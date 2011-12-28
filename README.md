@@ -2,11 +2,11 @@ org-html-slides
 ========================================
 
 You have an outline written in Emacs org-mode.  Add some JavaScript
-and CSS from org-html-slides, and you have an interactive
+and CSS from this project, and you have an interactive
 presentation. Supports bulleted lists, code blocks, and images.
 
 
-Building
+Bootstrap
 ========================================
 
 Org-html-slides is written in ClojureScript. You will need the
@@ -22,7 +22,7 @@ Run `script/bootstrap` to download dependencies.
 Examples
 ========================================
 
-Run `script/build development` to generate JavaScript files.
+Run `script/build development` to generate JavaScript files for the examples.
 
 You will need [Emacs](http://www.gnu.org/software/emacs/) and
 [org-mode](http://orgmode.org/) to generate the HTML.
@@ -31,7 +31,7 @@ Open `examples/example-development.org` in Emacs and type `C-c C-e b`.
 Emacs will generate an HTML file and open it in your default browser.
 
 
-Using in Your Org Files
+Using in Your Org-mode Files
 ========================================
 
 Run `script/build production` to generate a standalone JavaScript file.
@@ -45,6 +45,8 @@ Copy the following files from `out/` to the directory containing your .org file:
     projection.css
 
 Add the following lines to the bottom of your .org file:
+
+    #+TAGS: slide(s)
 
     #+STYLE: <link rel="stylesheet" type="text/css" href="goog-common.css" />
     #+STYLE: <link rel="stylesheet" type="text/css" href="common.css" />
