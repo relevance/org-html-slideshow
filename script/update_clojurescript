@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# ClojureScript is included in this repository as a Git submodule.
+#
+# This script will pull the latest version of ClojureScript and update
+# the submodule. Then you can run `git commit` to update the stored
+# ClojureScript commit hash.
+
+set -e
+cd `dirname $0`/..
+
+cd lib/clojurescript
+git checkout -q master
+if git pull | grep 'Already up-to-date' > /dev/null; then
+    echo "ClojureScript is already up-to-date."
+    exit 0
+else
+    cd ../..
+    git add -f lib/clojurescript
+    echo "ClojureScript updated; ready to commit."
+fi
