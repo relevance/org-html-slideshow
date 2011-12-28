@@ -79,7 +79,7 @@
 (defn leave-slideshow-mode []
   (info "Leaving slideshow mode")
   (show-original-html)
-  (doseq [elem (stylesheet-link-elems "projection")]
+  (doseq [elem (stylesheet-link-elems "screen")]
     (remove-elem elem))
   (doseq [elem original-screen-stylesheet-links]
     (add-to-head elem)))
