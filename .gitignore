@@ -2,3 +2,4 @@ lib
 out
 *~
 #*
+examples/*.html
