@@ -25,8 +25,8 @@ Examples
 
 Run `script/build development` to generate JavaScript files for the examples.
 
-You will need [Emacs](http://www.gnu.org/software/emacs/) and
-[org-mode](http://orgmode.org/) to generate the HTML.
+You will need [Emacs](http://www.gnu.org/software/emacs/) (version 23+ recommended) and
+[org-mode](http://orgmode.org/) (version 7+ recommended) to generate the HTML.
 
 Open `examples/example-development.org` in Emacs and type `C-c C-e b`.
 Emacs will generate an HTML file and open it in your default browser.
