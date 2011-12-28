@@ -6,7 +6,7 @@ cd `dirname $0`/..
 CLOSURE_DIR=lib/closure
 
 rm -rf lib
-mkdir -p lib
+mkdir -p $CLOSURE_DIR
 
 echo "Fetching Clojure ..."
 (
@@ -15,10 +15,7 @@ echo "Fetching Clojure ..."
 )
 
 echo "Fetching ClojureScript ..."
-(
-    cd lib
-    git clone -q https://github.com/clojure/clojurescript.git
-)
+git submodule -q update --init
 
 mkdir -p $CLOSURE_DIR/library $CLOSURE_DIR/compiler
 
