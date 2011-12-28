@@ -14,6 +14,7 @@ following installed to run the build process:
 
 * Bash
 * Curl
+* Git
 * Java Development Kit
 
 Run `script/bootstrap` to download dependencies.
