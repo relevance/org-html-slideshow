@@ -58,17 +58,17 @@ This example image is public-domain [[http://openclipart.org/detail/165554/geode
 
 * Section Two
 
-** First Slide in Topic Two                                           :slide:
+** Headline Levels                                                    :slide:
 
-#+begin_src clojure
-  (+ 3 4)
-#+end_src
+Slides can appear at any level in the org-mode hierarchy, but beware the [[http://orgmode.org/manual/Headings-and-sections.html#Headings-and-sections][headline-levels option]]. The headline depth at which org-mode switches from HTML headings to bulleted lists is determined by this option. The default is 3 levels of HTML headings (H1, H2, H3). Your slide titles must be in range of org-mode levels that produce HTML headings.
 
-** Second Slide in Topic Two                                          :slide:
+** Headline Levels & Bullets                                          :slide:
 
-#+begin_src clojure
-(println "Standard output is not captured.")
-#+end_src
+**** These bullets
+**** have to start
+**** at org-mode level 4
+
+
 
 #+COMMENT Include these stylesheets in your org-mode file
 #+STYLE: <link rel="stylesheet" type="text/css" href="../lib/closure/library/closure/goog/css/common.css" />
