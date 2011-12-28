@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -e
+cd `dirname $0`/..
+
+if [ -z "$1" ]; then
+    echo "Usage: script/build <development|production>"
+    exit 1
+fi
+
+case "$1" in
+    development)
+        MODE=""
+        ;;
+    production)
+        MODE=":optimizations :advanced"
+        ;;
+esac
+
+rm -rf out
+mkdir -p out
+
+CP="lib/clojurescript/src/clj:lib/clojurescript/src/cljs"
+for JAR in lib/*.jar; do
+    CP="$CP:$JAR"
+done
+
+exec java -cp "$CP" clojure.main \
+    lib/clojurescript/bin/cljsc.clj \
+    src/cljs \
+    "{:output-to \"out/org-html-slides.js\" $MODE}"

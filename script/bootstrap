@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+set -e
+cd `dirname $0`/..
+
+CLOSURE_DIR=lib/closure
+
+rm -rf lib
+mkdir -p lib
+
+echo "Fetching Clojure ..."
+(
+    cd lib
+    curl -sO http://repo1.maven.org/maven2/org/clojure/clojure/1.3.0/clojure-1.3.0.jar
+)
+
+echo "Fetching ClojureScript ..."
+(
+    cd lib
+    git clone -q https://github.com/clojure/clojurescript.git
+)
+
+mkdir -p $CLOSURE_DIR/library $CLOSURE_DIR/compiler
+
+echo "Fetching Google Closure compiler ..."
+(
+    cd $CLOSURE_DIR/compiler
+    curl -sO http://closure-compiler.googlecode.com/files/compiler-latest.zip
+    unzip -qu compiler-latest.zip
+)
+
+echo "Fetching Google Closure library ..."
+(
+    cd $CLOSURE_DIR/library
+    curl -sO http://closure-library.googlecode.com/files/closure-library-20110323-r790.zip
+    unzip -qu closure-library-20110323-r790.zip
+)
+
+echo "Building lib/goog.jar ..."
+jar cf ./lib/goog.jar -C $CLOSURE_DIR/library/closure/ goog
+
+echo "Copying closure/compiler/compiler.jar to lib/compiler.jar ..."
+cp lib/closure/compiler/compiler.jar lib
+
+echo "Done."
