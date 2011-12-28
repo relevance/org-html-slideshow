@@ -8,7 +8,7 @@
             [goog.events.KeyHandler :as KeyHandler]
             [goog.events.KeyCodes :as KeyCodes]))
 
-(def logger (Logger/getLogger "training.main"))
+(def logger (Logger/getLogger "org_html_slides.main"))
 
 (defn info [msg]
   (.info logger msg))
@@ -19,7 +19,24 @@
 
 (def loaded-slides (atom []))
 
-(def original-container-html (. (dom/getElement "container") innerHTML))
+(defn body-elem []
+  (first (array/toArray (dom/getElementsByTagNameAndClass "body"))))
+
+(def original-body-html
+  (. (body-elem) innerHTML))
+
+(defn stylesheet-link-elems [media-type]
+  (vec (filter (fn [elem]
+                 (and (= "stylesheet" (.. elem (getAttribute "rel") (toLowerCase)))
+                      (. elem (getAttribute "media"))
+                      (= media-type (.. elem (getAttribute "media") (toLowerCase)))))
+               (array/toArray (dom/getElementsByTagNameAndClass "link")))))
+
+(def original-screen-stylesheet-links
+  (stylesheet-link-elems "screen"))
+
+(def original-projection-stylesheet-links
+  (stylesheet-link-elems "projection"))
 
 (defn containing-slide-div [marker-elem]
   (some identity (for [n (range 8 0 -1)]
@@ -32,31 +49,40 @@
 (defn all-slides []
   (vec (map containing-slide-div (all-slide-markers))))
 
-(defn show-in-container [elem]
-  (let [container (dom/getElement "container")]
-    (set! (. container innerHTML) "")
-    (.appendChild container elem)))
+(defn replace-body [elem]
+  (let [body (body-elem)]
+    (set! (. body innerHTML) "")
+    (.appendChild body elem)))
 
 (defn show-current-slide []
-  (show-in-container (@loaded-slides @current-slide)))
+  (replace-body (@loaded-slides @current-slide)))
 
 (defn show-original-html []
-  (set! (. (dom/getElement "container") innerHTML) original-container-html))
+  (set! (. (body-elem) innerHTML) original-body-html))
 
-(defn slides-stylesheet-link-elem []
-  (some (fn [elem]
-          (when (= (.getAttribute elem "href") "css/slides.css") elem))
-        (array/toArray (dom/getElementsByTagNameAndClass "link"))))
+(defn add-to-head [elem]
+  (.appendChild (first (array/toArray (dom/getElementsByTagNameAndClass "head")))
+                elem))
+
+(defn remove-elem [elem]
+  (.. elem parentNode (removeChild elem)))
 
 (defn enter-slideshow-mode []
   (info "Entering slideshow mode")
   (show-current-slide)
-  (.setAttribute (slides-stylesheet-link-elem) "media" "screen"))
+  (doseq [elem (stylesheet-link-elems "screen")]
+    (remove-elem elem))
+  (doseq [elem original-projection-stylesheet-links]
+    (.setAttribute elem "media" "screen")
+    (add-to-head elem)))
 
 (defn leave-slideshow-mode []
   (info "Leaving slideshow mode")
   (show-original-html)
-  (.setAttribute (slides-stylesheet-link-elem) "media" "projection"))
+  (doseq [elem (stylesheet-link-elems "projection")]
+    (remove-elem elem))
+  (doseq [elem original-screen-stylesheet-links]
+    (add-to-head elem)))
 
 (defn show-next-slide []
   (when (< @current-slide (dec (count @loaded-slides)))
@@ -107,6 +133,8 @@
   (info "Application started")
   (reset! loaded-slides (all-slides))
   (info (str "Loaded " (count @loaded-slides) " slides"))
+  (info (str "Found " (count original-screen-stylesheet-links) " screen stylesheets."))
+  (info (str "Found " (count original-projection-stylesheet-links) " projection stylesheets."))
   (install-keyhandler))
 
 (main)
