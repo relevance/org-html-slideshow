@@ -6,6 +6,7 @@ cd `dirname $0`/..
 case "$1" in
     development)
         MODE="development"
+        CLJSC_OPTS=":optimizations :whitespace, :pretty-print true"
         ;;
     production)
         MODE="production"
