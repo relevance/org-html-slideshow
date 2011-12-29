@@ -70,21 +70,13 @@ Slides can appear at any level in the org-mode hierarchy, but beware the [[http:
 
 
 
-#+COMMENT Include these stylesheets in your org-mode file
 #+STYLE: <link rel="stylesheet" type="text/css" href="../lib/closure/library/closure/goog/css/common.css" />
 #+STYLE: <link rel="stylesheet" type="text/css" href="../src/css/common.css" />
 #+STYLE: <link rel="stylesheet" type="text/css" href="../src/css/screen.css" media="screen" />
 #+STYLE: <link rel="stylesheet" type="text/css" href="../src/css/projection.css" media="projection" />
 
-#+COMMENT Include this HTML in your org-mode file
 #+BEGIN_HTML
-<script type="text/javascript" src="../out/goog/base.js"></script>
 <script type="text/javascript" src="../out/org-html-slides.js"></script>
-<script type="text/javascript">
-<!--
-goog.require('org_html_slides.main');
-// -->
-</script>
 #+END_HTML
 
 #+COMMENT Include table-of-contents up to heading level 2
