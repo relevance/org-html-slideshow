@@ -3,10 +3,12 @@
             [goog.debug.Console :as Console]
             [goog.array :as array]
             [goog.dom :as dom]
+            [goog.dom.classes :as classes]
             [goog.style :as style]
             [goog.events :as events]
             [goog.events.KeyHandler :as KeyHandler]
-            [goog.events.KeyCodes :as KeyCodes]))
+            [goog.events.KeyCodes :as KeyCodes]
+            [goog.Uri :as Uri]))
 
 (def logger (Logger/getLogger "org_html_slides.main"))
 
@@ -49,6 +51,23 @@
 (defn all-slides []
   (vec (map containing-slide-div (all-slide-markers))))
 
+(defn node-seq
+  "Depth-first walk of the DOM as a lazy sequence, starting at elem."
+  [elem]
+  (when elem
+   (lazy-seq
+    (cons elem (node-seq
+                (or (. elem firstChild)
+                    (. elem nextSibling)
+                    (when-let [parent (. elem parentNode)]
+                      (. parent nextSibling))))))))
+
+(defn first-slide-marker-after [elem]
+  (first (filter (fn [elem]
+                   (and (= "SPAN" (. elem nodeName))
+                        (classes/has elem "slide")))
+                 (node-seq elem))))
+
 (defn replace-body [elem]
   (let [body (body-elem)]
     (set! (. body innerHTML) "")
@@ -67,8 +86,21 @@
 (defn remove-elem [elem]
   (.. elem parentNode (removeChild elem)))
 
+(defn set-current-slide-by-uri-fragment []
+  (let [uri (Uri/parse (. js/window location))]
+    (when (. uri (hasFragment))
+      (let [frag (. uri (getFragment))]
+        (info (str "Fragment ID found: " frag))
+        (let [marker (first-slide-marker-after (dom/getElement frag))
+              slide-id (. (containing-slide-div marker) id)
+              i (some identity (map-indexed (fn [i x] (when (= slide-id (. x id)) i)) @loaded-slides))]
+          (info (str "Next slide ID found: " slide-id))
+          (info (str "Corresponding slide number: " i))
+          (reset! current-slide i))))))
+
 (defn enter-slideshow-mode []
   (info "Entering slideshow mode")
+  (set-current-slide-by-uri-fragment)
   (show-current-slide)
   (doseq [elem (stylesheet-link-elems "screen")]
     (remove-elem elem))
@@ -135,6 +167,7 @@
   (info (str "Loaded " (count @loaded-slides) " slides"))
   (info (str "Found " (count original-screen-stylesheet-links) " screen stylesheets."))
   (info (str "Found " (count original-projection-stylesheet-links) " projection stylesheets."))
-  (install-keyhandler))
+  (install-keyhandler)
+  (info (str "Slide after #sec-2-2: "  (first-slide-marker-after (dom/getElement "sec-2-2")))))
 
 (main)
