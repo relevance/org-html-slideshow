@@ -91,12 +91,12 @@
     (when (. uri (hasFragment))
       (let [frag (. uri (getFragment))]
         (info (str "Fragment ID found: " frag))
-        (let [marker (first-slide-marker-after (dom/getElement frag))
-              slide-id (. (containing-slide-div marker) id)
-              i (some identity (map-indexed (fn [i x] (when (= slide-id (. x id)) i)) @loaded-slides))]
-          (info (str "Next slide ID found: " slide-id))
-          (info (str "Corresponding slide number: " i))
-          (reset! current-slide i))))))
+        (when-let [marker (first-slide-marker-after (dom/getElement frag))]
+          (let [slide-id (. (containing-slide-div marker) id)
+                i (some identity (map-indexed (fn [i x] (when (= slide-id (. x id)) i)) @loaded-slides))]
+            (info (str "Next slide ID found: " slide-id))
+            (info (str "Corresponding slide number: " i))
+            (reset! current-slide i)))))))
 
 (defn enter-slideshow-mode []
   (info "Entering slideshow mode")
