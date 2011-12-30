@@ -68,7 +68,9 @@ Slides can appear at any level in the org-mode hierarchy, but beware the [[http:
 **** have to start
 **** at org-mode level 4
 
+* Section Three
 
+** No slides in this section
 
 #+STYLE: <link rel="stylesheet" type="text/css" href="../lib/closure/library/closure/goog/css/common.css" />
 #+STYLE: <link rel="stylesheet" type="text/css" href="../src/css/common.css" />
