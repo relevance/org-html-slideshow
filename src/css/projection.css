@@ -12,6 +12,10 @@ li {
    margin: 12pt;
 }
 
+p.image {
+   text-align: center;
+}
+
 span.section-number-1 {
    display: none;
 }
