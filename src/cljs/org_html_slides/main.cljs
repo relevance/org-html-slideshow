@@ -15,6 +15,14 @@
 (defn info [msg]
   (.info logger msg))
 
+(defn add-image-classes []
+  (doseq [img (array/toArray (dom/getElementsByTagNameAndClass "img"))]
+    (let [p (. img parentNode)]
+      (when (= "P" (. p nodeName))
+        (classes/add p "image")))))
+
+(add-image-classes)
+
 (def current-slide (atom 0))
 
 (def slideshow-mode (atom false))
@@ -168,16 +176,9 @@
                  goog.events.KeyHandler.EventType.KEY
                  handle-key))
 
-(defn add-image-classes []
-  (doseq [img (array/toArray (dom/getElementsByTagNameAndClass "img"))]
-    (let [p (. img parentNode)]
-      (when (= "P" (. p nodeName))
-        (classes/add p "image")))))
-
 (defn main []
   (.setCapturing (goog.debug.Console.) true)
   (info "Application started")
-  (add-image-classes)  ;; doesn't work because we rewrite the DOM
   (reset! loaded-slides (all-slides))
   (info (str "Loaded " (count @loaded-slides) " slides"))
   (info (str "Found " (count original-screen-stylesheet-links) " screen stylesheets."))
