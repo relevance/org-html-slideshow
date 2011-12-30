@@ -74,7 +74,11 @@
     (.appendChild body elem)))
 
 (defn show-current-slide []
-  (replace-body (@loaded-slides @current-slide)))
+  (let [slide (@loaded-slides @current-slide)]
+    (replace-body slide)
+    (let [uri (Uri/parse (. js/window location))]
+      (. uri (setFragment (. slide id)))
+      (set! (. js/window location) (str uri)))))
 
 (defn show-original-html []
   (set! (. (body-elem) innerHTML) original-body-html))
@@ -114,7 +118,11 @@
   (doseq [elem (stylesheet-link-elems "screen")]
     (remove-elem elem))
   (doseq [elem original-screen-stylesheet-links]
-    (add-to-head elem)))
+    (add-to-head elem))
+  (let [frag (. (Uri/parse (. js/window location)) (getFragment))]
+    ;; Can't make goog.style.scrollIntoContainerView work,
+    ;; don't know what the 'container' arg is supposed to be.
+    (. (dom/getElement frag) (scrollIntoView))))
 
 (defn show-next-slide []
   (when (< @current-slide (dec (count @loaded-slides)))
