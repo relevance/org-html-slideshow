@@ -1,0 +1,49 @@
+body {
+   margin: 18pt;
+   font-size: 24pt;
+}
+
+h1,h2,h3,h4,h5,h6,h7,h8 {
+   text-align: center;
+   font-size: 48pt;
+}
+
+li {
+   margin: 12pt;
+}
+
+p.image {
+   text-align: center;
+}
+
+span.section-number-1 {
+   display: none;
+}
+
+span.section-number-2 {
+   display: none;
+}
+
+span.section-number-3 {
+   display: none;
+}
+
+span.section-number-4 {
+   display: none;
+}
+
+span.section-number-5 {
+   display: none;
+}
+
+span.section-number-6 {
+   display: none;
+}
+
+span.section-number-7 {
+   display: none;
+}
+
+span.section-number-8 {
+   display: none;
+}

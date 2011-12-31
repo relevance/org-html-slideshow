@@ -1,0 +1,11 @@
+body {
+   font-family: Helvetica, Arial, sans-serif;
+}
+
+span.tag span.slide {
+   display: none;
+}
+
+pre {
+   font-family: Monaco, "Courier New", monospace;
+}
