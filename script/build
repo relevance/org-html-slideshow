@@ -21,18 +21,16 @@ esac
 rm -rf out
 mkdir -p out
 
+cp lib/closure/library/closure/goog/css/common.css out/goog-common.css
+cp src/css/*.css out
 
 CP="lib/clojurescript/src/clj:lib/clojurescript/src/cljs"
 for JAR in lib/*.jar; do
     CP="$CP:$JAR"
 done
 
-java -cp "$CP" clojure.main \
+exec java -cp "$CP" clojure.main \
     lib/clojurescript/bin/cljsc.clj \
     src/cljs \
     "{:output-to \"out/org-html-slides.js\" $CLJSC_OPTS}"
 
-if [ "$MODE" == "production" ]; then
-    cp lib/closure/library/closure/goog/css/common.css out/goog-common.css
-    cp src/css/*.css out
-fi
