@@ -13,47 +13,20 @@ Should work in most modern web browsers; developed for Google Chrome.
 Org-html-slides is written in [ClojureScript](https://github.com/clojure/clojurescript).
 
 
-Bootstrap
-========================================
-
-You will need the following programs already installed to run the
-bootstrap process:
-
-* Bash
-* Curl
-* Git
-* Java Development Kit
-
-Run `script/bootstrap` to download additional build dependencies.
-
-
-Examples
-========================================
-
-Run `script/build development` to generate JavaScript files for the examples.
-
-You will need [Emacs](http://www.gnu.org/software/emacs/) (version 23+ recommended) and
-[org-mode](http://orgmode.org/) (version 7+ recommended) to generate the HTML.
-
-Open `examples/example-development.org` in Emacs and type `C-c C-e b`.
-Emacs will generate an HTML file and open it in your default
-browser. Type `t` to begin the slide show.
-
-
 Using in Your Org-mode Files
 ========================================
 
-Run `script/build production` to generate a standalone JavaScript file.
-
-Copy the following files from `out/` to the directory containing your .org file:
+**Step 1.** Copy the following files from `out/production/` to the
+directory containing your .org file:
 
     org-html-slides.js
-    goog-common.css
-    common.css
-    screen.css
-    projection.css
 
-Add the following lines to the bottom of your .org file:
+    common.css
+    goog-common.css
+    projection.css
+    screen.css
+
+**Step 2.** Add the following lines to the bottom of your .org file:
 
     #+TAGS: slide(s)
 
@@ -71,21 +44,77 @@ Add the following lines to the bottom of your .org file:
     # org-export-html-style-include-scripts: nil
     # End:
 
-Close and re-open your .org file. Type `y` to accept the buffer-local
-variables. 
+**Step 3.** Close and re-open your .org file. Type `y` to accept the
+buffer-local variables.
 
-For each org-mode headline that you want to make into a slide, add the
-`:slide:` tag by typing `C-c C-c s RET` with the cursor on the
-headline.
+**Step 4."" For each org-mode headline that you want to make into a
+slide, add the `:slide:` tag by typing `C-c C-c s RET` with the cursor
+on the headline.
 
-Type `C-c C-e h` in your .org file to export as HTML. Open the HTML
-file in your browser and type `t` to begin the slide show.
+**Step 5.** Type `C-c C-e h` in your .org file to export as HTML.
+
+Repeat Step 5 whenever you modify the .org file.
+
+
+Playing the Slide Show
+----------------------
+
+Open the generated HTML file in your browser and type `t` to begin the
+slide show.
+
+The Space, Enter, Page Down, and `n` keys advance to the next slide.
+
+The Page Up and `p` keys go back to the previous slide.
+
+The `t` key toggles between slide-show and normal views.
+
+
+Changing Styles
+--------------------
 
 You can modify the appearance of your slides by editing the stylesheets:
 
 * `projection.css` affects only the slide-show view
 * `screen.css` affects only the normal view
 * `common.css` affects both
+
+
+Development Bootstrap
+========================================
+
+To develop and build org-html-slides, you will need the following
+programs already installed:
+
+* Bash
+* Curl
+* Git
+* Java Development Kit
+
+Run `script/bootstrap` to download additional build dependencies.
+
+
+Development Examples
+========================================
+
+(Depends on "Development Bootstrap")
+
+Run `script/build development` to generate JavaScript files for the examples.
+
+You will need [Emacs](http://www.gnu.org/software/emacs/) (version 23+ recommended) and
+[org-mode](http://orgmode.org/) (version 7+ recommended) to generate the HTML.
+
+Open `examples/example-development.org` in Emacs and type `C-c C-e b`.
+Emacs will generate an HTML file and open it in your default
+browser. Type `t` to begin the slide show.
+
+
+Rebuilding Production Files
+========================================
+
+(Depends on "Development Bootstrap")
+
+Run `script/build production` to rebuild standalone JavaScript and CSS
+files in `out/production/`
 
 
 TODO
@@ -111,4 +140,3 @@ with the following copyright:
 
     Copyright 2009 The Closure Library Authors. All Rights Reserved.
     Use of this source code is governed by the Apache License, Version 2.0.
-
