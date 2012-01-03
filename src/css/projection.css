@@ -4,8 +4,9 @@ body {
 }
 
 h1,h2,h3,h4,h5,h6,h7,h8 {
-   text-align: center;
    font-size: 48pt;
+   margin: 18pt;
+   text-align: center;
 }
 
 li {
