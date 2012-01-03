@@ -129,6 +129,7 @@ TODO
 * Jump to slide from a list
 * Slide transitions
 * Animation?
+* Presenter display: clock, elapsed time, next slide, etc.
 
 
 Copyright and License
