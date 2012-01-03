@@ -47,7 +47,7 @@ directory containing your .org file:
 **Step 3.** Close and re-open your .org file. Type `y` to accept the
 buffer-local variables.
 
-**Step 4."" For each org-mode headline that you want to make into a
+**Step 4.** For each org-mode headline that you want to make into a
 slide, add the `:slide:` tag by typing `C-c C-c s RET` with the cursor
 on the headline.
 
