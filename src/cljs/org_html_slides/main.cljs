@@ -183,14 +183,28 @@
         prev (last (take-while #(not= current %) @slides))]
     (when prev (show-slide prev))))
 
+(defn show-first-slide []
+  (show-slide (first @slides)))
+
+(defn show-last-slide []
+  (show-slide (last @slides)))
+
+(defn go-to-top []
+  (set-location-fragment nil)
+  (. window (scrollTo 0 0)))
+
 
 ;;; KEYBOARD
 
 (def normal-keymap
-  {goog.events.KeyCodes.T toggle-mode})
+  {goog.events.KeyCodes.T toggle-mode
+   goog.events.KeyCodes.HOME go-to-top})
 
 (def slideshow-keymap
   {goog.events.KeyCodes.T toggle-mode
+
+   goog.events.KeyCodes.HOME show-first-slide
+   goog.events.KeyCodes.END show-last-slide
 
    goog.events.KeyCodes.SPACE show-next-slide
    goog.events.KeyCodes.ENTER show-next-slide        
