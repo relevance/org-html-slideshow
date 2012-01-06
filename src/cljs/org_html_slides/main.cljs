@@ -6,184 +6,248 @@
             [goog.dom.classes :as classes]
             [goog.style :as style]
             [goog.events :as events]
+            [goog.string :as string]
             [goog.events.KeyHandler :as KeyHandler]
             [goog.events.KeyCodes :as KeyCodes]
             [goog.Uri :as Uri]))
 
-(def logger (Logger/getLogger "org_html_slides.main"))
+;;; GLOBAL STATE
 
-(defn info [msg]
-  (.info logger msg))
+(def stylesheet-urls
+  "Atom containing map from mode (\"projection\" or \"screen\") to set
+  of stylesheet URLs used only in that mode."
+  (atom {}))
 
-(defn add-image-classes []
-  (doseq [img (array/toArray (dom/getElementsByTagNameAndClass "img"))]
-    (let [p (. img parentNode)]
-      (when (= "P" (. p nodeName))
-        (classes/add p "image")))))
+(def slides
+  "Atom containing Vector of slide data"
+  (atom nil))
 
-(add-image-classes)
+(def document-body
+  "Atom containing HTML of the original document body, after
+  post-processing but before beginning a slideshow."
+  (atom nil))
 
-(def current-slide (atom 0))
+(def slideshow-mode? (atom false))
 
-(def slideshow-mode (atom false))
 
-(def loaded-slides (atom []))
+;;; UTILITIES
 
-(defn body-elem []
-  (first (array/toArray (dom/getElementsByTagNameAndClass "body"))))
+(defn info [& msgs]
+  (.info (Logger/getLogger "org_html_slides.main") (apply pr-str msgs)))
 
-(def original-body-html
-  (. (body-elem) innerHTML))
+(defn attr
+  "Gets attribute from element and returns its value, lower-cased. If
+  the element does not have the attribute returns nil."
+  [elem attr]
+  (when (. elem (hasAttribute attr))
+    (.. elem (getAttribute attr) (toLowerCase))))
 
-(defn stylesheet-link-elems [media-type]
-  (vec (filter (fn [elem]
-                 (and (= "stylesheet" (.. elem (getAttribute "rel") (toLowerCase)))
-                      (. elem (getAttribute "media"))
-                      (= media-type (.. elem (getAttribute "media") (toLowerCase)))))
-               (array/toArray (dom/getElementsByTagNameAndClass "link")))))
+(defn dom-tags
+  ([tag-name]
+     (array/toArray (dom/getElementsByTagNameAndClass tag-name)))
+  ([tag-name class-name]
+     (array/toArray (dom/getElementsByTagNameAndClass tag-name class-name)))
+  ([tag-name class-name inside-elem]
+     (array/toArray (dom/getElementsByTagNameAndClass tag-name class-name inside-elem))))
 
-(def original-screen-stylesheet-links
-  (stylesheet-link-elems "screen"))
-
-(def original-projection-stylesheet-links
-  (stylesheet-link-elems "projection"))
-
-(defn containing-slide-div [marker-elem]
-  (some identity (for [n (range 8 0 -1)]
-                   (dom/getAncestorByTagNameAndClass
-                    marker-elem "div" (str "outline-" n)))))
-
-(defn all-slide-markers []
-  (array/toArray (dom/getElementsByTagNameAndClass "span" "slide")))
-
-(defn all-slides []
-  (vec (map containing-slide-div (all-slide-markers))))
-
-(defn node-seq
-  "Depth-first walk of the DOM as a lazy sequence, starting at elem."
+(defn remove-elem
+  "Remove a node from the DOM tree."
   [elem]
-  (when elem
-   (lazy-seq
-    (cons elem (node-seq
-                (or (. elem firstChild)
-                    (. elem nextSibling)
-                    (when-let [parent (. elem parentNode)]
-                      (. parent nextSibling))))))))
-
-(defn first-slide-marker-after [elem]
-  (first (filter (fn [elem]
-                   (and (= "SPAN" (. elem nodeName))
-                        (classes/has elem "slide")))
-                 (node-seq elem))))
-
-(defn replace-body [elem]
-  (let [body (body-elem)]
-    (set! (. body innerHTML) "")
-    (.appendChild body elem)))
-
-(defn show-current-slide []
-  (let [slide (@loaded-slides @current-slide)]
-    (replace-body slide)
-    (let [uri (Uri/parse (. js/window location))]
-      (. uri (setFragment (. slide id)))
-      (set! (. js/window location) (str uri)))))
-
-(defn show-original-html []
-  (set! (. (body-elem) innerHTML) original-body-html))
-
-(defn add-to-head [elem]
-  (.appendChild (first (array/toArray (dom/getElementsByTagNameAndClass "head")))
-                elem))
-
-(defn remove-elem [elem]
   (.. elem parentNode (removeChild elem)))
 
-(defn set-current-slide-by-uri-fragment []
+(defn add-to-head [elem]
+  (.appendChild (first (dom-tags "head")) elem))
+
+(defn body-elem []
+  (first (dom-tags "body")))
+
+(defn next-elem [elem]
+  (or (. elem firstChild)
+      (. elem nextSibling)
+      (when-let [parent (. elem parentNode)]
+        (. parent nextSibling))))
+
+(defn location-fragment []
+  (. (Uri/parse (. js/window location)) (getFragment)))
+
+(defn set-location-fragment [fragment-id]
   (let [uri (Uri/parse (. js/window location))]
-    (when (. uri (hasFragment))
-      (let [frag (. uri (getFragment))]
-        (info (str "Fragment ID found: " frag))
-        (when-let [marker (first-slide-marker-after (dom/getElement frag))]
-          (let [slide-id (. (containing-slide-div marker) id)
-                i (some identity (map-indexed (fn [i x] (when (= slide-id (. x id)) i)) @loaded-slides))]
-            (info (str "Next slide ID found: " slide-id))
-            (info (str "Corresponding slide number: " i))
-            (reset! current-slide i)))))))
+    (. uri (setFragment fragment-id))
+    (set! (. js/window location) (str uri))))
+
+
+;;; STYLESHEETS
+
+(defn stylesheets [media-type]
+  (set (map #(attr % "href")
+            (filter (fn [elem]
+                      (and (= "stylesheet" (attr elem "rel"))
+                           (= media-type (attr elem "media"))))
+                    (dom-tags "link")))))
+
+(defn remove-stylesheets [urls]
+  (doseq [elem (filter (fn [elem]
+                         (and (= "stylesheet" (attr elem "rel"))
+                              (contains? urls (attr elem "href"))))
+                       (dom-tags "link"))]
+    (remove-elem elem)))
+
+(defn add-stylesheets [urls]
+  (doseq [url urls]
+    (add-to-head
+     (doto (dom/createDom "link")
+       (. (setAttribute "rel" "stylesheet"))
+       (. (setAttribute "type" "text/css"))
+       (. (setAttribute "href" url))))))
+
+
+;;; SLIDES
+
+(defn nearest-containing-div [elem]
+  (if (= "DIV" (. elem nodeName))
+    elem
+    (recur (. elem parentNode))))
+
+(def heading-tag-names (set (map #(str "H" %) (range 1 9))))
+
+(defn nearest-inside-heading [elem]
+  (if (contains? heading-tag-names (. elem nodeName))
+    elem
+    (recur (next-elem elem))))
+
+(defn move-heading-tags-to-div-classes [classname]
+  (doseq [marker (dom-tags "span" classname)]
+    (classes/add (nearest-containing-div marker) classname)
+    (remove-elem marker)))
+
+(defn remove-nested-slides [slide-div-elem]
+  (let [div (. slide-div-elem (cloneNode true))]
+    (doseq [elem (dom-tags "div" "slide" div)]
+      (remove-elem elem))
+    div))
+
+(defn get-slides []
+  (vec (map (fn [elem]
+              {:id  (. (nearest-inside-heading elem) id)
+               :html (dom/getOuterHtml (remove-nested-slides elem))})
+            (dom-tags "div" "slide"))))
+
+(defn slide-from-id [id]
+  (some (fn [slide] (when (= id (:id slide)) slide)) @slides))
+
+(defn find-slide-after [id]
+  (second (drop-while #(pos? (string/numerateCompare id (:id %)))
+                      @slides)))
+
+(defn current-slide []
+  (let [fragment-id (location-fragment)]
+    (or (slide-from-id fragment-id)
+        (and (seq fragment-id) (find-slide-after fragment-id))
+        (first @slides))))
+
+(defn show-slide [{:keys [id html]}]
+  (set-location-fragment id)
+  (set! (. (body-elem) innerHTML) html))
+
+
+;;; GUI EVENTS
 
 (defn enter-slideshow-mode []
-  (info "Entering slideshow mode")
-  (set-current-slide-by-uri-fragment)
-  (show-current-slide)
-  (doseq [elem (stylesheet-link-elems "screen")]
-    (remove-elem elem))
-  (doseq [elem original-projection-stylesheet-links]
-    (.setAttribute elem "media" "screen")
-    (add-to-head elem)))
+  (info '(enter-slideshow-mode))
+  (show-slide (current-slide))
+  (remove-stylesheets (get @stylesheet-urls "screen"))
+  (add-stylesheets (get @stylesheet-urls "projection")))
 
 (defn leave-slideshow-mode []
-  (info "Leaving slideshow mode")
-  (show-original-html)
-  (doseq [elem (stylesheet-link-elems "screen")]
-    (remove-elem elem))
-  (doseq [elem original-screen-stylesheet-links]
-    (add-to-head elem))
-  (let [frag (. (Uri/parse (. js/window location)) (getFragment))]
-    ;; Can't make goog.style.scrollIntoContainerView work,
-    ;; don't know what the 'container' arg is supposed to be.
-    (. (dom/getElement frag) (scrollIntoView))))
-
-(defn show-next-slide []
-  (when (< @current-slide (dec (count @loaded-slides)))
-    (swap! current-slide inc)
-    (show-current-slide)))
-
-(defn show-prev-slide []
-  (when (pos? @current-slide)
-    (swap! current-slide dec)
-    (show-current-slide)))
+  (info '(leave-slideshow-mode))
+  (remove-stylesheets (get @stylesheet-urls "projection"))
+  (add-stylesheets (get @stylesheet-urls "screen"))
+  (set! (. (body-elem) innerHTML) @document-body)
+  (. (dom/getElement (location-fragment)) (scrollIntoView)))
 
 (defn toggle-mode []
-  (if @slideshow-mode
-    (leave-slideshow-mode)
-    (enter-slideshow-mode))
-  (swap! slideshow-mode not))
+  (info '(toggle-mode))
+  (swap! slideshow-mode? not)
+  (if @slideshow-mode?
+    (enter-slideshow-mode)
+    (leave-slideshow-mode)))
+
+(defn show-next-slide []
+  (let [current (current-slide)
+        next (second (drop-while #(not= current %) @slides))]
+    (when next (show-slide next))))
+
+(defn show-prev-slide []
+  (let [current (current-slide)
+        prev (last (take-while #(not= current %) @slides))]
+    (when prev (show-slide prev))))
+
+
+;;; KEYBOARD
+
+(def normal-keymap
+  {goog.events.KeyCodes.T toggle-mode})
+
+(def slideshow-keymap
+  {goog.events.KeyCodes.T toggle-mode
+
+   goog.events.KeyCodes.SPACE show-next-slide
+   goog.events.KeyCodes.ENTER show-next-slide        
+   goog.events.KeyCodes.MAC_ENTER show-next-slide
+   goog.events.KeyCodes.RIGHT show-next-slide
+   goog.events.KeyCodes.DOWN show-next-slide
+   goog.events.KeyCodes.PAGE_DOWN show-next-slide
+   goog.events.KeyCodes.N show-next-slide
+
+   goog.events.KeyCodes.LEFT show-prev-slide
+   goog.events.KeyCodes.UP show-prev-slide
+   goog.events.KeyCodes.PAGE_UP show-prev-slide
+   goog.events.KeyCodes.P show-prev-slide})
 
 (defn handle-key [event]
-  (let [code (. event keyCode)]
-    (if @slideshow-mode
-      (condp = code
-        goog.events.KeyCodes.T (toggle-mode)
-
-        goog.events.KeyCodes.SPACE (show-next-slide)
-        goog.events.KeyCodes.ENTER (show-next-slide)        
-        goog.events.KeyCodes.MAC_ENTER (show-next-slide)
-        goog.events.KeyCodes.RIGHT (show-next-slide)
-        goog.events.KeyCodes.DOWN (show-next-slide)
-        goog.events.KeyCodes.PAGE_DOWN (show-next-slide)
-        goog.events.KeyCodes.N (show-next-slide)
-
-        goog.events.KeyCodes.LEFT (show-prev-slide)
-        goog.events.KeyCodes.UP (show-prev-slide)
-        goog.events.KeyCodes.PAGE_UP (show-prev-slide)
-        goog.events.KeyCodes.P (show-prev-slide)
-        nil)
-      (condp = code
-        goog.events.KeyCodes.T (toggle-mode)
-        nil))))
+  (let [code (. event keyCode)
+        keymap (if @slideshow-mode? slideshow-keymap normal-keymap)
+        command (get keymap code)]
+    (when command
+      (command)
+      (. event (preventDefault))
+      (. event (stopPropagation)))))
 
 (defn install-keyhandler []
   (events/listen (goog.events.KeyHandler. (dom/getDocument))
                  goog.events.KeyHandler.EventType.KEY
                  handle-key))
 
+
+;;; INITIAL SETUP
+
+(defn init-stylesheets []
+  (swap! stylesheet-urls assoc
+         "projection" (stylesheets "projection")
+         "screen" (stylesheets "screen")))
+
+(defn add-image-classes []
+  (doseq [img (dom-tags "img")]
+    (let [p (. img parentNode)]
+      (when (= "P" (. p nodeName))
+        (classes/add p "image")))))
+
+
+;;; MAIN
+
 (defn main []
   (.setCapturing (goog.debug.Console.) true)
   (info "Application started")
-  (reset! loaded-slides (all-slides))
-  (info (str "Loaded " (count @loaded-slides) " slides"))
-  (info (str "Found " (count original-screen-stylesheet-links) " screen stylesheets."))
-  (info (str "Found " (count original-projection-stylesheet-links) " projection stylesheets."))
-  (install-keyhandler)
-  (info (str "Slide after #sec-2-2: "  (first-slide-marker-after (dom/getElement "sec-2-2")))))
+  (info "Preparing document")
+  (init-stylesheets)
+  (add-image-classes)
+  (move-heading-tags-to-div-classes "slide")
+  (remove-stylesheets (get @stylesheet-urls "projection"))
+  (info "Saving document and slides")
+  (reset! document-body (. (body-elem) innerHTML))
+  (reset! slides (get-slides))
+  (info '(count slides) (count @slides))
+  (info "Installing key handler")
+  (install-keyhandler))
 
 (main)

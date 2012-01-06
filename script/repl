@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -e
+cd `dirname $0`/..
+
+MODE="development"
+
+OUT_DIR="out/$MODE"
+rm -rf "$OUT_DIR"
+mkdir -p "$OUT_DIR"
+
+CLJSC_OPTS=":optimizations :whitespace, :pretty-print true, :output-dir \"$OUT_DIR\" :output-to \"$OUT_DIR/org-html-slides.js\""
+
+CP="lib/clojurescript/src/clj:lib/clojurescript/src/cljs"
+for JAR in lib/*.jar; do
+    CP="$CP:$JAR"
+done
+
+java -cp "$CP" clojure.main \
+    -e "(require '[cljs.closure :as closure])" \
+    -e "(require '[clojure.java.browse :as browse])" \
+    -e "(defn go [] (closure/build \"src/cljs\" {$CLJSC_OPTS}))" \
+    -e "(defn browse [] (browse/browse-url \"file://$PWD/examples/example-development.html\"))" \
+    -e "(go)" \
+    -r
