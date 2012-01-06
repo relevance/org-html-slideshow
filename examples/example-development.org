@@ -20,9 +20,9 @@
 
 This slide contains text. 
 
-** Source Code
+** Source Code                                                        :slide:
 
-*** Source Code on a Slide                                            :slide:
+*** Source Code on a Slide                                :another_tag:slide:
 
 #+begin_src clojure
   (defn example []
