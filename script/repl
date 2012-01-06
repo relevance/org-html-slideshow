@@ -18,6 +18,8 @@ done
 
 java -cp "$CP" clojure.main \
     -e "(require '[cljs.closure :as closure])" \
+    -e "(require '[clojure.java.browse :as browse])" \
     -e "(defn go [] (closure/build \"src/cljs\" {$CLJSC_OPTS}))" \
+    -e "(defn browse [] (browse/browse-url \"file://$PWD/examples/example-development.html\"))" \
     -e "(go)" \
     -r
