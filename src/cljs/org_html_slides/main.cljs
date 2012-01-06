@@ -18,12 +18,8 @@
   (atom {}))
 
 (def slides
-  "Atom containing Map of slide IDs to HTML strings of the slide DIVs."
-  (atom {}))
-
-(def slide-ids
-  "Atom contaning Vector of keys to 'slides', in correct order."
-  (atom []))
+  "Atom containing Vector of slide data"
+  (atom nil))
 
 (def document-body
   "Atom containing HTML of the original document body, after
@@ -59,6 +55,23 @@
 (defn add-to-head [elem]
   (.appendChild (first (dom-tags "head")) elem))
 
+(defn body-elem []
+  (first (dom-tags "body")))
+
+(defn next-elem [elem]
+  (or (. elem firstChild)
+      (. elem nextSibling)
+      (when-let [parent (. elem parentNode)]
+        (. parent nextSibling))))
+
+(defn location-fragment []
+  (. (Uri/parse (. js/window location)) (getFragment)))
+
+(defn set-location-fragment [fragment-id]
+  (let [uri (Uri/parse (. js/window location))]
+    (. uri (setFragment fragment-id))
+    (set! (. js/window location) (str uri))))
+
 
 ;;; STYLESHEETS
 
@@ -85,6 +98,118 @@
        (. (setAttribute "href" url))))))
 
 
+;;; SLIDES
+
+(defn nearest-containing-div [elem]
+  (if (= "DIV" (. elem nodeName))
+    elem
+    (recur (. elem parentNode))))
+
+(def heading-tag-names (set (map #(str "H" %) (range 1 9))))
+
+(defn nearest-inside-heading [elem]
+  (if (contains? heading-tag-names (. elem nodeName))
+    elem
+    (recur (next-elem elem))))
+
+(defn move-heading-tags-to-div-classes [classname]
+  (doseq [marker (dom-tags "span" classname)]
+    (classes/add (nearest-containing-div marker) classname)
+    (remove-elem marker)))
+
+(defn get-slides []
+  (vec (map (fn [elem]
+              {:id  (. (nearest-inside-heading elem) id)
+               :html (. elem innerHTML)})
+            (dom-tags "div" "slide"))))
+
+(defn slide-from-id [id]
+  (some (fn [slide] (when (= id (:id slide)) slide)) @slides))
+
+(defn find-slide-after [id]
+  (second (drop-while #(pos? (string/numerateCompare id (:id %)))
+                      @slides)))
+
+(defn current-slide []
+  (let [fragment-id (location-fragment)]
+    (or (slide-from-id fragment-id)
+        (find-slide-after fragment-id)
+        (first @slides))))
+
+(defn show-slide [{:keys [id html]}]
+  (set-location-fragment id)
+  (set! (. (body-elem) innerHTML) html))
+
+
+;;; GUI EVENTS
+
+(defn enter-slideshow-mode []
+  (info '(enter-slideshow-mode))
+  (show-slide (current-slide))
+  (remove-stylesheets (get @stylesheet-urls "screen"))
+  (add-stylesheets (get @stylesheet-urls "projection")))
+
+(defn leave-slideshow-mode []
+  (info '(leave-slideshow-mode))
+  (remove-stylesheets (get @stylesheet-urls "projection"))
+  (add-stylesheets (get @stylesheet-urls "screen"))
+  (set! (. (body-elem) innerHTML) @document-body)
+  (. (dom/getElement (location-fragment)) (scrollIntoView)))
+
+(defn toggle-mode []
+  (info '(toggle-mode))
+  (swap! slideshow-mode? not)
+  (if @slideshow-mode?
+    (enter-slideshow-mode)
+    (leave-slideshow-mode)))
+
+(defn show-next-slide []
+  (let [current (current-slide)
+        next (second (drop-while #(not= current %) @slides))]
+    (when next (show-slide next))))
+
+(defn show-prev-slide []
+  (let [current (current-slide)
+        prev (last (take-while #(not= current %) @slides))]
+    (when prev (show-slide prev))))
+
+
+;;; KEYBOARD
+
+(def normal-keymap
+  {goog.events.KeyCodes.T toggle-mode})
+
+(def slideshow-keymap
+  {goog.events.KeyCodes.T toggle-mode
+
+   goog.events.KeyCodes.SPACE show-next-slide
+   goog.events.KeyCodes.ENTER show-next-slide        
+   goog.events.KeyCodes.MAC_ENTER show-next-slide
+   goog.events.KeyCodes.RIGHT show-next-slide
+   goog.events.KeyCodes.DOWN show-next-slide
+   goog.events.KeyCodes.PAGE_DOWN show-next-slide
+   goog.events.KeyCodes.N show-next-slide
+
+   goog.events.KeyCodes.LEFT show-prev-slide
+   goog.events.KeyCodes.UP show-prev-slide
+   goog.events.KeyCodes.PAGE_UP show-prev-slide
+   goog.events.KeyCodes.P show-prev-slide})
+
+(defn handle-key [event]
+  (let [code (. event keyCode)
+        keymap (if @slideshow-mode? slideshow-keymap normal-keymap)
+        command (get keymap code)]
+    (when command
+      (command)
+      (. event (preventDefault))
+      (. event (stopPropagation)))))
+
+(defn install-keyhandler []
+  (events/listen (goog.events.KeyHandler. (dom/getDocument))
+                 goog.events.KeyHandler.EventType.KEY
+                 handle-key))
+
+
 ;;; INITIAL SETUP
 
 (defn init-stylesheets []
@@ -104,9 +229,15 @@
 (defn main []
   (.setCapturing (goog.debug.Console.) true)
   (info "Application started")
+  (info "Preparing document")
   (init-stylesheets)
   (add-image-classes)
-  (info "Stylesheets: " @stylesheet-urls)
-  (remove-stylesheets (get @stylesheet-urls "projection")))
+  (move-heading-tags-to-div-classes "slide")
+  (remove-stylesheets (get @stylesheet-urls "projection"))
+  (info "Saving document and slides")
+  (reset! document-body (. (body-elem) innerHTML))
+  (reset! slides (get-slides))
+  (info "Installing key handler")
+  (install-keyhandler))
 
 (main)
