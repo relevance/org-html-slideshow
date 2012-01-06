@@ -115,10 +115,11 @@
     elem
     (recur (next-elem elem))))
 
-(defn move-heading-tags-to-div-classes [classname]
-  (doseq [marker (dom-tags "span" classname)]
-    (classes/add (nearest-containing-div marker) classname)
-    (remove-elem marker)))
+(defn copy-heading-tags-to-div-classes []
+  (doseq [tags (dom-tags "span" "tag")]
+    (let [div (nearest-containing-div tags)]
+      (doseq [tag (dom-tags "span" nil tags)]
+        (classes/add div (classes/get tag))))))
 
 (defn remove-nested-sections [slide-div-elem]
   (let [div (. slide-div-elem (cloneNode true))]
@@ -256,7 +257,7 @@
   (info "Preparing document")
   (init-stylesheets)
   (add-image-classes)
-  (move-heading-tags-to-div-classes "slide")
+  (copy-heading-tags-to-div-classes)
   (remove-stylesheets (get @stylesheet-urls "projection"))
   (info "Saving document and slides")
   (reset! document-body (. (body-elem) innerHTML))
