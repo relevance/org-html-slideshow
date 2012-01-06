@@ -22,6 +22,8 @@ This slide contains text.
 
 ** Source Code                                                        :slide:
 
+*** Sub-heading under a slide which is not a slide  
+
 *** Source Code on a Slide                                :another_tag:slide:
 
 #+begin_src clojure
