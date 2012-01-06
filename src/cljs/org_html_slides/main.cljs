@@ -122,8 +122,9 @@
 
 (defn remove-nested-slides [slide-div-elem]
   (let [div (. slide-div-elem (cloneNode true))]
-    (doseq [elem (dom-tags "div" "slide" div)]
-      (remove-elem elem))
+    (doseq [elem (dom-tags "div" nil div)]
+      (when (some #(classes/has elem (str "outline-" %)) (range 1 9))
+        (remove-elem elem)))
     div))
 
 (defn get-slides []
