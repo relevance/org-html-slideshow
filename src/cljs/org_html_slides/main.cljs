@@ -120,7 +120,7 @@
     (classes/add (nearest-containing-div marker) classname)
     (remove-elem marker)))
 
-(defn remove-nested-slides [slide-div-elem]
+(defn remove-nested-sections [slide-div-elem]
   (let [div (. slide-div-elem (cloneNode true))]
     (doseq [elem (dom-tags "div" nil div)]
       (when (some #(classes/has elem (str "outline-" %)) (range 1 9))
@@ -130,7 +130,7 @@
 (defn get-slides []
   (vec (map (fn [elem]
               {:id  (. (nearest-inside-heading elem) id)
-               :html (dom/getOuterHtml (remove-nested-slides elem))})
+               :html (dom/getOuterHtml (remove-nested-sections elem))})
             (dom-tags "div" "slide"))))
 
 (defn slide-from-id [id]
