@@ -6,6 +6,7 @@
             [goog.dom.classes :as classes]
             [goog.style :as style]
             [goog.events :as events]
+            [goog.string :as string]
             [goog.events.KeyHandler :as KeyHandler]
             [goog.events.KeyCodes :as KeyCodes]
             [goog.Uri :as Uri]))
@@ -45,7 +46,9 @@
   ([tag-name]
      (array/toArray (dom/getElementsByTagNameAndClass tag-name)))
   ([tag-name class-name]
-     (array/toArray (dom/getElementsByTagNameAndClass tag-name class-name))))
+     (array/toArray (dom/getElementsByTagNameAndClass tag-name class-name)))
+  ([tag-name class-name inside-elem]
+     (array/toArray (dom/getElementsByTagNameAndClass tag-name class-name inside-elem))))
 
 (defn remove-elem
   "Remove a node from the DOM tree."
@@ -117,10 +120,16 @@
     (classes/add (nearest-containing-div marker) classname)
     (remove-elem marker)))
 
+(defn remove-nested-slides [slide-div-elem]
+  (let [div (. slide-div-elem (cloneNode true))]
+    (doseq [elem (dom-tags "div" "slide" div)]
+      (remove-elem elem))
+    div))
+
 (defn get-slides []
   (vec (map (fn [elem]
               {:id  (. (nearest-inside-heading elem) id)
-               :html (. elem innerHTML)})
+               :html (dom/getOuterHtml (remove-nested-slides elem))})
             (dom-tags "div" "slide"))))
 
 (defn slide-from-id [id]
@@ -133,7 +142,7 @@
 (defn current-slide []
   (let [fragment-id (location-fragment)]
     (or (slide-from-id fragment-id)
-        (find-slide-after fragment-id)
+        (and (seq fragment-id) (find-slide-after fragment-id))
         (first @slides))))
 
 (defn show-slide [{:keys [id html]}]
@@ -237,6 +246,7 @@
   (info "Saving document and slides")
   (reset! document-body (. (body-elem) innerHTML))
   (reset! slides (get-slides))
+  (info '(count slides) (count @slides))
   (info "Installing key handler")
   (install-keyhandler))
 
