@@ -97,4 +97,5 @@ Slides can appear at any level in the org-mode hierarchy, but beware the [[http:
 # Local Variables:
 # org-export-html-style-include-default: nil
 # org-export-html-style-include-scripts: nil
+# buffer-file-coding-system: utf-8-unix
 # End:

@@ -9,3 +9,24 @@ span.tag span.slide {
 pre {
    font-family: Monaco, "Courier New", monospace;
 }
+
+#c-panel {
+   background: lightgray;
+   bottom: 0px;
+   border: 1px solid black;
+   font-size: 12pt;
+   position: fixed;
+   right: 0px;
+}
+
+#c-panel a {
+   display: block;
+}
+
+#c-panel .key {
+   display: none;
+}
+
+#c-panel .key {
+   display: none;
+}
