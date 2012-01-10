@@ -101,6 +101,38 @@
        (. (setAttribute "href" url))))))
 
 
+;;; FOLD-OUT CONTENT
+
+(defn get-folds []
+  (vec (map (fn [elem]
+              {:head-elem (.. elem parentNode parentNode)
+               :body-elem (first (dom-tags "div" nil (nearest-containing-div elem)))})
+            (dom-tags "span" "fold"))))
+
+(def show-hide-html
+  "<a href=\"#\" class=\"show-hide\">show/hide</a>")
+
+(defn toggle-visibility [head body]
+  (if (style/isElementShown body)
+    (do (style/showElement body false)
+        (classes/remove head "unfolded")
+        (classes/add head "folded"))
+    (do (style/showElement body true)
+        (classes/remove head "folded")
+        (classes/add head "unfolded"))))
+
+(defn install-folds []
+  (doseq [{:keys [head-elem body-elem]} (get-folds)]
+    (toggle-visibility head-elem body-elem)
+    (let [a (dom/htmlToDocumentFragment show-hide-html)]
+      (. head-elem (appendChild a))
+      (let [a (dom-tags "a" "show-hide" head-elem)]
+        (events/listen head-elem goog.events.EventType.CLICK
+                       (fn [e]
+                         (toggle-visibility head-elem body-elem)
+                         (. e (preventDefault))))))))
+
+
 ;;; SLIDES
 
 (defn nearest-containing-div [elem]
@@ -258,6 +290,7 @@
   (init-stylesheets)
   (add-image-classes)
   (copy-heading-tags-to-div-classes)
+  (install-folds)
   (remove-stylesheets (get @stylesheet-urls "projection"))
   (info "Saving document and slides")
   (reset! document-body (. (body-elem) innerHTML))
