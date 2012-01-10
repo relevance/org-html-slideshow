@@ -13,6 +13,7 @@ if [ ! -z "`git status --porcelain`" ]; then
     exit 1
 fi
 
+echo "Building production files ..."
 script/build production
 git add out/production
 git commit -m "Rebuild production files"
