@@ -4,9 +4,10 @@
             [goog.array :as array]
             [goog.dom :as dom]
             [goog.dom.classes :as classes]
+            [goog.string :as string]
             [goog.style :as style]
             [goog.events :as events]
-            [goog.string :as string]
+            [goog.events.EventType :as EventType]
             [goog.events.KeyHandler :as KeyHandler]
             [goog.events.KeyCodes :as KeyCodes]
             [goog.Uri :as Uri]))
