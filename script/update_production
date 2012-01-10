@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# This script will build production CSS and JavaScript files and
+# commit them.
+
+set -e
+cd `dirname $0`/..
+
+if [ ! -z "`git status --porcelain`" ]; then
+    echo "Error: org-html-slides working directory is not clean."
+    echo "Commit or stash any uncommitted changes before"
+    echo "running this script."
+    exit 1
+fi
+
+script/build production
+git add out/production
+git commit -m "Rebuild production files"
+echo "Done."
