@@ -140,6 +140,9 @@
 
 ;;; SLIDES
 
+(def current-slide-div-html
+  "<div id=\"current-slide\"></div>")
+
 (defn nearest-containing-div [elem]
   (if (= "DIV" (. elem nodeName))
     elem
@@ -186,22 +189,29 @@
 
 (defn show-slide [{:keys [id html]}]
   (set-location-fragment id)
-  (set! (. (body-elem) innerHTML) html))
+  (set! (. (dom/getElement "current-slide") innerHTML) html))
 
 
 ;;; GUI EVENTS
 
 (defn enter-slideshow-mode []
   (info '(enter-slideshow-mode))
-  (show-slide (current-slide))
+  (style/showElement (dom/getElement "preamble") false)
+  (style/showElement (dom/getElement "content") false)
+  (style/showElement (dom/getElement "postamble") false)
   (remove-stylesheets (get @stylesheet-urls "screen"))
-  (add-stylesheets (get @stylesheet-urls "projection")))
+  (add-stylesheets (get @stylesheet-urls "projection"))
+  (style/showElement (dom/getElement "current-slide") true)
+  (show-slide (current-slide)))
 
 (defn leave-slideshow-mode []
   (info '(leave-slideshow-mode))
+  (style/showElement (dom/getElement "current-slide") false)
   (remove-stylesheets (get @stylesheet-urls "projection"))
   (add-stylesheets (get @stylesheet-urls "screen"))
-  (set! (. (body-elem) innerHTML) @document-body)
+  (style/showElement (dom/getElement "preamble") true)
+  (style/showElement (dom/getElement "content") true)
+  (style/showElement (dom/getElement "postamble") true)
   (. (dom/getElement (location-fragment)) (scrollIntoView)))
 
 (defn toggle-mode []
@@ -293,12 +303,13 @@
   (info "Application started")
   (info "Preparing document")
   (init-stylesheets)
+  (remove-stylesheets (get @stylesheet-urls "projection"))
   (add-image-classes)
   (copy-heading-tags-to-div-classes)
   (install-folds)
-  (remove-stylesheets (get @stylesheet-urls "projection"))
-  (info "Saving document and slides")
-  (reset! document-body (. (body-elem) innerHTML))
+  (. (body-elem)
+     (appendChild (dom/htmlToDocumentFragment current-slide-div-html)))
+  (style/showElement (dom/getElement "current-slide") false)
   (reset! slides (get-slides))
   (info '(count slides) (count @slides))
   (info "Installing key handler")
