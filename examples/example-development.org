@@ -74,6 +74,16 @@ Slides can appear at any level in the org-mode hierarchy, but beware the [[http:
 
 ** No slides in this section
 
+** Question for the Group
+
+Ask a question. The solution is below, but hidden until you click on it.
+
+*** Solution                                                          :fold:
+
+This is the solution.
+
+* The End
+
 #+STYLE: <link rel="stylesheet" type="text/css" href="../lib/closure/library/closure/goog/css/common.css" />
 #+STYLE: <link rel="stylesheet" type="text/css" href="../src/css/common.css" />
 #+STYLE: <link rel="stylesheet" type="text/css" href="../src/css/screen.css" media="screen" />
