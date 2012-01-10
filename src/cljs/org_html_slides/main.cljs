@@ -297,7 +297,7 @@
   (show-slide (last @slides)))
 
 (defn go-to-top []
-  (set-location-fragment nil)
+  (set-location-fragment "top")
   (. window (scrollTo 0 0)))
 
 
