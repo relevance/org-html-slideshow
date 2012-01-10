@@ -10,6 +10,7 @@
             [goog.events.EventType :as EventType]
             [goog.events.KeyHandler :as KeyHandler]
             [goog.events.KeyCodes :as KeyCodes]
+            [goog.Timer :as Timer]
             [goog.Uri :as Uri]))
 
 ;;; GLOBAL STATE
@@ -166,7 +167,8 @@
 (defn install-control-panel []
   (. (body-elem) (appendChild (dom/htmlToDocumentFragment control-html)))
   (let [panel (dom/getElement "c-panel")]
-    (style/setStyle panel "opacity" 0.0)
+    (style/setStyle panel "opacity" 0.75)
+    (Timer/callOnce (fn [e] (style/setStyle panel "opacity" 0.0)) 1000)
     (events/listen panel goog.events.EventType.MOUSEOVER
                    (fn [e] (. e (preventDefault))
                      (style/setStyle panel "opacity" 0.75)))
