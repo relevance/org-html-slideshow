@@ -122,6 +122,12 @@
         (classes/remove head "folded")
         (classes/add head "unfolded"))))
 
+(defn handle-show-hide [event]
+  (. event (preventDefault))
+  (let [head-elem (. event currentTarget)
+        body-elem (first (dom-tags "div" nil (nearest-containing-div head-elem)))]
+    (toggle-visibility head-elem body-elem)))
+
 (defn install-folds []
   (doseq [{:keys [head-elem body-elem]} (get-folds)]
     (toggle-visibility head-elem body-elem)
@@ -129,9 +135,7 @@
       (. head-elem (appendChild a))
       (let [a (dom-tags "a" "show-hide" head-elem)]
         (events/listen head-elem goog.events.EventType.CLICK
-                       (fn [e]
-                         (toggle-visibility head-elem body-elem)
-                         (. e (preventDefault))))))))
+                       handle-show-hide)))))
 
 
 ;;; SLIDES
