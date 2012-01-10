@@ -137,6 +137,63 @@
         (events/listen head-elem goog.events.EventType.CLICK
                        handle-show-hide)))))
 
+;;; CONTROL PANEL
+
+(def control-html
+  "<div id=\"c-panel\">
+<a id=\"c-toggle\" href=\"#\">
+  <span class=\"label\">Toggle slide-show mode</span>
+  <span class=\"key\">T</span>
+</a>
+<a id=\"c-first\" href=\"#\">
+  <span class=\"label\">First slide</span>
+  <span class=\"key\">Home</span>
+</a>
+<a id=\"c-prev\" href=\"#\">
+  <span class=\"label\">Previous slide</span>
+  <span class=\"key\">P</span>
+</a>
+<a id=\"c-next\" href=\"#\">
+  <span class=\"label\">Next slide</span>
+  <span class=\"key\">N</span>
+</a>
+<a id=\"c-last\" href=\"#\">
+  <span class=\"label\">Last slide</span>
+  <span class=\"key\">End</span>
+</a>
+</div>")
+
+(defn install-control-panel []
+  (. (body-elem) (appendChild (dom/htmlToDocumentFragment control-html)))
+  (let [panel (dom/getElement "c-panel")]
+    (style/setStyle panel "opacity" 0.0)
+    (events/listen panel goog.events.EventType.MOUSEOVER
+                   (fn [e] (. e (preventDefault))
+                     (style/setStyle panel "opacity" 0.75)))
+    (events/listen panel goog.events.EventType.MOUSEOUT
+                   (fn [e] (. e (preventDefault))
+                     (style/setStyle panel "opacity" 0.0)))
+    (events/listen (dom/getElement "c-toggle")
+                   goog.events.EventType.CLICK
+                   (fn [e] (. e (preventDefault))
+                     (toggle-mode)))
+    (events/listen (dom/getElement "c-first")
+                   goog.events.EventType.CLICK
+                   (fn [e] (. e (preventDefault))
+                     (show-first-slide)))
+    (events/listen (dom/getElement "c-prev")
+                   goog.events.EventType.CLICK
+                   (fn [e] (. e (preventDefault))
+                     (show-prev-slide)))
+    (events/listen (dom/getElement "c-next")
+                   goog.events.EventType.CLICK
+                   (fn [e] (. e (preventDefault))
+                     (show-next-slide)))
+    (events/listen (dom/getElement "c-last")
+                   goog.events.EventType.CLICK
+                   (fn [e] (. e (preventDefault))
+                     (show-last-slide)))))
+
 
 ;;; SLIDES
 
@@ -313,6 +370,7 @@
   (reset! slides (get-slides))
   (info '(count slides) (count @slides))
   (info "Installing key handler")
+  (install-control-panel)
   (install-keyhandler))
 
 (main)

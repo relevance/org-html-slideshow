@@ -107,4 +107,5 @@ This is the solution.
 # Local Variables:
 # org-export-html-style-include-default: nil
 # org-export-html-style-include-scripts: nil
+# buffer-file-coding-system: utf-8-unix
 # End:
