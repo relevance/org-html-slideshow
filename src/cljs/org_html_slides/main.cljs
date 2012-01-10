@@ -111,7 +111,7 @@
             (dom-tags "span" "fold"))))
 
 (def show-hide-html
-  "<a href=\"#\" class=\"show-hide\">show/hide</a>")
+  " <a href=\"#\" class=\"show-hide\"><span>show/hide</span></a>")
 
 (defn toggle-visibility [head body]
   (if (style/isElementShown body)
