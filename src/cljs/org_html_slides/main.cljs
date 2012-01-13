@@ -24,11 +24,6 @@
   "Atom containing Vector of slide data"
   (atom nil))
 
-(def document-body
-  "Atom containing HTML of the original document body, after
-  post-processing but before beginning a slideshow."
-  (atom nil))
-
 (def slideshow-mode? (atom false))
 
 
