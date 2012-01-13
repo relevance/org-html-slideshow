@@ -121,9 +121,8 @@ TODO
 ========================================
 
 * Better stylesheets
-* Home/End keys to jump to first/last slide
 * ? key to display on-screen help
-* Mouse navigation: click-to-advance, on-screen controls
+* click mouse to advance slides
 * Link visible in original document to begin slide show
 * "Slide X of N" display
 * Jump to slide from a list
