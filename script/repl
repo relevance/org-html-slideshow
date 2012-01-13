@@ -9,9 +9,9 @@ OUT_DIR="out/$MODE"
 rm -rf "$OUT_DIR"
 mkdir -p "$OUT_DIR"
 
-CLJSC_OPTS=":optimizations :whitespace, :pretty-print true, :output-dir \"$OUT_DIR\" :output-to \"$OUT_DIR/org-html-slides.js\" :foreign-libs [{:file \"cybozu-xpath.js\" :provides [\"cybozu.xpath\"]}]"
+CLJSC_OPTS=":optimizations :whitespace, :pretty-print true, :output-dir \"$OUT_DIR\" :output-to \"$OUT_DIR/org-html-slides.js\""
 
-CP="lib/domina/lib"
+CP=""
 for top in "src" \
     "lib/clojurescript/src" \
     "lib/one/src/lib" \
