@@ -76,8 +76,14 @@
      (. goog-event (stopPropagation)))
     (dispatch/fire event-id goog-event)))
 
+(defn show! [content]
+  (style/showElement (d/single-node content) true))
 
-;;; STYLESHEETS
+(defn hide! [content]
+  (style/showElement (d/single-node content) false))
+
+
+;;;
 
 (defn stylesheets [media-type]
   (set (map #(d/attr % "href")
@@ -253,22 +259,22 @@
 
 (defn enter-slideshow-mode []
   (info '(enter-slideshow-mode))
-  (style/showElement (dom/getElement "preamble") false)
-  (style/showElement (dom/getElement "content") false)
-  (style/showElement (dom/getElement "postamble") false)
+  (hide! (d/by-id "preamble"))
+  (hide! (d/by-id "content"))
+  (hide! (d/by-id "postamble"))
   (remove-stylesheets (get @stylesheet-urls "screen"))
   (add-stylesheets (get @stylesheet-urls "projection"))
-  (style/showElement (dom/getElement "current-slide") true)
+  (show! (d/by-id "current-slide"))
   (show-slide (current-slide)))
 
 (defn leave-slideshow-mode []
   (info '(leave-slideshow-mode))
-  (style/showElement (dom/getElement "current-slide") false)
+  (hide! (d/by-id "current-slide"))
   (remove-stylesheets (get @stylesheet-urls "projection"))
   (add-stylesheets (get @stylesheet-urls "screen"))
-  (style/showElement (dom/getElement "preamble") true)
-  (style/showElement (dom/getElement "content") true)
-  (style/showElement (dom/getElement "postamble") true)
+  (show! (d/by-id "preamble"))
+  (show! (d/by-id "content"))
+  (show! (d/by-id "postamble"))
   (. (dom/getElement (location-fragment)) (scrollIntoView)))
 
 (defn change-mode []
@@ -385,7 +391,7 @@
   (install-folds)
   (. (body-elem)
      (appendChild (dom/htmlToDocumentFragment current-slide-div-html)))
-  (style/showElement (dom/getElement "current-slide") false)
+  (hide! (d/by-id "current-slide"))
   (reset! slides (get-slides))
   (info '(count slides) (count @slides))
   (info "Installing key handler")
