@@ -1,3 +1,6 @@
 [submodule "lib/clojurescript"]
 	path = lib/clojurescript
 	url = https://github.com/clojure/clojurescript.git
+[submodule "lib/one"]
+	path = lib/one
+	url = https://github.com/brentonashworth/one.git
