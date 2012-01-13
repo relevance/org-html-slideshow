@@ -75,6 +75,13 @@
     (. uri (setFragment fragment-id))
     (set! (. js/window location) (str uri))))
 
+(defn fire-handler [event-id]
+  (fn [goog-event]
+    (when goog-event   ; goog.Timer sends nil event
+     (. goog-event (preventDefault))
+     (. goog-event (stopPropagation)))
+    (dispatch/fire event-id goog-event)))
+
 
 ;;; STYLESHEETS
 
@@ -162,37 +169,36 @@
 </a>
 </div>")
 
+(defn show-control-panel []
+  (style/setStyle (dom/getElement "c-panel") "opacity" 0.75))
+
+(defn hide-control-panel []
+  (style/setStyle (dom/getElement "c-panel") "opacity" 0.0))
+
 (defn install-control-panel []
   (. (body-elem) (appendChild (dom/htmlToDocumentFragment control-html)))
   (let [panel (dom/getElement "c-panel")]
-    (style/setStyle panel "opacity" 0.75)
-    (Timer/callOnce (fn [e] (style/setStyle panel "opacity" 0.0)) 1000)
+    (dispatch/fire :show-control-panel)
+    (Timer/callOnce (fire-handler :hide-control-panel) 3000)
     (events/listen panel goog.events.EventType.MOUSEOVER
-                   (fn [e] (. e (preventDefault))
-                     (style/setStyle panel "opacity" 0.75)))
+                   (fire-handler :show-control-panel))
     (events/listen panel goog.events.EventType.MOUSEOUT
-                   (fn [e] (. e (preventDefault))
-                     (style/setStyle panel "opacity" 0.0)))
+                   (fire-handler :hide-control-panel))
     (events/listen (dom/getElement "c-toggle")
                    goog.events.EventType.CLICK
-                   (fn [e] (. e (preventDefault))
-                     (toggle-mode)))
+                   (fire-handler :toggle-mode))
     (events/listen (dom/getElement "c-first")
                    goog.events.EventType.CLICK
-                   (fn [e] (. e (preventDefault))
-                     (show-first-slide)))
+                   (fire-handler :show-first-slide))
     (events/listen (dom/getElement "c-prev")
                    goog.events.EventType.CLICK
-                   (fn [e] (. e (preventDefault))
-                     (show-prev-slide)))
+                   (fire-handler :show-prev-slide))
     (events/listen (dom/getElement "c-next")
                    goog.events.EventType.CLICK
-                   (fn [e] (. e (preventDefault))
-                     (show-next-slide)))
+                   (fire-handler :show-next-slide))
     (events/listen (dom/getElement "c-last")
                    goog.events.EventType.CLICK
-                   (fn [e] (. e (preventDefault))
-                     (show-last-slide)))))
+                   (fire-handler :show-last-slide))))
 
 
 ;;; SLIDES
@@ -302,34 +308,34 @@
 ;;; KEYBOARD
 
 (def normal-keymap
-  {goog.events.KeyCodes.T toggle-mode
-   goog.events.KeyCodes.HOME go-to-top})
+  {goog.events.KeyCodes.T :toggle-mode
+   goog.events.KeyCodes.HOME :go-to-top})
 
 (def slideshow-keymap
-  {goog.events.KeyCodes.T toggle-mode
+  {goog.events.KeyCodes.T :toggle-mode
 
-   goog.events.KeyCodes.HOME show-first-slide
-   goog.events.KeyCodes.END show-last-slide
+   goog.events.KeyCodes.HOME :show-first-slide
+   goog.events.KeyCodes.END :show-last-slide
 
-   goog.events.KeyCodes.SPACE show-next-slide
-   goog.events.KeyCodes.ENTER show-next-slide        
-   goog.events.KeyCodes.MAC_ENTER show-next-slide
-   goog.events.KeyCodes.RIGHT show-next-slide
-   goog.events.KeyCodes.DOWN show-next-slide
-   goog.events.KeyCodes.PAGE_DOWN show-next-slide
-   goog.events.KeyCodes.N show-next-slide
+   goog.events.KeyCodes.SPACE :show-next-slide
+   goog.events.KeyCodes.ENTER :show-next-slide        
+   goog.events.KeyCodes.MAC_ENTER :show-next-slide
+   goog.events.KeyCodes.RIGHT :show-next-slide
+   goog.events.KeyCodes.DOWN :show-next-slide
+   goog.events.KeyCodes.PAGE_DOWN :show-next-slide
+   goog.events.KeyCodes.N :show-next-slide
 
-   goog.events.KeyCodes.LEFT show-prev-slide
-   goog.events.KeyCodes.UP show-prev-slide
-   goog.events.KeyCodes.PAGE_UP show-prev-slide
-   goog.events.KeyCodes.P show-prev-slide})
+   goog.events.KeyCodes.LEFT :show-prev-slide
+   goog.events.KeyCodes.UP :show-prev-slide
+   goog.events.KeyCodes.PAGE_UP :show-prev-slide
+   goog.events.KeyCodes.P :show-prev-slide})
 
 (defn handle-key [event]
   (let [code (. event keyCode)
         keymap (if @slideshow-mode? slideshow-keymap normal-keymap)
-        command (get keymap code)]
-    (when command
-      (command)
+        event-id (get keymap code)]
+    (when event-id
+      (dispatch/fire event-id)
       (. event (preventDefault))
       (. event (stopPropagation)))))
 
@@ -337,6 +343,19 @@
   (events/listen (goog.events.KeyHandler. (dom/getDocument))
                  goog.events.KeyHandler.EventType.KEY
                  handle-key))
+
+
+;;; EVENTS
+
+(defn install-event-handlers []
+  (dispatch/react-to #{:show-next-slide} (fn [id _] (show-next-slide)))
+  (dispatch/react-to #{:show-prev-slide} (fn [id _] (show-prev-slide)))
+  (dispatch/react-to #{:show-first-slide} (fn [id _] (show-first-slide)))
+  (dispatch/react-to #{:show-last-slide} (fn [id _] (show-last-slide)))
+  (dispatch/react-to #{:toggle-mode} (fn [id _] (toggle-mode)))
+  (dispatch/react-to #{:go-to-top} (fn [id _] (go-to-top)))
+  (dispatch/react-to #{:show-control-panel} (fn [id _] (show-control-panel)))
+  (dispatch/react-to #{:hide-control-panel} (fn [id _] (hide-control-panel))))
 
 
 ;;; INITIAL SETUP
@@ -370,6 +389,7 @@
   (reset! slides (get-slides))
   (info '(count slides) (count @slides))
   (info "Installing key handler")
+  (install-event-handlers)
   (install-control-panel)
   (install-keyhandler))
 
