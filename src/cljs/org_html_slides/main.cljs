@@ -271,12 +271,18 @@
   (style/showElement (dom/getElement "postamble") true)
   (. (dom/getElement (location-fragment)) (scrollIntoView)))
 
-(defn toggle-mode []
-  (info '(toggle-mode))
-  (swap! slideshow-mode? not)
+(defn change-mode []
   (if @slideshow-mode?
     (enter-slideshow-mode)
     (leave-slideshow-mode)))
+
+(defn toggle-mode []
+  (info '(toggle-mode))
+  (swap! slideshow-mode? not))
+
+(add-watch slideshow-mode? :change-mode
+           (fn [k r o n]
+             (dispatch/fire :change-mode)))
 
 (defn show-next-slide []
   (let [current (current-slide)
@@ -349,8 +355,8 @@
   (dispatch/react-to #{:toggle-mode} (fn [id _] (toggle-mode)))
   (dispatch/react-to #{:go-to-top} (fn [id _] (go-to-top)))
   (dispatch/react-to #{:show-control-panel} (fn [id _] (show-control-panel)))
-  (dispatch/react-to #{:hide-control-panel} (fn [id _] (hide-control-panel))))
-
+  (dispatch/react-to #{:hide-control-panel} (fn [id _] (hide-control-panel)))
+  (dispatch/react-to #{:change-mode} (fn [id _] (change-mode))))
 
 ;;; INITIAL SETUP
 
