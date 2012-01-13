@@ -4,3 +4,6 @@
 [submodule "lib/one"]
 	path = lib/one
 	url = https://github.com/brentonashworth/one.git
+[submodule "lib/domina"]
+	path = lib/domina
+	url = https://github.com/levand/domina.git
