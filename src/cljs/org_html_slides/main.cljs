@@ -13,7 +13,8 @@
             [goog.Timer :as Timer]
             [goog.Uri :as Uri]
             [one.logging :as logging]
-            [one.dispatch :as dispatch]))
+            [one.dispatch :as dispatch]
+            [domina :as d]))
 
 ;;; GLOBAL STATE
 
@@ -34,13 +35,6 @@
 (defn info [& msgs]
   (logging/info (logging/get-logger "org_html_slides.main")
                 (apply pr-str msgs)))
-
-(defn attr
-  "Gets attribute from element and returns its value, lower-cased. If
-  the element does not have the attribute returns nil."
-  [elem attr]
-  (when (. elem (hasAttribute attr))
-    (.. elem (getAttribute attr) (toLowerCase))))
 
 (defn dom-tags
   ([tag-name]
@@ -86,16 +80,16 @@
 ;;; STYLESHEETS
 
 (defn stylesheets [media-type]
-  (set (map #(attr % "href")
+  (set (map #(d/attr % "href")
             (filter (fn [elem]
-                      (and (= "stylesheet" (attr elem "rel"))
-                           (= media-type (attr elem "media"))))
+                      (and (= "stylesheet" (d/attr elem "rel"))
+                           (= media-type (d/attr elem "media"))))
                     (dom-tags "link")))))
 
 (defn remove-stylesheets [urls]
   (doseq [elem (filter (fn [elem]
-                         (and (= "stylesheet" (attr elem "rel"))
-                              (contains? urls (attr elem "href"))))
+                         (and (= "stylesheet" (d/attr elem "rel"))
+                              (contains? urls (d/attr elem "href"))))
                        (dom-tags "link"))]
     (remove-elem elem)))
 
