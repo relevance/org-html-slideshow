@@ -11,7 +11,9 @@
             [goog.events.KeyHandler :as KeyHandler]
             [goog.events.KeyCodes :as KeyCodes]
             [goog.Timer :as Timer]
-            [goog.Uri :as Uri]))
+            [goog.Uri :as Uri]
+            [one.logging :as logging]
+            [one.dispatch :as dispatch]))
 
 ;;; GLOBAL STATE
 
@@ -30,7 +32,8 @@
 ;;; UTILITIES
 
 (defn info [& msgs]
-  (.info (Logger/getLogger "org_html_slides.main") (apply pr-str msgs)))
+  (logging/info (logging/get-logger "org_html_slides.main")
+                (apply pr-str msgs)))
 
 (defn attr
   "Gets attribute from element and returns its value, lower-cased. If
