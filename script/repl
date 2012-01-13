@@ -12,7 +12,10 @@ mkdir -p "$OUT_DIR"
 CLJSC_OPTS=":optimizations :whitespace, :pretty-print true, :output-dir \"$OUT_DIR\" :output-to \"$OUT_DIR/org-html-slides.js\""
 
 CP=""
-for top in "src" "lib/clojurescript/src" "lib/one/src/lib"; do
+for top in "src" \
+    "lib/clojurescript/src" \
+    "lib/one/src/lib" \
+    "lib/domina/src" ; do
     for dir in "clj" "cljs"; do
         CP="$CP:$top/$dir"
     done
