@@ -30,7 +30,7 @@ done
 java -cp "$CP" clojure.main \
     lib/clojurescript/bin/cljsc.clj \
     src/cljs \
-    "{:output-dir \"$OUT_DIR\" :output-to \"$OUT_DIR/org-html-slides.js\" $CLJSC_OPTS}"
+    "{:output-dir \"$OUT_DIR\" :output-to \"$OUT_DIR/org-html-slides.js\" $CLJSC_OPTS :foreign-libs {:file \"cybozu-xpath.js\" :provides [\"cybozu.xpath\"]}}"
 
 if [ "$MODE" == "production" ]; then
     cp "lib/closure/library/closure/goog/css/common.css" "$OUT_DIR/goog-common.css"
