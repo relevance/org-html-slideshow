@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+set -e
+cd `dirname $0`/..
+
+if [ -z "$1" ]; then
+    echo "Usage: update-submodule <submodule-directory>"
+    exit 1
+fi
+
+SUBMODULE=$1
+
+if [ ! -z "`git status --porcelain`" ]; then
+    echo "Error: Working directory is not clean. Commit"
+    echo "or stash any uncommitted changes before"
+    echo "running this script."
+    exit 1
+fi
+
+pushd "$SUBMODULE"
+if [ ! -z "`git status --porcelain`" ]; then
+    echo "Error: Submodule working directory $SUBMODULE"
+    echo "is not clean. Commit or stash any uncommitted"
+    echo "changes before running this script."
+    exit 1
+fi
+
+git checkout -q master
+
+if git pull | grep 'Already up-to-date' > /dev/null; then
+    echo "Submodule is already up-to-date."
+    exit 0
+else
+    popd
+    git add -f "$SUBMODULE"
+    git commit -m "Update submodule at $SUBMODULE"
+    echo "Submodule updated at $SUBMODULE"
+fi
