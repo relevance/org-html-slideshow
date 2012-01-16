@@ -377,6 +377,11 @@
       (when (= "P" (. p nodeName))
         (classes/add p "image")))))
 
+(defn add-outline-text-class []
+  (doseq [i (range 1 9)]
+    (doseq [elem (dom-tags "div" (str "outline-text-" i))]
+      (classes/add elem "outline-text"))))
+
 
 ;;; MAIN
 
@@ -388,6 +393,7 @@
   (remove-stylesheets (get @stylesheet-urls "projection"))
   (add-image-classes)
   (copy-heading-tags-to-div-classes)
+  (add-outline-text-class)
   (install-folds)
   (. (body-elem)
      (appendChild (dom/htmlToDocumentFragment current-slide-div-html)))
