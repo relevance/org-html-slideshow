@@ -32,5 +32,5 @@ java -cp "$CP" clojure.main \
 if [ "$MODE" == "production" ]; then
     cp "lib/closure/library/closure/goog/css/common.css" "$OUT_DIR/goog-common.css"
     cp src/css/*.css "$OUT_DIR"
-    rm -rf "$OUT_DIR/cljs" "$OUT_DIR/org_html_slides"
+    rm -rf "$OUT_DIR/cljs" "$OUT_DIR/org_html_slides" "$OUT_DIR/domina.js" "$OUT_DIR/one"
 fi
