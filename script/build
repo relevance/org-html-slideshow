@@ -22,15 +22,12 @@ OUT_DIR="out/$MODE"
 rm -rf "$OUT_DIR"
 mkdir -p "$OUT_DIR"
 
-CP="lib/clojurescript/src/clj:lib/clojurescript/src/cljs"
-for JAR in lib/*.jar; do
-    CP="$CP:$JAR"
-done
+source script/classpath.sh
 
 java -cp "$CP" clojure.main \
     lib/clojurescript/bin/cljsc.clj \
     src/cljs \
-    "{:output-dir \"$OUT_DIR\" :output-to \"$OUT_DIR/org-html-slides.js\" $CLJSC_OPTS :foreign-libs {:file \"cybozu-xpath.js\" :provides [\"cybozu.xpath\"]}}"
+    "{:output-dir \"$OUT_DIR\" :output-to \"$OUT_DIR/org-html-slides.js\" $CLJSC_OPTS}"
 
 if [ "$MODE" == "production" ]; then
     cp "lib/closure/library/closure/goog/css/common.css" "$OUT_DIR/goog-common.css"
