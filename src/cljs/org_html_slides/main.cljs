@@ -257,9 +257,13 @@
         (and (seq fragment-id) (find-slide-after fragment-id))
         (first @slides))))
 
+(defn next-slide []
+  (find-slide-after (:id (current-slide))))
+
 (defn show-slide [{:keys [id html]}]
   (set-location-fragment id)
-  (set! (. (dom/getElement "current-slide") innerHTML) html))
+  (set! (. (dom/getElement "current-slide") innerHTML) html)
+  (show-presenter-slides))
 
 
 ;;; GUI EVENTS
@@ -371,19 +375,42 @@
   </head>
   <body class=\"presenter\">
     <h1>Presenter Display</h1>
-    <div id=\"presenter-current-slide\">
-       <h2>Current Slide</h2>
+    <div id=\"presenter-current-slide-container\">
+      <h2>Current Slide</h2>
+      <div id=\"presenter-current-slide\">
+      </div>
     </div>
-    <div id=\"presenter-next-slide\">
-       <h2>Next Slide</h2>
+    <div id=\"presenter-next-slide-container\">
+      <h2>Next Slide</h2>
+      <div id=\"presenter-next-slide\">
+      </div>
     </div>
   </body>
 </html>
 ")
 
+(defn show-presenter-slides []
+  (when @presenter-window
+    (if (. @presenter-window closed)
+      (reset! presenter-window nil)
+      (do 
+        (let [div (.. @presenter-window document
+                      (getElementById "presenter-current-slide"))]
+          (set! (. div innerHTML) (:html (current-slide))))
+        (let [div (.. @presenter-window document
+                      (getElementById "presenter-next-slide"))]
+          (set! (. div innerHTML) (:html (next-slide))))))))
+
 (defn show-presenter-window []
-  (reset! presenter-window (window/open ""))
-  (.. @presenter-window document (write presenter-display-html)))
+  (reset! presenter-window
+          (window/open "" (. {:target "presenter-display"
+                              :toolbar false
+                              :location false
+                              :statusbar false
+                              :menubar false}
+                             strobj)))
+  (.. @presenter-window document (write presenter-display-html))
+  (show-presenter-slides))
 
 
 ;;; EVENTS
