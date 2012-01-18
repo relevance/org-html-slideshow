@@ -12,6 +12,7 @@
             [goog.events.KeyCodes :as KeyCodes]
             [goog.Timer :as Timer]
             [goog.Uri :as Uri]
+            [goog.window :as window]
             [one.logging :as logging]
             [one.dispatch :as dispatch]
             [domina :as d]))
@@ -167,6 +168,9 @@
   <span class=\"label\">Last slide</span>
   <span class=\"key\">End</span>
 </a>
+<a id=\"c-presenter-window\" href=\"#\">
+  <span class=\"label\">Open presenter display</span>
+</a>
 </div>")
 
 (defn show-control-panel []
@@ -198,7 +202,10 @@
                    (fire-handler :show-next-slide))
     (events/listen (dom/getElement "c-last")
                    goog.events.EventType.CLICK
-                   (fire-handler :show-last-slide))))
+                   (fire-handler :show-last-slide))
+    (events/listen (dom/getElement "c-presenter-window")
+                   goog.events.EventType.CLICK
+                   (fire-handler :show-presenter-window))))
 
 
 ;;; SLIDES
@@ -351,6 +358,34 @@
                  handle-key))
 
 
+;;; PRESENTER WINDOW
+
+(def presenter-window (atom nil))
+
+(def presenter-display-html
+  "
+<html>
+  <head>
+    <style type=\"text/css\">
+    </style>
+  </head>
+  <body class=\"presenter\">
+    <h1>Presenter Display</h1>
+    <div id=\"presenter-current-slide\">
+       <h2>Current Slide</h2>
+    </div>
+    <div id=\"presenter-next-slide\">
+       <h2>Next Slide</h2>
+    </div>
+  </body>
+</html>
+")
+
+(defn show-presenter-window []
+  (reset! presenter-window (window/open ""))
+  (.. @presenter-window document (write presenter-display-html)))
+
+
 ;;; EVENTS
 
 (defn install-event-handlers []
@@ -362,7 +397,8 @@
   (dispatch/react-to #{:go-to-top} (fn [id _] (go-to-top)))
   (dispatch/react-to #{:show-control-panel} (fn [id _] (show-control-panel)))
   (dispatch/react-to #{:hide-control-panel} (fn [id _] (hide-control-panel)))
-  (dispatch/react-to #{:change-mode} (fn [id _] (change-mode))))
+  (dispatch/react-to #{:change-mode} (fn [id _] (change-mode)))
+  (dispatch/react-to #{:show-presenter-window} (fn [id _] (show-presenter-window))))
 
 ;;; INITIAL SETUP
 
