@@ -50,8 +50,10 @@
   [elem]
   (.. elem parentNode (removeChild elem)))
 
-(defn add-to-head [elem]
-  (.appendChild (first (dom-tags "head")) elem))
+(defn add-to-head
+  ([elem] (add-to-head elem nil))
+  ([elem parent]
+     (.appendChild (first (dom-tags "head" nil parent)) elem)))
 
 (defn body-elem []
   (first (dom-tags "body")))
@@ -100,13 +102,16 @@
                        (dom-tags "link"))]
     (remove-elem elem)))
 
-(defn add-stylesheets [urls]
-  (doseq [url urls]
-    (add-to-head
-     (doto (dom/createDom "link")
-       (. (setAttribute "rel" "stylesheet"))
-       (. (setAttribute "type" "text/css"))
-       (. (setAttribute "href" url))))))
+(defn add-stylesheets
+  ([urls] (add-stylesheets urls nil))
+  ([urls parent]
+     (doseq [url urls]
+       (add-to-head
+        (doto (dom/createDom "link")
+          (. (setAttribute "rel" "stylesheet"))
+          (. (setAttribute "type" "text/css"))
+          (. (setAttribute "href" url)))
+        parent))))
 
 
 ;;; FOLD-OUT CONTENT
@@ -370,11 +375,9 @@
   "
 <html>
   <head>
-    <style type=\"text/css\">
-    </style>
   </head>
-  <body class=\"presenter\">
-    <h1>Presenter Display</h1>
+  <body class=\"presenter-display\">
+    <h1 id=\"presenter-display-title\">Presenter Display</h1>
     <div id=\"presenter-current-slide-container\">
       <h2>Current Slide</h2>
       <div id=\"presenter-current-slide\">
@@ -409,7 +412,10 @@
                               :statusbar false
                               :menubar false}
                              strobj)))
-  (.. @presenter-window document (write presenter-display-html))
+  (let [doc (. @presenter-window document)]
+    (. doc (write presenter-display-html))
+    (add-stylesheets (get @stylesheet-urls "common") doc)
+    (add-stylesheets (get @stylesheet-urls "projection") doc))
   (show-presenter-slides))
 
 
@@ -432,7 +438,8 @@
 (defn init-stylesheets []
   (swap! stylesheet-urls assoc
          "projection" (stylesheets "projection")
-         "screen" (stylesheets "screen")))
+         "screen" (stylesheets "screen")
+         "common" (stylesheets nil)))
 
 (defn add-image-classes []
   (doseq [img (dom-tags "img")]

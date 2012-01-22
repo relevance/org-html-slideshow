@@ -48,3 +48,47 @@ span.section-number-7 {
 span.section-number-8 {
    display: none;
 }
+
+body.presenter-display {
+   background-color: black;
+}
+
+#presenter-current-slide-container {
+   float: left;
+   font-size: 50%;
+   height: 50%;
+   width: 50%;
+   vertical-align: top;
+}
+
+#presenter-next-slide-container {
+   float: right;
+   font-size: 40%;
+   height: 50%;
+   width: 40%;
+   vertical-align: top;
+}
+
+#presenter-current-slide {
+   border: 1px solid black;
+   overflow: hidden;
+   padding: 12pt;
+}
+
+#presenter-next-slide {
+   border: 1px solid black;
+   overflow: hidden;
+   padding: 12pt;
+}
+
+#presenter-current-slide-container h1,h2,h3,h4,h5,h6,h7,h8 {
+   font-size: 100%;
+}
+
+#presenter-current-slide-container img {
+   width: 50%;
+}
+
+#presenter-next-slide-container img {
+   width: 50%;
+}
