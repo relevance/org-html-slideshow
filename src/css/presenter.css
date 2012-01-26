@@ -1,0 +1,44 @@
+body.presenter-display {
+   background-color: black;
+}
+
+.presenter-label {
+   color: white;
+}
+
+#presenter-current-slide-container {
+   float: left;
+   zoom: 60%;
+   width: 50%;
+   vertical-align: top;
+}
+
+#presenter-next-slide-container {
+   float: right;
+   zoom: 50%;
+   width: 40%;
+   vertical-align: top;
+}
+
+#presenter-current-slide {
+   background: white;
+   border: 1px solid black;
+   font-size: 150%;
+   overflow: hidden;
+   padding: 12pt;
+}
+
+#presenter-next-slide {
+   background: white;
+   border: 1px solid black;
+   font-size: 150%;
+   overflow: hidden;
+   padding: 12pt;
+}
+
+#presenter-times {
+   bottom: 18pt;
+   position: absolute;
+   text-align: center;
+   width: 90%;
+}

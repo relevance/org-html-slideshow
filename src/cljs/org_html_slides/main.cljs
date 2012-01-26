@@ -10,6 +10,7 @@
             [goog.events.EventType :as EventType]
             [goog.events.KeyHandler :as KeyHandler]
             [goog.events.KeyCodes :as KeyCodes]
+            [goog.string.format :as googstringformat]
             [goog.Timer :as Timer]
             [goog.Uri :as Uri]
             [goog.window :as window]
@@ -377,46 +378,74 @@
   <head>
   </head>
   <body class=\"presenter-display\">
-    <h1 id=\"presenter-display-title\">Presenter Display</h1>
-    <div id=\"presenter-current-slide-container\">
-      <h2>Current Slide</h2>
-      <div id=\"presenter-current-slide\">
+    <div id=\"presenter-slide-preview\">
+      <div id=\"presenter-current-slide-container\">
+        <h2 class=\"presenter-label\">Current Slide</h2>
+        <div id=\"presenter-current-slide\">
+        </div>
       </div>
-    </div>
-    <div id=\"presenter-next-slide-container\">
-      <h2>Next Slide</h2>
-      <div id=\"presenter-next-slide\">
+      <div id=\"presenter-next-slide-container\">
+        <h2 class=\"presenter-label\">Next Slide</h2>
+        <div id=\"presenter-next-slide\">
+        </div>
       </div>
-    </div>
+     </div>
+     <div id=\"presenter-times\" class=\"presenter-label\">
+       <div id=\"presenter-elapsed-time\"></div>
+       <div id=\"presenter-clock-time\"></div>
+     </div>
   </body>
 </html>
 ")
 
-(defn show-presenter-slides []
+(defn get-presenter-window []
   (when @presenter-window
     (if (. @presenter-window closed)
       (reset! presenter-window nil)
-      (do 
-        (let [div (.. @presenter-window document
-                      (getElementById "presenter-current-slide"))]
-          (set! (. div innerHTML) (:html (current-slide))))
-        (let [div (.. @presenter-window document
-                      (getElementById "presenter-next-slide"))]
-          (set! (. div innerHTML) (:html (next-slide))))))))
+      @presenter-window)))
+
+
+(defn update-presenter-clock []
+  (when-let [win (get-presenter-window)]
+    (let [elem (.. win document
+                    (getElementById "presenter-clock-time"))
+          now (js/Date.)]
+      (set! (. elem innerHTML)
+            (goog.string.format
+             "<h2>%d:%02d:%02d %s</h2>"
+             (rem (. now (getHours)) 12)
+             (. now (getMinutes))
+             (.. now (getSeconds))
+             (if (< 12 (. now (getHours)))
+               "PM" "AM"))))
+    (. js/window (setTimeout update-presenter-clock 1000))))
+
+(defn show-presenter-slides []
+  (when-let [win (get-presenter-window)]
+    (let [div (.. win document
+                  (getElementById "presenter-current-slide"))]
+      (set! (. div innerHTML) (:html (current-slide))))
+    (let [div (.. win document
+                  (getElementById "presenter-next-slide"))]
+      (set! (. div innerHTML) (:html (next-slide))))))
 
 (defn show-presenter-window []
-  (reset! presenter-window
-          (window/open "" (. {:target "presenter-display"
-                              :toolbar false
-                              :location false
-                              :statusbar false
-                              :menubar false}
-                             strobj)))
-  (let [doc (. @presenter-window document)]
-    (. doc (write presenter-display-html))
-    (add-stylesheets (get @stylesheet-urls "common") doc)
-    (add-stylesheets (get @stylesheet-urls "projection") doc))
-  (show-presenter-slides))
+  (if-let [win (get-presenter-window)]
+    (. win (focus))
+    (do (reset! presenter-window
+             (window/open "" (. {:target "PRESENTERDISPLAY"
+                                 :toolbar false
+                                 :location false
+                                 :statusbar false
+                                 :menubar false}
+                                strobj)))
+        (let [doc (. @presenter-window document)]
+          (. doc (write presenter-display-html))
+          (add-stylesheets (get @stylesheet-urls "common") doc)
+          (add-stylesheets (get @stylesheet-urls "projection") doc)
+          (add-stylesheets (get @stylesheet-urls "presenter") doc))
+        (show-presenter-slides)
+        (update-presenter-clock))))
 
 
 ;;; EVENTS
@@ -439,7 +468,8 @@
   (swap! stylesheet-urls assoc
          "projection" (stylesheets "projection")
          "screen" (stylesheets "screen")
-         "common" (stylesheets nil)))
+         "common" (stylesheets nil)
+         "presenter" (stylesheets "presenter")))
 
 (defn add-image-classes []
   (doseq [img (dom-tags "img")]
@@ -461,6 +491,7 @@
   (info "Preparing document")
   (init-stylesheets)
   (remove-stylesheets (get @stylesheet-urls "projection"))
+  (remove-stylesheets (get @stylesheet-urls "presenter"))
   (add-image-classes)
   (copy-heading-tags-to-div-classes)
   (add-outline-text-class)

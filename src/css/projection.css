@@ -70,20 +70,22 @@ body.presenter-display {
 }
 
 #presenter-current-slide {
+   background: white;
    border: 1px solid black;
    overflow: hidden;
    padding: 12pt;
 }
 
 #presenter-next-slide {
+   background: white;
    border: 1px solid black;
    overflow: hidden;
    padding: 12pt;
 }
 
-#presenter-current-slide-container h1,h2,h3,h4,h5,h6,h7,h8 {
+/*#presenter-current-slide-container h1,h2,h3,h4,h5,h6,h7,h8 {
    font-size: 100%;
-}
+}*/
 
 #presenter-current-slide-container img {
    width: 50%;
