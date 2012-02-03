@@ -1,6 +1,7 @@
-lib/*.jar
-lib/closure
+/lib/jars
+/lib/closure
 out/development
 *~
 #*
 examples/*.html
+/.lein*
