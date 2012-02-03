@@ -20,20 +20,19 @@ Using in Your Org-mode Files
 directory containing your .org file:
 
     org-html-slides.js
-
     common.css
-    goog-common.css
+    presenter.css
     projection.css
     screen.css
 
-**Step 2.** Add the following lines to the bottom of your .org file:
+**Step 2.** Add the following lines to the **bottom** of your .org file:
 
     #+TAGS: slide(s)
 
-    #+STYLE: <link rel="stylesheet" type="text/css" href="goog-common.css" />
     #+STYLE: <link rel="stylesheet" type="text/css" href="common.css" />
     #+STYLE: <link rel="stylesheet" type="text/css" href="screen.css" media="screen" />
     #+STYLE: <link rel="stylesheet" type="text/css" href="projection.css" media="projection" />
+    #+STYLE: <link rel="stylesheet" type="text/css" href="presenter.css" media="presenter" />
 
     #+BEGIN_HTML
     <script type="text/javascript" src="org-html-slides.js"></script>
@@ -68,6 +67,22 @@ The Page Up and `p` keys go back to the previous slide.
 
 The `t` key toggles between slide-show and normal views.
 
+Move the mouse to the lower right-hand corner of the screen to show a
+control panel with links to navigate the slide show by mouse.
+
+
+Presenter Preview
+--------------------
+
+While playing the slide show, click on the control panel's "Open
+presenter preview" link. This will open a new window showing the
+currently visible slide, upcoming slide, wall clock time, and elapsed
+time since the presentation began.
+
+Even with the presenter preview window open, the main slide show
+window **must** be focused (the "active" window) in order for the
+keyboard commands to work.
+
 
 Changing Styles
 --------------------
@@ -77,6 +92,7 @@ You can modify the appearance of your slides by editing the stylesheets:
 * `projection.css` affects only the slide-show view
 * `screen.css` affects only the normal view
 * `common.css` affects both
+* `presenter.css` affects only the presenter preview
 
 
 Development Bootstrap
@@ -85,12 +101,20 @@ Development Bootstrap
 To develop and build org-html-slides, you will need the following
 programs already installed:
 
-* Bash
-* Curl
-* Git
-* Java Development Kit
+* [Git][git]
+* [Leiningen][lein] 1.6.2 or later
+* [Java Development Kit][jdk] (JDK) 1.6 or later
 
-Run `script/bootstrap` to download additional build dependencies.
+[git]: http://git-scm.com/
+[lein]: https://github.com/technomancy/leiningen
+[jdk]: http://www.oracle.com/technetwork/java/javase/downloads/index.html
+
+
+In the top-level directory of this project, run the following commands
+to download additional dependencies:
+
+    git submodule update
+    lein deps
 
 
 Development Examples
@@ -98,7 +122,14 @@ Development Examples
 
 (Depends on "Development Bootstrap")
 
-Run `script/build development` to generate JavaScript files for the examples.
+Launch a Clojure REPL with:
+
+    lein repl
+
+Then run the build with:
+
+    (use 'build)
+    (build :development)
 
 You will need [Emacs](http://www.gnu.org/software/emacs/) (version 23+ recommended) and
 [org-mode](http://orgmode.org/) (version 7+ recommended) to generate the HTML.
@@ -113,8 +144,15 @@ Rebuilding Production Files
 
 (Depends on "Development Bootstrap")
 
-Run `script/build production` to rebuild standalone JavaScript and CSS
-files in `out/production/`
+Launch a Clojure REPL with:
+
+    lein repl
+
+Then run the build with:
+
+    (use 'build)
+    (build :production)
+
 
 
 TODO
@@ -128,15 +166,4 @@ TODO
 * Jump to slide from a list
 * Slide transitions
 * Animation?
-* Presenter display: clock, elapsed time, next slide, etc.
 
-
-Copyright and License
-========================================
-
-Contains code from the
-[Google Closure](http://code.google.com/closure/) project,
-with the following copyright:
-
-    Copyright 2009 The Closure Library Authors. All Rights Reserved.
-    Use of this source code is governed by the Apache License, Version 2.0.
