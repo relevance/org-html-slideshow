@@ -179,7 +179,7 @@
   <span class=\"key\">End</span>
 </a>
 <a id=\"c-presenter-window\" href=\"#\">
-  <span class=\"label\">Open presenter display</span>
+  <span class=\"label\">Open presenter preview</span>
 </a>
 </div>")
 
