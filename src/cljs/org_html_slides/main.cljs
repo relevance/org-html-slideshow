@@ -31,6 +31,10 @@
 
 (def slideshow-mode? (atom false))
 
+(def presenter-window (atom nil))
+
+(def presenter-start-time (atom nil))
+
 
 ;;; UTILITIES
 
@@ -310,7 +314,11 @@
 (defn show-next-slide []
   (let [current (current-slide)
         next (second (drop-while #(not= current %) @slides))]
-    (when next (show-slide next))))
+    (when next (show-slide next))
+    (swap! presenter-start-time (fn [t]
+                                  (if (nil? t)
+                                    (.getTime (js/Date.))
+                                    t)))))
 
 (defn show-prev-slide []
   (let [current (current-slide)
@@ -370,8 +378,6 @@
 
 ;;; PRESENTER WINDOW
 
-(def presenter-window (atom nil))
-
 (def presenter-display-html
   "
 <html>
@@ -391,8 +397,8 @@
       </div>
      </div>
      <div id=\"presenter-times\" class=\"presenter-label\">
-       <div id=\"presenter-elapsed-time\"></div>
-       <div id=\"presenter-clock-time\"></div>
+       <div id=\"presenter-elapsed-time\"><h2>0:00:00</h2></div>
+       <div id=\"presenter-clock-time\"><h2></h2></div>
      </div>
   </body>
 </html>
@@ -404,20 +410,36 @@
       (reset! presenter-window nil)
       @presenter-window)))
 
+(defn update-presenter-clock-time [win]
+  (let [elem (.. win -document
+                 (getElementById "presenter-clock-time"))
+        now (js/Date.)]
+    (set! (. elem -innerHTML)
+          (goog.string.format
+           "<h2>%d:%02d:%02d %s</h2>"
+           (rem (. now (getHours)) 12)
+           (. now (getMinutes))
+           (.. now (getSeconds))
+           (if (< 12 (. now (getHours)))
+             "PM" "AM")))))
+
+(defn update-presenter-elapsed-time [win]
+  (when @presenter-start-time
+   (let [elem (.. win -document
+                  (getElementById "presenter-elapsed-time"))
+         elapsed (- (.getTime (js/Date.)) @presenter-start-time)
+         secs (mod (/ elapsed 1000) 60)
+         mins (mod (/ elapsed (* 60 1000)) 60)
+         hours (/ elapsed (* 60 60 1000))]
+     (set! (. elem -innerHTML)
+           (goog.string.format
+            "<h2>%d:%02d:%02d</h2>"
+            hours mins secs)))))
 
 (defn update-presenter-clock []
   (when-let [win (get-presenter-window)]
-    (let [elem (.. win -document
-                    (getElementById "presenter-clock-time"))
-          now (js/Date.)]
-      (set! (. elem -innerHTML)
-            (goog.string.format
-             "<h2>%d:%02d:%02d %s</h2>"
-             (rem (. now (getHours)) 12)
-             (. now (getMinutes))
-             (.. now (getSeconds))
-             (if (< 12 (. now (getHours)))
-               "PM" "AM"))))
+    (update-presenter-clock-time win)
+    (update-presenter-elapsed-time win)
     (. js/window (setTimeout update-presenter-clock 1000))))
 
 (defn show-presenter-slides []

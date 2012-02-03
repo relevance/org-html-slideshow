@@ -47,5 +47,17 @@ body.presenter-display {
    position: absolute;
    text-align: center;
    height: 19%;
-   width: 100%;
+   width: 98%;
+}
+
+#presenter-elapsed-time {
+   position: absolute;
+   left: 1%;
+   width: 45%;
+}
+
+#presenter-clock-time {
+   position: absolute;
+   right: 1%;
+   width: 45%;
 }
