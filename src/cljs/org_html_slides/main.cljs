@@ -49,7 +49,7 @@
 (defn remove-elem
   "Remove a node from the DOM tree."
   [elem]
-  (.. elem parentNode (removeChild elem)))
+  (.. elem -parentNode (removeChild elem)))
 
 (defn add-to-head
   ([elem] (add-to-head elem nil))
@@ -60,18 +60,18 @@
   (first (dom-tags "body")))
 
 (defn next-elem [elem]
-  (or (. elem firstChild)
-      (. elem nextSibling)
-      (when-let [parent (. elem parentNode)]
-        (. parent nextSibling))))
+  (or (. elem -firstChild)
+      (. elem -nextSibling)
+      (when-let [parent (. elem -parentNode)]
+        (. parent -nextSibling))))
 
 (defn location-fragment []
-  (. (Uri/parse (. js/window location)) (getFragment)))
+  (. (Uri/parse (. js/window -location)) (getFragment)))
 
 (defn set-location-fragment [fragment-id]
-  (let [uri (Uri/parse (. js/window location))]
+  (let [uri (Uri/parse (. js/window -location))]
     (. uri (setFragment fragment-id))
-    (set! (. js/window location) (str uri))))
+    (set! (. js/window -location) (str uri))))
 
 (defn fire-handler [event-id]
   (fn [goog-event]
@@ -119,7 +119,7 @@
 
 (defn get-folds []
   (vec (map (fn [elem]
-              {:head-elem (.. elem parentNode parentNode)
+              {:head-elem (.. elem -parentNode -parentNode)
                :body-elem (first (dom-tags "div" nil (nearest-containing-div elem)))})
             (dom-tags "span" "fold"))))
 
@@ -137,7 +137,7 @@
 
 (defn handle-show-hide [event]
   (. event (preventDefault))
-  (let [head-elem (. event currentTarget)
+  (let [head-elem (. event -currentTarget)
         body-elem (first (dom-tags "div" nil (nearest-containing-div head-elem)))]
     (toggle-visibility head-elem body-elem)))
 
@@ -220,14 +220,14 @@
   "<div id=\"current-slide\"></div>")
 
 (defn nearest-containing-div [elem]
-  (if (= "DIV" (. elem nodeName))
+  (if (= "DIV" (. elem -nodeName))
     elem
-    (recur (. elem parentNode))))
+    (recur (. elem -parentNode))))
 
 (def heading-tag-names (set (map #(str "H" %) (range 1 9))))
 
 (defn nearest-inside-heading [elem]
-  (if (contains? heading-tag-names (. elem nodeName))
+  (if (contains? heading-tag-names (. elem -nodeName))
     elem
     (recur (next-elem elem))))
 
@@ -246,7 +246,7 @@
 
 (defn get-slides []
   (vec (map (fn [elem]
-              {:id  (. (nearest-inside-heading elem) id)
+              {:id  (. (nearest-inside-heading elem) -id)
                :html (dom/getOuterHtml (remove-nested-sections elem))})
             (dom-tags "div" "slide"))))
 
@@ -268,7 +268,7 @@
 
 (defn show-slide [{:keys [id html]}]
   (set-location-fragment id)
-  (set! (. (dom/getElement "current-slide") innerHTML) html)
+  (set! (. (dom/getElement "current-slide") -innerHTML) html)
   (show-presenter-slides))
 
 
@@ -354,7 +354,7 @@
    goog.events.KeyCodes.P :show-prev-slide})
 
 (defn handle-key [event]
-  (let [code (. event keyCode)
+  (let [code (. event -keyCode)
         keymap (if @slideshow-mode? slideshow-keymap normal-keymap)
         event-id (get keymap code)]
     (when event-id
@@ -400,17 +400,17 @@
 
 (defn get-presenter-window []
   (when @presenter-window
-    (if (. @presenter-window closed)
+    (if (. @presenter-window -closed)
       (reset! presenter-window nil)
       @presenter-window)))
 
 
 (defn update-presenter-clock []
   (when-let [win (get-presenter-window)]
-    (let [elem (.. win document
+    (let [elem (.. win -document
                     (getElementById "presenter-clock-time"))
           now (js/Date.)]
-      (set! (. elem innerHTML)
+      (set! (. elem -innerHTML)
             (goog.string.format
              "<h2>%d:%02d:%02d %s</h2>"
              (rem (. now (getHours)) 12)
@@ -422,12 +422,12 @@
 
 (defn show-presenter-slides []
   (when-let [win (get-presenter-window)]
-    (let [div (.. win document
+    (let [div (.. win -document
                   (getElementById "presenter-current-slide"))]
-      (set! (. div innerHTML) (:html (current-slide))))
-    (let [div (.. win document
+      (set! (. div -innerHTML) (:html (current-slide))))
+    (let [div (.. win -document
                   (getElementById "presenter-next-slide"))]
-      (set! (. div innerHTML) (:html (next-slide))))))
+      (set! (. div -innerHTML) (:html (next-slide))))))
 
 (defn show-presenter-window []
   (if-let [win (get-presenter-window)]
@@ -438,8 +438,8 @@
                                  :location false
                                  :statusbar false
                                  :menubar false}
-                                strobj)))
-        (let [doc (. @presenter-window document)]
+                                -strobj)))
+        (let [doc (. @presenter-window -document)]
           (. doc (write presenter-display-html))
           (add-stylesheets (get @stylesheet-urls "common") doc)
           (add-stylesheets (get @stylesheet-urls "projection") doc)
@@ -473,8 +473,8 @@
 
 (defn add-image-classes []
   (doseq [img (dom-tags "img")]
-    (let [p (. img parentNode)]
-      (when (= "P" (. p nodeName))
+    (let [p (. img -parentNode)]
+      (when (= "P" (. p -nodeName))
         (classes/add p "image")))))
 
 (defn add-outline-text-class []
