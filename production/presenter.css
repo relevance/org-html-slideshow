@@ -1,0 +1,68 @@
+/* Org-HTML-Slideshow presenter styles.
+ *
+ * These styles will apply only to the presenter preview.
+ */
+
+body.presenter-display {
+   background-color: black;
+}
+
+.presenter-label {
+   color: white;
+   font-family: Helvetica, Arial, sans-serif;
+}
+
+#presenter-current-slide-container {
+   bottom: 200px;
+   height: 60%;
+   left: 1%;
+   overflow: hidden;
+   position: absolute;
+   top: 0;
+   vertical-align: top;
+   width: 50%;
+   zoom: 60%;
+}
+
+#presenter-next-slide-container {
+   height: 50%;
+   overflow: hidden;
+   position: absolute;
+   right: 1%;
+   top: 1%;
+   vertical-align: top;
+   width: 40%;
+   zoom: 50%;
+}
+
+#presenter-current-slide {
+   background: white;
+   height: 100%;
+   padding: 12pt;
+}
+
+#presenter-next-slide {
+   background: white;
+   height: 100%;
+   padding: 12pt;
+}
+
+#presenter-times {
+   bottom: 1%;
+   position: absolute;
+   text-align: center;
+   height: 19%;
+   width: 98%;
+}
+
+#presenter-elapsed-time {
+   position: absolute;
+   left: 1%;
+   width: 45%;
+}
+
+#presenter-clock-time {
+   position: absolute;
+   right: 1%;
+   width: 45%;
+}
