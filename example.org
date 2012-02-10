@@ -1,0 +1,111 @@
+#+TITLE: Example Presentation
+#+AUTHOR: Stuart Sierra
+
+#+BEGIN_HTML
+<p>Type <strong>T</strong> to begin the slide show.</p>
+#+END_HTML
+
+* Org-HTML-Slideshow                                                  :slide:
+
+Make slides from Emacs Org-Mode!
+
+** Making Slides                                                      :slide:
+
+Org-Mode headlines with the =:slide:= tag will become slides.
+
+** Headlines Don't Have to be Slides
+
+This section doesn't have a =:slide:= tag, so it will *not* become a slide, although it is still part of the exported HTML document.
+
+** Use Lists For Bullets                                              :slide:
+
+- Use Org-Mode lists for bullet points
+- You can make nested bullet lists
+  - With sub-lists
+  - Like this
+
+** Or Low-Level Headings                                              :slide:
+
+**** By default
+***** Org-Mode headings below level 3
+****** Become bullets
+****** Meaning they *cannot* be slides
+**** This is configurable
+***** See [[http://orgmode.org/manual/Export-options.html][Export Options in the Org-Mode manual]]
+
+** Slides Can Be Nested                                               :slide:
+
+You can use the structure of the Org-Mode document to group your slides.
+
+For example, this slide is a *level-2* Org-Mode heading.
+
+*** Slide Headings Can Be Nested                                      :slide:
+
+This slide is a *level-3* Org-Mode heading, inside the previous one.
+
+* Source Code                                                         :slide:
+
+Use =begin_src/end_src= blocks to include source code.
+
+#+begin_src clojure
+  (defn example []
+    (println "This is sample source code."))
+#+end_src
+
+** Syntax Highlighting                                                :slide:
+
+- Org-Mode HTML export uses htmlize.el
+- Code in exported HTML will match your current Emacs theme
+  - Choose a theme that looks good on slides!
+  - Tip: launch Emacs with =-q= to skip your custom settings
+
+* Images                                                              :slide:
+
+- Slides can contain images
+  - Any file type a browser can display
+- See also these Emacs variables
+  - =org-export-html-inline-images=
+  - =org-export-html-inline-image-extensions=
+    - Controls which file types get exported
+- See [[http://orgmode.org/manual/Images-in-HTML-export.html][Images in HTML Export in the Org-Mode manual]].
+
+** Slide with Image                                                   :slide:
+
+Make a =file:= link with the path to the image and no link text.
+
+[[file:example-image.svg]]
+
+This example image is public-domain [[http://openclipart.org/detail/165554/geodesic_dome-by-yoderj][clip art by Josiah / yoderj]].
+
+* Styling                                                             :slide:
+
+- Use CSS styles to control appearance of slides
+- Extra tags on a slide become extra CSS classes on its HTML
+
+** Org-Mode Tag as CSS Class                          :slide:blue_background:
+
+- This slide has the =:blue_background:= tag
+  - Which is a class defined in =projection.css=
+- Make up your own tags
+  - Add them to the CSS file
+
+* The End                                                             :slide:
+
+Include the stylesheets and JavaScript at the *bottom* of your Org-Mode file.
+
+#+TAGS: slide(s)
+
+#+STYLE: <link rel="stylesheet" type="text/css" href="src/css/common.css" />
+#+STYLE: <link rel="stylesheet" type="text/css" href="src/css/screen.css" media="screen" />
+#+STYLE: <link rel="stylesheet" type="text/css" href="src/css/projection.css" media="projection" />
+#+STYLE: <link rel="stylesheet" type="text/css" href="src/css/presenter.css" media="presenter" />
+
+#+BEGIN_HTML
+<script type="text/javascript" src="production/org-html-slideshow.js"></script>
+#+END_HTML
+
+# Local Variables:
+# org-export-html-style-include-default: nil
+# org-export-html-style-include-scripts: nil
+# buffer-file-coding-system: utf-8-unix
+# End:

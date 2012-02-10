@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Example Presentation</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Example Presentation"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-02-10 16:25:10 EST"/>
+<meta name="author" content="Stuart Sierra"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+<link rel="stylesheet" type="text/css" href="src/css/common.css" />
+<link rel="stylesheet" type="text/css" href="src/css/screen.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="src/css/projection.css" media="projection" />
+<link rel="stylesheet" type="text/css" href="src/css/presenter.css" media="presenter" />
+
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">Example Presentation</h1>
+
+
+<p>Type <strong>T</strong> to begin the slide show.</p>
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Org-HTML-Slideshow</a>
+<ul>
+<li><a href="#sec-1-1">1.1 Making Slides</a></li>
+<li><a href="#sec-1-2">1.2 Headlines Don't Have to be Slides</a></li>
+<li><a href="#sec-1-3">1.3 Use Lists For Bullets</a></li>
+<li><a href="#sec-1-4">1.4 Or Low-Level Headings</a></li>
+<li><a href="#sec-1-5">1.5 Slides Can Be Nested</a>
+<ul>
+<li><a href="#sec-1-5-1">1.5.1 Slide Headings Can Be Nested</a></li>
+</ul></li>
+</ul>
+</li>
+<li><a href="#sec-2">2 Source Code</a>
+<ul>
+<li><a href="#sec-2-1">2.1 Syntax Highlighting</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 Images</a>
+<ul>
+<li><a href="#sec-3-1">3.1 Slide with Image</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4 Styling</a>
+<ul>
+<li><a href="#sec-4-1">4.1 Org-Mode Tag as CSS Class</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5 The End</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Org-HTML-Slideshow &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+Make slides from Emacs Org-Mode!
+</p>
+
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Making Slides &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-1-1">
+
+
+<p>
+Org-Mode headlines with the <code>:slide:</code> tag will become slides.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Headlines Don't Have to be Slides</h3>
+<div class="outline-text-3" id="text-1-2">
+
+
+<p>
+This section doesn't have a <code>:slide:</code> tag, so it will <b>not</b> become a slide, although it is still part of the exported HTML document.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Use Lists For Bullets &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-1-3">
+
+
+<ul>
+<li>Use Org-Mode lists for bullet points
+</li>
+<li>You can make nested bullet lists
+<ul>
+<li>With sub-lists
+</li>
+<li>Like this
+</li>
+</ul>
+
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Or Low-Level Headings &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-1-4">
+
+
+<ul>
+<li id="sec-1-4-1">By default<br/>
+<ul>
+<li id="sec-1-4-1-1">Org-Mode headings below level 3<br/>
+<ul>
+<li id="sec-1-4-1-1-1">Become bullets<br/>
+</li>
+</ul>
+<ul>
+<li id="sec-1-4-1-1-2">Meaning they <b>cannot</b> be slides<br/>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li id="sec-1-4-2">This is configurable<br/>
+<ul>
+<li id="sec-1-4-2-1">See <a href="http://orgmode.org/manual/Export-options.html">Export Options in the Org-Mode manual</a><br/>
+
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Slides Can Be Nested &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-1-5">
+
+
+<p>
+You can use the structure of the Org-Mode document to group your slides.
+</p>
+<p>
+For example, this slide is a <b>level-2</b> Org-Mode heading.
+</p>
+
+</div>
+
+<div id="outline-container-1-5-1" class="outline-4">
+<h4 id="sec-1-5-1"><span class="section-number-4">1.5.1</span> Slide Headings Can Be Nested &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h4>
+<div class="outline-text-4" id="text-1-5-1">
+
+
+<p>
+This slide is a <b>level-3</b> Org-Mode heading, inside the previous one.
+</p>
+</div>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Source Code &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+Use <code>begin_src/end_src</code> blocks to include source code.
+</p>
+
+
+
+<pre class="src src-clojure">(<span style="color: #CDA869;">defn</span> <span style="color: #9B703F;">example</span> []
+  (<span style="color: #7587A6;">println</span> <span style="color: #8F9D6A;">"This is sample source code."</span>))
+</pre>
+
+
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Syntax Highlighting &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-2-1">
+
+
+<ul>
+<li>Org-Mode HTML export uses htmlize.el
+</li>
+<li>Code in exported HTML will match your current Emacs theme
+<ul>
+<li>Choose a theme that looks good on slides!
+</li>
+<li>Tip: launch Emacs with <code>-q</code> to skip your custom settings
+</li>
+</ul>
+
+</li>
+</ul>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Images &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div class="outline-text-2" id="text-3">
+
+
+<ul>
+<li>Slides can contain images
+<ul>
+<li>Any file type a browser can display
+</li>
+</ul>
+
+</li>
+<li>See also these Emacs variables
+<ul>
+<li><code>org-export-html-inline-images</code>
+</li>
+<li><code>org-export-html-inline-image-extensions</code>
+<ul>
+<li>Controls which file types get exported
+</li>
+</ul>
+
+</li>
+</ul>
+
+</li>
+<li>See <a href="http://orgmode.org/manual/Images-in-HTML-export.html">Images in HTML Export in the Org-Mode manual</a>.
+</li>
+</ul>
+
+
+
+</div>
+
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Slide with Image &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-3-1">
+
+
+<p>
+Make a <code>file:</code> link with the path to the image and no link text.
+</p>
+<p>
+<img src="example-image.svg"  alt="example-image.svg" />
+</p>
+<p>
+This example image is public-domain <a href="http://openclipart.org/detail/165554/geodesic_dome-by-yoderj">clip art by Josiah / yoderj</a>.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Styling &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div class="outline-text-2" id="text-4">
+
+
+<ul>
+<li>Use CSS styles to control appearance of slides
+</li>
+<li>Extra tags on a slide become extra CSS classes on its HTML
+</li>
+</ul>
+
+
+
+</div>
+
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Org-Mode Tag as CSS Class &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span>&nbsp;<span class="blue_background">blue_background</span></span></h3>
+<div class="outline-text-3" id="text-4-1">
+
+
+<ul>
+<li>This slide has the <code>:blue_background:</code> tag
+<ul>
+<li>Which is a class defined in <code>projection.css</code>
+</li>
+</ul>
+
+</li>
+<li>Make up your own tags
+<ul>
+<li>Add them to the CSS file
+</li>
+</ul>
+
+</li>
+</ul>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> The End &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div class="outline-text-2" id="text-5">
+
+
+<p>
+Include the stylesheets and JavaScript at the <b>bottom</b> of your Org-Mode file.
+</p>
+
+
+
+
+<script type="text/javascript" src="production/org-html-slideshow.js"></script>
+
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2012-02-10 16:25:10 EST</p>
+<p class="author">Author: Stuart Sierra</p>
+<p class="creator">Org version 7.8.02 with Emacs version 23</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>
