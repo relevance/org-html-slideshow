@@ -8,6 +8,7 @@ body {
    font-size: 24pt;
 }
 
+/* Use all headings as slide titles, regardless of level. */
 h1,h2,h3,h4,h5,h6,h7,h8 {
    font-size: 48pt;
    margin: 18pt;
@@ -18,84 +19,22 @@ li {
    margin: 12pt;
 }
 
+/* Center embedded images. */
 p.image {
    text-align: center;
 }
 
-span.section-number-1 {
+/* Hide Org-Mode tags in slide-show view. */
+span.tag {
    display: none;
 }
 
-span.section-number-2 {
+/* Hide Org-Mode section numbers in slide-show view. */
+span.section-number-1,span.section-number-2,span.section-number-3,span.section-number-4,span.section-number-5,span.section-number-6,span.section-number-7,span.section-number-8 {
    display: none;
 }
 
-span.section-number-3 {
-   display: none;
-}
-
-span.section-number-4 {
-   display: none;
-}
-
-span.section-number-5 {
-   display: none;
-}
-
-span.section-number-6 {
-   display: none;
-}
-
-span.section-number-7 {
-   display: none;
-}
-
-span.section-number-8 {
-   display: none;
-}
-
-body.presenter-display {
-   background-color: black;
-}
-
-#presenter-current-slide-container {
-   float: left;
-   font-size: 50%;
-   height: 50%;
-   width: 50%;
-   vertical-align: top;
-}
-
-#presenter-next-slide-container {
-   float: right;
-   font-size: 40%;
-   height: 50%;
-   width: 40%;
-   vertical-align: top;
-}
-
-#presenter-current-slide {
-   background: white;
-   border: 1px solid black;
-   overflow: hidden;
-   padding: 12pt;
-}
-
-#presenter-next-slide {
-   background: white;
-   border: 1px solid black;
-   overflow: hidden;
-   padding: 12pt;
-}
-
-/*#presenter-current-slide-container h1,h2,h3,h4,h5,h6,h7,h8 {
-   font-size: 100%;
-}*/
-
-#presenter-current-slide-container img {
-   width: 50%;
-}
-
-#presenter-next-slide-container img {
-   width: 50%;
+.blue_background {
+   background: blue;
+   color: white;
 }
