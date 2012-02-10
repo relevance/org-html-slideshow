@@ -85,10 +85,10 @@
     (dispatch/fire event-id goog-event)))
 
 (defn show! [content]
-  (style/showElement (d/single-node content) true))
+  (when content (style/showElement (d/single-node content) true)))
 
 (defn hide! [content]
-  (style/showElement (d/single-node content) false))
+  (when content (style/showElement (d/single-node content) false)))
 
 
 ;;;
