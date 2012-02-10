@@ -84,14 +84,13 @@ This is the solution.
 
 * The End
 
-#+STYLE: <link rel="stylesheet" type="text/css" href="../lib/closure/library/closure/goog/css/common.css" />
 #+STYLE: <link rel="stylesheet" type="text/css" href="../src/css/common.css" />
 #+STYLE: <link rel="stylesheet" type="text/css" href="../src/css/screen.css" media="screen" />
 #+STYLE: <link rel="stylesheet" type="text/css" href="../src/css/projection.css" media="projection" />
 #+STYLE: <link rel="stylesheet" type="text/css" href="../src/css/presenter.css" media="presenter" />
 
 #+BEGIN_HTML
-<script type="text/javascript" src="../out/development/org-html-slides.js"></script>
+<script type="text/javascript" src="../out/development/org-html-slideshow.js"></script>
 #+END_HTML
 
 #+COMMENT Include table-of-contents up to heading level 2
