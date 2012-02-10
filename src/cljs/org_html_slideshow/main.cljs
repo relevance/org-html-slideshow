@@ -14,7 +14,6 @@
             [goog.Timer :as Timer]
             [goog.Uri :as Uri]
             [goog.window :as window]
-            [one.logging :as logging]
             [one.dispatch :as dispatch]
             [domina :as d]))
 
@@ -39,8 +38,7 @@
 ;;; UTILITIES
 
 (defn info [& msgs]
-  (logging/info (logging/get-logger "org_html_slideshow.main")
-                (apply pr-str msgs)))
+  (.info (Logger/getLogger "org_html_slideshow.main") (apply pr-str msgs)))
 
 (defn dom-tags
   ([tag-name]
