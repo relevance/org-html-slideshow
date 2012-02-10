@@ -5,8 +5,8 @@
 
 (def options
   {:production
-   {:output-dir "out/production"
-    :output-to "out/production/org-html-slideshow.js"
+   {:output-dir "production"
+    :output-to "production/org-html-slideshow.js"
     :optimizations :advanced}
    :development
    {:output-dir "out/development"

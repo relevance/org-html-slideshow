@@ -18,8 +18,8 @@ Org-HTML-Slideshow is written in
 Using in Your Org-mode Files
 ========================================
 
-**Step 1.** Copy the following files from `out/production/` to the
-directory containing your .org file:
+**Step 1.** Copy the following files from the `production` directory
+to the directory containing your .org file:
 
     org-html-slideshow.js
     common.css
