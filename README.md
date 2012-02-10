@@ -1,16 +1,18 @@
-org-html-slides
+Org-HTML-Slideshow
 ========================================
 
-You have an outline written in Emacs org-mode.  Add some JavaScript
-and CSS from this project, and you have an interactive
-slide presentation!
+You have an outline written in Emacs Org-Mode.  Export it to HTML. Add
+Org-HTML-Slideshow, and you have an interactive slide presentation
+that runs in a web browser!
 
-Supports anything org-mode can export: bulleted lists, code blocks,
+Supports anything Org-Mode can export: bulleted lists, code blocks,
 images, etc.
 
-Should work in most modern web browsers; developed for Google Chrome.
+Should work in most modern web browsers; tested only in Google Chrome
+18.0.1025.11 beta.
 
-Org-html-slides is written in [ClojureScript](https://github.com/clojure/clojurescript).
+Org-HTML-Slideshow is written in
+[ClojureScript](https://github.com/clojure/clojurescript).
 
 
 Using in Your Org-mode Files
@@ -19,7 +21,7 @@ Using in Your Org-mode Files
 **Step 1.** Copy the following files from `out/production/` to the
 directory containing your .org file:
 
-    org-html-slides.js
+    org-html-slideshow.js
     common.css
     presenter.css
     projection.css
@@ -35,7 +37,7 @@ directory containing your .org file:
     #+STYLE: <link rel="stylesheet" type="text/css" href="presenter.css" media="presenter" />
 
     #+BEGIN_HTML
-    <script type="text/javascript" src="org-html-slides.js"></script>
+    <script type="text/javascript" src="org-html-slideshow.js"></script>
     #+END_HTML
 
     # Local Variables:
@@ -46,13 +48,26 @@ directory containing your .org file:
 **Step 3.** Close and re-open your .org file. Type `y` to accept the
 buffer-local variables.
 
-**Step 4.** For each org-mode headline that you want to make into a
-slide, add the `:slide:` tag by typing `C-c C-c s RET` with the cursor
-on the headline.
 
-**Step 5.** Type `C-c C-e h` in your .org file to export as HTML.
+Adding Tags to Your Org-Mode File
+---------------------------------
 
-Repeat Step 5 whenever you modify the .org file.
+For each org-mode headline that you want to make into a slide, add the
+`:slide:` tag by typing `C-c C-c s RET` with the cursor on the
+headline.
+
+Additional tags will be added as CSS classes on the slides.
+
+Read more about [tags in the Org-Mode manual](http://orgmode.org/manual/Tags.html).
+
+
+Exporting to HTML
+-----------------
+
+Type `C-c C-e h` in your .org file to export as HTML. Repeat whenever
+you modify the .org file.
+
+Read more about [HTML export in the Org-Mode manual](http://orgmode.org/manual/HTML-export.html).
 
 
 Playing the Slide Show
@@ -95,7 +110,7 @@ You can modify the appearance of your slides by editing the stylesheets:
 * `presenter.css` affects only the presenter preview
 
 
-Development Bootstrap
+Development
 ========================================
 
 To develop and build org-html-slides, you will need the following
@@ -117,10 +132,8 @@ to download additional dependencies:
     lein deps
 
 
-Development Examples
-========================================
-
-(Depends on "Development Bootstrap")
+Rebuilding Development Examples
+-------------------------------
 
 Launch a Clojure REPL with:
 
@@ -140,9 +153,7 @@ browser. Type `t` to begin the slide show.
 
 
 Rebuilding Production Files
-========================================
-
-(Depends on "Development Bootstrap")
+---------------------------
 
 Launch a Clojure REPL with:
 
@@ -164,6 +175,6 @@ TODO
 * Link visible in original document to begin slide show
 * "Slide X of N" display
 * Jump to slide from a list
-* Slide transitions
+* Slide transitions?
 * Animation?
 
