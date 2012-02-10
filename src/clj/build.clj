@@ -18,7 +18,8 @@
   {:pre [(contains? options mode)]}
   (closure/build "src/cljs" (options mode))
   (when (= mode :production)
+    (.mkdirs (io/file "production"))
     (doseq [f (filter #(and (.isFile %)
                             (.. % getName (endsWith ".css")))
                       (file-seq (io/file "src/css")))]
-      (io/copy f (io/file "out/production" (.getName f))))))
+      (io/copy f (io/file "production" (.getName f))))))
