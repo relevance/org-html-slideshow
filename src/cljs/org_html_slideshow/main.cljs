@@ -1,4 +1,4 @@
-(ns org-html-slides.main
+(ns org-html-slideshow.main
   (:require [goog.debug.Logger :as Logger]
             [goog.debug.Console :as Console]
             [goog.array :as array]
@@ -39,7 +39,7 @@
 ;;; UTILITIES
 
 (defn info [& msgs]
-  (logging/info (logging/get-logger "org_html_slides.main")
+  (logging/info (logging/get-logger "org_html_slideshow.main")
                 (apply pr-str msgs)))
 
 (defn dom-tags
