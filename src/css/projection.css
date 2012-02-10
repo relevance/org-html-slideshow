@@ -1,3 +1,8 @@
+/* Org-HTML-Slideshow projection styles.
+ *
+ * These styles will apply only to the slide-show view.
+ */
+
 body {
    margin: 18pt;
    font-size: 24pt;

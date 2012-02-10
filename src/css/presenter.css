@@ -1,3 +1,8 @@
+/* Org-HTML-Slideshow presenter styles.
+ *
+ * These styles will apply only to the presenter preview.
+ */
+
 body.presenter-display {
    background-color: black;
 }
