@@ -18,7 +18,7 @@
   (closure/build "src/cljs"
                  (if (= mode :development)
                    development-options
-                   default-options))
+                   production-options))
   (when (= mode :production)
     (doseq [f (filter #(and (.isFile %)
                             (.. % getName (endsWith ".css")))
