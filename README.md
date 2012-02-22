@@ -185,3 +185,11 @@ Copyright & Contributions
 
 There is no copyright. I dedicate this work to the public domain. If
 you want me to use your fixes/improvements, you must do the same.
+
+
+Contributors
+--------------------
+
+* Stuart Sierra
+* Craig Andera
+* Alex Redington
