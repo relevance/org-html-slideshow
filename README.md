@@ -169,6 +169,7 @@ Then run the build with:
 TODO
 ========================================
 
+* Handle keyboard commands from presenter preview window
 * Better stylesheets
 * ? key to display on-screen help
 * click mouse to advance slides
