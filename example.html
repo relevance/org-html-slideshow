@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Example Presentation"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-02-10 16:25:10 EST"/>
+<meta name="generated" content="2012-02-24 10:56:01 EST"/>
 <meta name="author" content="Stuart Sierra"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -63,7 +63,12 @@
 <li><a href="#sec-4-1">4.1 Org-Mode Tag as CSS Class</a></li>
 </ul>
 </li>
-<li><a href="#sec-5">5 The End</a></li>
+<li><a href="#sec-5">5 Placing Stylesheets/JavaScript</a>
+<ul>
+<li><a href="#sec-5-1">5.1 Warning About Hidden Headlines</a></li>
+<li><a href="#sec-5-2">5.2 The End</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -332,12 +337,48 @@ This example image is public-domain <a href="http://openclipart.org/detail/16555
 </div>
 
 <div id="outline-container-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> The End &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<h2 id="sec-5"><span class="section-number-2">5</span> Placing Stylesheets/JavaScript &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
 <div class="outline-text-2" id="text-5">
 
 
 <p>
 Include the stylesheets and JavaScript at the <b>bottom</b> of your Org-Mode file.
+</p>
+
+</div>
+
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Warning About Hidden Headlines &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-5-1">
+
+
+<p>
+Stylesheets and JavaScript will <b>not</b> be loaded if the <b>last</b> headline in your Org-Mode file is hidden by any of:
+</p>
+<ul>
+<li><code>COMMENT</code> at the start of the heading
+</li>
+<li><code>#+COMMENT</code> at the start of the line
+</li>
+<li><code>:noexport:</code> tag, or missing <code>:export:</code> tag
+</li>
+</ul>
+
+
+<p>
+See <a href="http://orgmode.org/manual/Comment-lines.html">Comment lines</a> and <a href="http://orgmode.org/manual/Selective-export.html">Selective export</a> in the Org-Mode manual for details.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> The End &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-5-2">
+
+
+<p>
+Sometimes it's safest to add an "empty" heading at the end of your document to make sure the stylesheets and JavaScript are included.
 </p>
 
 
@@ -348,9 +389,10 @@ Include the stylesheets and JavaScript at the <b>bottom</b> of your Org-Mode fil
 </div>
 </div>
 </div>
+</div>
 
 <div id="postamble">
-<p class="date">Date: 2012-02-10 16:25:10 EST</p>
+<p class="date">Date: 2012-02-24 10:56:01 EST</p>
 <p class="author">Author: Stuart Sierra</p>
 <p class="creator">Org version 7.8.02 with Emacs version 23</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>

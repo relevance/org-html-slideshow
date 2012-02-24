@@ -89,9 +89,23 @@ This example image is public-domain [[http://openclipart.org/detail/165554/geode
 - Make up your own tags
   - Add them to the CSS file
 
-* The End                                                             :slide:
+* Placing Stylesheets/JavaScript                                      :slide:
 
 Include the stylesheets and JavaScript at the *bottom* of your Org-Mode file.
+
+** Warning About Hidden Headlines                                     :slide:
+
+Stylesheets and JavaScript will *not* be loaded if the *last* headline in your Org-Mode file is hidden by any of:
+
+- =COMMENT= at the start of the heading
+- =#+COMMENT= at the start of the line
+- =:noexport:= tag, or missing =:export:= tag
+
+See [[http://orgmode.org/manual/Comment-lines.html][Comment lines]] and [[http://orgmode.org/manual/Selective-export.html][Selective export]] in the Org-Mode manual for details.
+
+** The End                                                            :slide:
+
+Sometimes it's safest to add an "empty" heading at the end of your document to make sure the stylesheets and JavaScript are included.
 
 #+TAGS: slide(s)
 
