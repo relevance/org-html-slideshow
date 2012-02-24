@@ -93,6 +93,8 @@ This example image is public-domain [[http://openclipart.org/detail/165554/geode
 
 Include the stylesheets and JavaScript at the *bottom* of your Org-Mode file.
 
+They must go at the bottom because the Google Closure Library does not support an on-DOM-ready event. See the [[http://groups.google.com/group/closure-library-discuss/browse_thread/thread/1beecbb5d6afcb41/075c536259653946][Closure mailing list discussion]] for an explanation.
+
 ** Warning About Hidden Headlines                                     :slide:
 
 Stylesheets and JavaScript will *not* be loaded if the *last* headline in your Org-Mode file is hidden by any of:
