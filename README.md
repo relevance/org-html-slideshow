@@ -15,6 +15,16 @@ Org-HTML-Slideshow is written in
 [ClojureScript](https://github.com/clojure/clojurescript).
 
 
+Recommended Emacs Platform
+========================================
+
+* [GNU Emacs](http://www.gnu.org/software/emacs/) version 23+
+  * Check version with `M-x emacs-version`
+* [Org-Mode](http://orgmode.org/) version 7+
+  * Check version by opening an .org file and `M-x org-version`
+* [Htmlize](http://www.emacswiki.org/emacs/Htmlize) version 1.37+
+
+
 Using in Your Org-mode Files
 ========================================
 
@@ -191,6 +201,6 @@ you want me to use your fixes/improvements, you must do the same.
 Contributors
 --------------------
 
-* Stuart Sierra
+* Stuart Sierra (primary author)
 * Craig Andera
 * Alex Redington
