@@ -54,16 +54,25 @@ Use =begin_src/end_src= blocks to include source code.
 
 ** Syntax Highlighting                                                :slide:
 
-- Org-Mode HTML export uses htmlize.el
+- Org-Mode HTML export uses [[http://www.emacswiki.org/emacs/Htmlize][htmlize.el]]
 - Code in exported HTML will match your current Emacs theme
-  - Choose a theme that looks good on slides!
-  - Tip: launch Emacs with =-q= to skip your custom settings
+  - Choose a theme that looks good on a projector!
+
+** Syntax Highlighting with CSS Classes                               :slide:
+
+- Set the Emacs variable:
+  - =org-export-htmlize-output-type=
+  - to the symbol =css=
+- Htmlize.el will add SPAN tags with CSS classes
+  - Named for each font face, e.g. =org-comment=
+- Examine HTML output to see class names
+- Add CSS styles to set colors
 
 * Images                                                              :slide:
 
 - Slides can contain images
   - Any file type a browser can display
-- See also these Emacs variables
+- See also these Emacs variables:
   - =org-export-html-inline-images=
   - =org-export-html-inline-image-extensions=
     - Controls which file types get exported

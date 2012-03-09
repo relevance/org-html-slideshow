@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Example Presentation"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-02-24 10:58:39 EST"/>
+<meta name="generated" content="2012-03-09 18:48:13 EST"/>
 <meta name="author" content="Stuart Sierra"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -51,6 +51,7 @@
 <li><a href="#sec-2">2 Source Code</a>
 <ul>
 <li><a href="#sec-2-1">2.1 Syntax Highlighting</a></li>
+<li><a href="#sec-2-2">2.2 Syntax Highlighting with CSS Classes</a></li>
 </ul>
 </li>
 <li><a href="#sec-3">3 Images</a>
@@ -219,16 +220,47 @@ Use <code>begin_src/end_src</code> blocks to include source code.
 
 
 <ul>
-<li>Org-Mode HTML export uses htmlize.el
+<li>Org-Mode HTML export uses <a href="http://www.emacswiki.org/emacs/Htmlize">htmlize.el</a>
 </li>
 <li>Code in exported HTML will match your current Emacs theme
 <ul>
-<li>Choose a theme that looks good on slides!
-</li>
-<li>Tip: launch Emacs with <code>-q</code> to skip your custom settings
+<li>Choose a theme that looks good on a projector!
 </li>
 </ul>
 
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Syntax Highlighting with CSS Classes &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-2-2">
+
+
+<ul>
+<li>Set the Emacs variable:
+<ul>
+<li><code>org-export-htmlize-output-type</code>
+</li>
+<li>to the symbol <code>css</code>
+</li>
+</ul>
+
+</li>
+<li>Htmlize.el will add SPAN tags with CSS classes
+<ul>
+<li>Named for each font face, e.g. <code>org-comment</code>
+</li>
+</ul>
+
+</li>
+<li>Examine HTML output to see class names
+</li>
+<li>Add CSS styles to set colors
 </li>
 </ul>
 
@@ -251,7 +283,7 @@ Use <code>begin_src/end_src</code> blocks to include source code.
 </ul>
 
 </li>
-<li>See also these Emacs variables
+<li>See also these Emacs variables:
 <ul>
 <li><code>org-export-html-inline-images</code>
 </li>
@@ -395,7 +427,7 @@ Sometimes it's safest to add an "empty" heading at the end of your document to m
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-02-24 10:58:39 EST</p>
+<p class="date">Date: 2012-03-09 18:48:13 EST</p>
 <p class="author">Author: Stuart Sierra</p>
 <p class="creator">Org version 7.8.02 with Emacs version 23</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
