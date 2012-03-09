@@ -384,19 +384,19 @@
   <body class=\"presenter-display\">
     <div id=\"presenter-slide-preview\">
       <div id=\"presenter-current-slide-container\">
-        <h2 class=\"presenter-label\">Current Slide</h2>
+        <span class=\"presenter-label\">Current Slide</span>
         <div id=\"presenter-current-slide\">
         </div>
       </div>
       <div id=\"presenter-next-slide-container\">
-        <h2 class=\"presenter-label\">Next Slide</h2>
+        <span class=\"presenter-label\">Next Slide</span>
         <div id=\"presenter-next-slide\">
         </div>
       </div>
      </div>
      <div id=\"presenter-times\" class=\"presenter-label\">
-       <div id=\"presenter-elapsed-time\"><h2>0:00:00</h2></div>
-       <div id=\"presenter-clock-time\"><h2></h2></div>
+       <div id=\"presenter-elapsed-time\"><span>0:00:00</span></div>
+       <div id=\"presenter-clock-time\"><span></span></div>
      </div>
   </body>
 </html>
@@ -414,7 +414,7 @@
         now (js/Date.)]
     (set! (. elem -innerHTML)
           (goog.string.format
-           "<h2>%d:%02d:%02d %s</h2>"
+           "<span>%d:%02d:%02d %s</span>"
            (rem (. now (getHours)) 12)
            (. now (getMinutes))
            (.. now (getSeconds))
@@ -431,7 +431,7 @@
          hours (/ elapsed (* 60 60 1000))]
      (set! (. elem -innerHTML)
            (goog.string.format
-            "<h2>%d:%02d:%02d</h2>"
+            "<span>%d:%02d:%02d</span>"
             hours mins secs)))))
 
 (defn update-presenter-clock []
