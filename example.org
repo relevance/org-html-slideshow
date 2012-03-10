@@ -43,6 +43,18 @@ For example, this slide is a *level-2* Org-Mode heading.
 
 This slide is a *level-3* Org-Mode heading, inside the previous one.
 
+* Presenter Notes                                                     :slide:
+
+- Slides can have presenter notes
+- Add a sub-heading with the =:notes:= tag
+
+** Notes                                                              :notes:
+
+- Presenter notes for this slide
+- Not displayed as part of the slide
+- Displayed in Presenter Preview window
+- Only one =:notes:= section per slide allowed
+
 * Source Code                                                         :slide:
 
 Use =begin_src/end_src= blocks to include source code.

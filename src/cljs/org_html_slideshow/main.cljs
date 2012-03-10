@@ -242,14 +242,22 @@
 (defn remove-nested-sections [slide-div-elem]
   (let [div (. slide-div-elem (cloneNode true))]
     (doseq [elem (dom-tags "div" nil div)]
-      (when (some #(classes/has elem (str "outline-" %)) (range 1 9))
+      (when (and (not )
+                 (some #(classes/has elem (str "outline-" %)) (range 1 9)))
         (remove-elem elem)))
     div))
+
+(defn slide-notes-html [slide-div-elem]
+  (if-let [div (first (filter #(classes/has % "notes")
+                                (dom-tags "div" nil slide-div-elem)))]
+    (dom/getOuterHtml div)
+    ""))
 
 (defn get-slides []
   (vec (map (fn [elem]
               {:id  (. (nearest-inside-heading elem) -id)
-               :html (dom/getOuterHtml (remove-nested-sections elem))})
+               :html (dom/getOuterHtml (remove-nested-sections elem))
+               :notes-html (slide-notes-html elem)})
             (dom-tags "div" "slide"))))
 
 (defn slide-from-id [id]
@@ -394,6 +402,7 @@
         </div>
       </div>
      </div>
+     <div id=\"presenter-notes-container\"></div>
      <div id=\"presenter-times\" class=\"presenter-label\">
        <div id=\"presenter-elapsed-time-container\">
           <span id=\"presenter-elapsed-time\">0:00:00</span>
@@ -458,9 +467,13 @@
 
 (defn show-presenter-slides []
   (when-let [win (get-presenter-window)]
-    (let [div (.. win -document
-                  (getElementById "presenter-current-slide"))]
-      (set! (. div -innerHTML) (:html (current-slide))))
+    (let [{:keys [html notes-html]} (current-slide)]
+      (let [div (.. win -document
+                    (getElementById "presenter-current-slide"))]
+        (set! (. div -innerHTML) html))
+      (let [div (.. win -document
+                    (getElementById "presenter-notes-container"))]
+        (set! (. div -innerHTML) notes-html)))
     (let [div (.. win -document
                   (getElementById "presenter-next-slide"))]
       (set! (. div -innerHTML) (:html (next-slide))))))
