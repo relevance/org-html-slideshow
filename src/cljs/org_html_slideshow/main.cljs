@@ -395,9 +395,11 @@
       </div>
      </div>
      <div id=\"presenter-times\" class=\"presenter-label\">
-       <div id=\"presenter-elapsed-time\"><span>0:00:00</span></div>
-       <div id=\"presenter-elapsed-time-reset-container\">
-         <a href=\"#\" id=\"presenter-elapsed-time-reset\">reset</a>
+       <div id=\"presenter-elapsed-time-container\">
+          <span id=\"presenter-elapsed-time\">0:00:00</span>
+          <span id=\"presenter-elapsed-time-reset-container\">
+            <a href=\"#\" id=\"presenter-elapsed-time-reset\">reset</a>
+          </span>
        </div>
        <div id=\"presenter-clock-time\"><span></span></div>
      </div>
@@ -414,14 +416,16 @@
 (defn update-presenter-clock-time [win]
   (let [elem (.. win -document
                  (getElementById "presenter-clock-time"))
-        now (js/Date.)]
+        now (js/Date.)
+        hours (. now (getHours))
+        display-hours (if (< 12 hours) (- hours 12) hours)]
     (set! (. elem -innerHTML)
           (goog.string.format
-           "<span>%d:%02d:%02d %s</span>"
-           (rem (. now (getHours)) 12)
+           "<span>%d:%02d:%02d<span id=\"presenter-clock-time-ampm\"> %s</span></span>"
+           display-hours
            (. now (getMinutes))
            (.. now (getSeconds))
-           (if (< 12 (. now (getHours)))
+           (if (<= 12 hours)
              "pm" "am")))))
 
 (defn elapsed-time-string []
@@ -430,7 +434,7 @@
         mins (mod (/ elapsed (* 60 1000)) 60)
         hours (/ elapsed (* 60 60 1000))]
     (goog.string.format
-     "<span>%d:%02d:%02d</span>"
+     "%d:%02d:%02d"
      hours mins secs)))
 
 (defn update-presenter-elapsed-time [win]
@@ -439,7 +443,7 @@
     (set! (. elem -innerHTML)
           (if @presenter-start-time
             (elapsed-time-string)
-            "<span>0:00:00</span>")))  )
+            "0:00:00")))  )
 
 (defn update-presenter-clock []
   (when-let [win (get-presenter-window)]
