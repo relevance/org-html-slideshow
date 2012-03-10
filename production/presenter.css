@@ -49,6 +49,7 @@ body.presenter-display {
 
 #presenter-times {
    bottom: 1%;
+   font-size: 3em;
    position: absolute;
    text-align: center;
    height: 19%;
@@ -65,4 +66,16 @@ body.presenter-display {
    position: absolute;
    right: 1%;
    width: 45%;
+}
+
+#presenter-elapsed-time-reset-container {
+   font-size: 12pt;
+   position: absolute;
+   left: 1%;
+   bottom: 1%;
+   width: 45%;
+}
+
+a#presenter-elapsed-time-reset {
+   color: cyan;
 }

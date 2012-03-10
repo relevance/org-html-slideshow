@@ -368,8 +368,8 @@
       (. event (preventDefault))
       (. event (stopPropagation)))))
 
-(defn install-keyhandler []
-  (events/listen (goog.events.KeyHandler. (dom/getDocument))
+(defn install-keyhandler [document]
+  (events/listen (goog.events.KeyHandler. document)
                  goog.events.KeyHandler.EventType.KEY
                  handle-key))
 
@@ -396,6 +396,9 @@
      </div>
      <div id=\"presenter-times\" class=\"presenter-label\">
        <div id=\"presenter-elapsed-time\"><span>0:00:00</span></div>
+       <div id=\"presenter-elapsed-time-reset-container\">
+         <a href=\"#\" id=\"presenter-elapsed-time-reset\">reset</a>
+       </div>
        <div id=\"presenter-clock-time\"><span></span></div>
      </div>
   </body>
@@ -419,26 +422,35 @@
            (. now (getMinutes))
            (.. now (getSeconds))
            (if (< 12 (. now (getHours)))
-             "PM" "AM")))))
+             "pm" "am")))))
+
+(defn elapsed-time-string []
+  (let [elapsed (- (.getTime (js/Date.)) @presenter-start-time)
+        secs (mod (/ elapsed 1000) 60)
+        mins (mod (/ elapsed (* 60 1000)) 60)
+        hours (/ elapsed (* 60 60 1000))]
+    (goog.string.format
+     "<span>%d:%02d:%02d</span>"
+     hours mins secs)))
 
 (defn update-presenter-elapsed-time [win]
-  (when @presenter-start-time
-   (let [elem (.. win -document
-                  (getElementById "presenter-elapsed-time"))
-         elapsed (- (.getTime (js/Date.)) @presenter-start-time)
-         secs (mod (/ elapsed 1000) 60)
-         mins (mod (/ elapsed (* 60 1000)) 60)
-         hours (/ elapsed (* 60 60 1000))]
-     (set! (. elem -innerHTML)
-           (goog.string.format
-            "<span>%d:%02d:%02d</span>"
-            hours mins secs)))))
+  (let [elem (.. win -document
+                 (getElementById "presenter-elapsed-time"))]
+    (set! (. elem -innerHTML)
+          (if @presenter-start-time
+            (elapsed-time-string)
+            "<span>0:00:00</span>")))  )
 
 (defn update-presenter-clock []
   (when-let [win (get-presenter-window)]
     (update-presenter-clock-time win)
     (update-presenter-elapsed-time win)
     (. js/window (setTimeout update-presenter-clock 1000))))
+
+(defn reset-elapsed-time []
+  (reset! presenter-start-time nil)
+  (when-let [win (get-presenter-window)]
+    (update-presenter-elapsed-time win)))
 
 (defn show-presenter-slides []
   (when-let [win (get-presenter-window)]
@@ -463,7 +475,11 @@
           (. doc (write presenter-display-html))
           (add-stylesheets (get @stylesheet-urls "common") doc)
           (add-stylesheets (get @stylesheet-urls "projection") doc)
-          (add-stylesheets (get @stylesheet-urls "presenter") doc))
+          (add-stylesheets (get @stylesheet-urls "presenter") doc)
+          (install-keyhandler doc)
+          (events/listen (.getElementById doc "presenter-elapsed-time-reset")
+                         goog.events.EventType.CLICK
+                         (fire-handler :reset-elapsed-time)))
         (show-presenter-slides)
         (update-presenter-clock))))
 
@@ -480,7 +496,8 @@
   (dispatch/react-to #{:show-control-panel} (fn [id _] (show-control-panel)))
   (dispatch/react-to #{:hide-control-panel} (fn [id _] (hide-control-panel)))
   (dispatch/react-to #{:change-mode} (fn [id _] (change-mode)))
-  (dispatch/react-to #{:show-presenter-window} (fn [id _] (show-presenter-window))))
+  (dispatch/react-to #{:show-presenter-window} (fn [id _] (show-presenter-window)))
+  (dispatch/react-to #{:reset-elapsed-time} (fn [id _] (reset-elapsed-time))))
 
 ;;; INITIAL SETUP
 
@@ -524,6 +541,6 @@
   (info "Installing key handler")
   (install-event-handlers)
   (install-control-panel)
-  (install-keyhandler))
+  (install-keyhandler (dom/getDocument)))
 
 (main)
