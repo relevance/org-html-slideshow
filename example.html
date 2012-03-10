@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Example Presentation"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-03-09 18:48:13 EST"/>
+<meta name="generated" content="2012-03-10 12:42:11 EST"/>
 <meta name="author" content="Stuart Sierra"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -48,26 +48,31 @@
 </ul></li>
 </ul>
 </li>
-<li><a href="#sec-2">2 Source Code</a>
+<li><a href="#sec-2">2 Presenter Notes</a>
 <ul>
-<li><a href="#sec-2-1">2.1 Syntax Highlighting</a></li>
-<li><a href="#sec-2-2">2.2 Syntax Highlighting with CSS Classes</a></li>
+<li><a href="#sec-2-1">2.1 Notes</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3 Images</a>
+<li><a href="#sec-3">3 Source Code</a>
 <ul>
-<li><a href="#sec-3-1">3.1 Slide with Image</a></li>
+<li><a href="#sec-3-1">3.1 Syntax Highlighting</a></li>
+<li><a href="#sec-3-2">3.2 Syntax Highlighting with CSS Classes</a></li>
 </ul>
 </li>
-<li><a href="#sec-4">4 Styling</a>
+<li><a href="#sec-4">4 Images</a>
 <ul>
-<li><a href="#sec-4-1">4.1 Org-Mode Tag as CSS Class</a></li>
+<li><a href="#sec-4-1">4.1 Slide with Image</a></li>
 </ul>
 </li>
-<li><a href="#sec-5">5 Placing Stylesheets/JavaScript</a>
+<li><a href="#sec-5">5 Styling</a>
 <ul>
-<li><a href="#sec-5-1">5.1 Warning About Hidden Headlines</a></li>
-<li><a href="#sec-5-2">5.2 The End</a></li>
+<li><a href="#sec-5-1">5.1 Org-Mode Tag as CSS Class</a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6 Placing Stylesheets/JavaScript</a>
+<ul>
+<li><a href="#sec-6-1">6.1 Warning About Hidden Headlines</a></li>
+<li><a href="#sec-6-2">6.2 The End</a></li>
 </ul>
 </li>
 </ul>
@@ -196,8 +201,44 @@ This slide is a <b>level-3</b> Org-Mode heading, inside the previous one.
 </div>
 
 <div id="outline-container-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Source Code &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<h2 id="sec-2"><span class="section-number-2">2</span> Presenter Notes &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
 <div class="outline-text-2" id="text-2">
+
+
+<ul>
+<li>Slides can have presenter notes
+</li>
+<li>Add a sub-heading with the <code>:notes:</code> tag
+</li>
+</ul>
+
+
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Notes &nbsp;&nbsp;&nbsp;<span class="tag"><span class="notes">notes</span></span></h3>
+<div class="outline-text-3" id="text-2-1">
+
+
+<ul>
+<li>Presenter notes for this slide
+</li>
+<li>Not part of the slide
+</li>
+<li>Displayed in Presenter Preview window
+</li>
+</ul>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Source Code &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div class="outline-text-2" id="text-3">
 
 
 <p>
@@ -206,17 +247,17 @@ Use <code>begin_src/end_src</code> blocks to include source code.
 
 
 
-<pre class="src src-clojure">(<span style="color: #CDA869;">defn</span> <span style="color: #9B703F;">example</span> []
-  (<span style="color: #7587A6;">println</span> <span style="color: #8F9D6A;">"This is sample source code."</span>))
+<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">example</span> []
+  (<span class="org-variable-name">println</span> <span class="org-string">"This is sample source code."</span>))
 </pre>
 
 
 
 </div>
 
-<div id="outline-container-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Syntax Highlighting &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
-<div class="outline-text-3" id="text-2-1">
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Syntax Highlighting &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-3-1">
 
 
 <ul>
@@ -236,9 +277,9 @@ Use <code>begin_src/end_src</code> blocks to include source code.
 
 </div>
 
-<div id="outline-container-2-2" class="outline-3">
-<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Syntax Highlighting with CSS Classes &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
-<div class="outline-text-3" id="text-2-2">
+<div id="outline-container-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Syntax Highlighting with CSS Classes &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-3-2">
 
 
 <ul>
@@ -270,9 +311,9 @@ Use <code>begin_src/end_src</code> blocks to include source code.
 
 </div>
 
-<div id="outline-container-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Images &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Images &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div class="outline-text-2" id="text-4">
 
 
 <ul>
@@ -305,9 +346,9 @@ Use <code>begin_src/end_src</code> blocks to include source code.
 
 </div>
 
-<div id="outline-container-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Slide with Image &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
-<div class="outline-text-3" id="text-3-1">
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Slide with Image &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-4-1">
 
 
 <p>
@@ -324,9 +365,9 @@ This example image is public-domain <a href="http://openclipart.org/detail/16555
 
 </div>
 
-<div id="outline-container-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Styling &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Styling &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div class="outline-text-2" id="text-5">
 
 
 <ul>
@@ -340,9 +381,9 @@ This example image is public-domain <a href="http://openclipart.org/detail/16555
 
 </div>
 
-<div id="outline-container-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Org-Mode Tag as CSS Class &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span>&nbsp;<span class="blue_background">blue_background</span></span></h3>
-<div class="outline-text-3" id="text-4-1">
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Org-Mode Tag as CSS Class &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span>&nbsp;<span class="blue_background">blue_background</span></span></h3>
+<div class="outline-text-3" id="text-5-1">
 
 
 <ul>
@@ -368,9 +409,9 @@ This example image is public-domain <a href="http://openclipart.org/detail/16555
 
 </div>
 
-<div id="outline-container-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> Placing Stylesheets/JavaScript &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Placing Stylesheets/JavaScript &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div class="outline-text-2" id="text-6">
 
 
 <p>
@@ -382,9 +423,9 @@ They must go at the bottom because the Google Closure Library does not support a
 
 </div>
 
-<div id="outline-container-5-1" class="outline-3">
-<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Warning About Hidden Headlines &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
-<div class="outline-text-3" id="text-5-1">
+<div id="outline-container-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Warning About Hidden Headlines &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-6-1">
 
 
 <p>
@@ -407,9 +448,9 @@ See <a href="http://orgmode.org/manual/Comment-lines.html">Comment lines</a> and
 
 </div>
 
-<div id="outline-container-5-2" class="outline-3">
-<h3 id="sec-5-2"><span class="section-number-3">5.2</span> The End &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
-<div class="outline-text-3" id="text-5-2">
+<div id="outline-container-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> The End &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-6-2">
 
 
 <p>
@@ -427,7 +468,7 @@ Sometimes it's safest to add an "empty" heading at the end of your document to m
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-03-09 18:48:13 EST</p>
+<p class="date">Date: 2012-03-10 12:42:11 EST</p>
 <p class="author">Author: Stuart Sierra</p>
 <p class="creator">Org version 7.8.02 with Emacs version 23</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
