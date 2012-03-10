@@ -68,7 +68,11 @@ headline.
 
 Additional tags will be added as CSS classes on the slides.
 
-Read more about [tags in the Org-Mode manual](http://orgmode.org/manual/Tags.html).
+Read more about [tags](http://orgmode.org/manual/Tags.html)
+in the Org-Mode manual.
+
+See the files `example.org` and `example.html` for more examples of
+things you can do with Org-Mode.
 
 
 Exporting to HTML
@@ -77,7 +81,8 @@ Exporting to HTML
 Type `C-c C-e h` in your .org file to export as HTML. Repeat whenever
 you modify the .org file.
 
-Read more about [HTML export in the Org-Mode manual](http://orgmode.org/manual/HTML-export.html).
+Read more about [HTML export](http://orgmode.org/manual/HTML-export.html)
+in the Org-Mode manual.
 
 
 Playing the Slide Show
@@ -104,6 +109,13 @@ presenter preview" link. This will open a new window showing the
 currently visible slide, upcoming slide, wall clock time, and elapsed
 time since the presentation began.
 
+
+Presenter Notes
+--------------------
+
+Add a sub-heading with the tag `:notes:` beneath a `:slide:`
+heading. The content under the notes heading will be displayed in the
+Presenter Preview window with the slide.
 
 
 Changing Styles
@@ -179,9 +191,9 @@ TODO
 * Better stylesheets
 * ? key to display on-screen help
 * click mouse to advance slides
-* Link visible in original document to begin slide show
 * "Slide X of N" display
 * Jump to slide from a list
+* Link visible in original document to begin slide show?
 * Slide transitions?
 * Animation?
 
