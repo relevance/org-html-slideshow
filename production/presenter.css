@@ -49,14 +49,14 @@ body.presenter-display {
 
 #presenter-times {
    bottom: 1%;
-   font-size: 3em;
+   font-size: 2.5em;
    position: absolute;
    text-align: center;
    height: 19%;
    width: 98%;
 }
 
-#presenter-elapsed-time {
+#presenter-elapsed-time-container {
    position: absolute;
    left: 1%;
    width: 45%;
@@ -68,12 +68,13 @@ body.presenter-display {
    width: 45%;
 }
 
+#presenter-clock-time-ampm {
+   font-size: 0.5em;
+}
+
 #presenter-elapsed-time-reset-container {
    font-size: 12pt;
-   position: absolute;
-   left: 1%;
-   bottom: 1%;
-   width: 45%;
+   display: block;
 }
 
 a#presenter-elapsed-time-reset {
