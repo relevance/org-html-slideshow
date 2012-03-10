@@ -104,9 +104,6 @@ presenter preview" link. This will open a new window showing the
 currently visible slide, upcoming slide, wall clock time, and elapsed
 time since the presentation began.
 
-Even with the presenter preview window open, the main slide show
-window **must** be focused (the "active" window) in order for the
-keyboard commands to work.
 
 
 Changing Styles
