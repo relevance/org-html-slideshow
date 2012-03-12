@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Example Presentation"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-03-10 12:42:11 EST"/>
+<meta name="generated" content="2012-03-12 19:11:09 EDT"/>
 <meta name="author" content="Stuart Sierra"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -50,7 +50,10 @@
 </li>
 <li><a href="#sec-2">2 Presenter Notes</a>
 <ul>
-<li><a href="#sec-2-1">2.1 Notes</a></li>
+<li><a href="#sec-2-1">2.1 A Slide with Notes</a>
+<ul>
+<li><a href="#sec-2-1-1">2.1.1 Notes</a></li>
+</ul></li>
 </ul>
 </li>
 <li><a href="#sec-3">3 Source Code</a>
@@ -217,20 +220,39 @@ This slide is a <b>level-3</b> Org-Mode heading, inside the previous one.
 </div>
 
 <div id="outline-container-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Notes &nbsp;&nbsp;&nbsp;<span class="tag"><span class="notes">notes</span></span></h3>
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> A Slide with Notes &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
 <div class="outline-text-3" id="text-2-1">
+
+
+<ul>
+<li>This slide has notes
+</li>
+<li>Notes are only visible to presenter
+</li>
+</ul>
+
+
+
+</div>
+
+<div id="outline-container-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> Notes &nbsp;&nbsp;&nbsp;<span class="tag"><span class="notes">notes</span></span></h4>
+<div class="outline-text-4" id="text-2-1-1">
 
 
 <ul>
 <li>Presenter notes for this slide
 </li>
-<li>Not part of the slide
+<li>Not displayed as part of the slide
 </li>
 <li>Displayed in Presenter Preview window
+</li>
+<li>Only one <code>:notes:</code> section per slide allowed
 </li>
 </ul>
 
 
+</div>
 </div>
 </div>
 
@@ -247,8 +269,8 @@ Use <code>begin_src/end_src</code> blocks to include source code.
 
 
 
-<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">example</span> []
-  (<span class="org-variable-name">println</span> <span class="org-string">"This is sample source code."</span>))
+<pre class="src src-clojure">(<span style="color: #CDA869;">defn</span> <span style="color: #9B703F;">example</span> []
+  (<span style="color: #7587A6;">println</span> <span style="color: #8F9D6A;">"This is sample source code."</span>))
 </pre>
 
 
@@ -283,11 +305,13 @@ Use <code>begin_src/end_src</code> blocks to include source code.
 
 
 <ul>
-<li>Set the Emacs variable:
+<li>Set the Emacs variable 
 <ul>
-<li><code>org-export-htmlize-output-type</code>
+<li><code>org-export-htmlize-output-type</code> 
 </li>
 <li>to the symbol <code>css</code>
+</li>
+<li>(Does not work as a buffer-local variable)
 </li>
 </ul>
 
@@ -468,7 +492,7 @@ Sometimes it's safest to add an "empty" heading at the end of your document to m
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-03-10 12:42:11 EST</p>
+<p class="date">Date: 2012-03-12 19:11:09 EDT</p>
 <p class="author">Author: Stuart Sierra</p>
 <p class="creator">Org version 7.8.02 with Emacs version 23</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>

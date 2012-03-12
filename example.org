@@ -47,8 +47,13 @@ This slide is a *level-3* Org-Mode heading, inside the previous one.
 
 - Slides can have presenter notes
 - Add a sub-heading with the =:notes:= tag
+  
+** A Slide with Notes                                                 :slide:
 
-** Notes                                                              :notes:
+- This slide has notes
+- Notes are only visible to presenter
+
+*** Notes                                                             :notes:
 
 - Presenter notes for this slide
 - Not displayed as part of the slide
@@ -72,9 +77,10 @@ Use =begin_src/end_src= blocks to include source code.
 
 ** Syntax Highlighting with CSS Classes                               :slide:
 
-- Set the Emacs variable:
-  - =org-export-htmlize-output-type=
+- Set the Emacs variable 
+  - =org-export-htmlize-output-type= 
   - to the symbol =css=
+  - (Does not work as a buffer-local variable)
 - Htmlize.el will add SPAN tags with CSS classes
   - Named for each font face, e.g. =org-comment=
 - Examine HTML output to see class names
