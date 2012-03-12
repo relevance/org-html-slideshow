@@ -248,8 +248,10 @@
     div))
 
 (defn slide-notes-html [slide-div-elem]
-  (if-let [div (first (filter #(classes/has % "notes")
-                                (dom-tags "div" nil slide-div-elem)))]
+  (if-let [div (first (filter (fn [elem]
+                                (and (= "DIV" (.-nodeName elem))
+                                     (classes/has elem "notes")))
+                              (.-children slide-div-elem)))]
     (dom/getOuterHtml div)
     ""))
 
