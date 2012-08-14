@@ -538,6 +538,15 @@
     (doseq [elem (dom-tags "div" (str "outline-text-" i))]
       (classes/add elem "outline-text"))))
 
+(defn remove-heading-spaces
+  "Remove extraneous &nbsp; from org-mode headlines"
+  []
+  (doseq [n (range 1 9)
+          elem (dom-tags (str "h" n))]
+    (set! (.-innerHTML elem)
+          (.replace (.-innerHTML elem)
+                    (js/RegExp. "&nbsp;" "g") ""))))
+
 
 ;;; MAIN
 
@@ -551,6 +560,7 @@
   (add-image-classes)
   (copy-heading-tags-to-div-classes)
   (add-outline-text-class)
+  (remove-heading-spaces)
   (install-folds)
   (. (body-elem)
      (appendChild (dom/htmlToDocumentFragment current-slide-div-html)))
