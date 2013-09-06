@@ -228,16 +228,12 @@
 
 (def heading-tag-names (set (map #(str "H" %) (range 1 9))))
 
-(defn nearest-inside-heading [elem]
-  (if (contains? heading-tag-names (. elem -nodeName))
-    elem
-    (recur (next-elem elem))))
-
 (defn copy-heading-tags-to-div-classes []
   (doseq [tags (dom-tags "span" "tag")]
     (let [div (nearest-containing-div tags)]
-      (doseq [tag (dom-tags "span" nil tags)]
-        (classes/add div (classes/get tag))))))
+      (when-not (= "text-table-of-contents" (.-id div))
+        (doseq [tag (dom-tags "span" nil tags)]
+          (classes/add div (classes/get tag)))))))
 
 (defn remove-nested-sections [slide-div-elem]
   (let [div (. slide-div-elem (cloneNode true))]
@@ -257,7 +253,7 @@
 
 (defn get-slides []
   (vec (map (fn [elem]
-              {:id  (. (nearest-inside-heading elem) -id)
+              {:id  (. elem -id)
                :html (dom/getOuterHtml (remove-nested-sections elem))
                :notes-html (slide-notes-html elem)})
             (dom-tags "div" "slide"))))
