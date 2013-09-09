@@ -534,14 +534,19 @@
     (doseq [elem (dom-tags "div" (str "outline-text-" i))]
       (classes/add elem "outline-text"))))
 
+(defn remove-nbsp [elem]
+      (set! (.-innerHTML elem)
+          (.replace (.-innerHTML elem)
+                    (js/RegExp. "&nbsp;" "g") "")))
+
 (defn remove-heading-spaces
   "Remove extraneous &nbsp; from org-mode headlines"
   []
   (doseq [n (range 1 9)
           elem (dom-tags (str "h" n))]
-    (set! (.-innerHTML elem)
-          (.replace (.-innerHTML elem)
-                    (js/RegExp. "&nbsp;" "g") ""))))
+    (remove-nbsp elem))
+  (doseq [elem (dom-tags "a" nil (dom/getElement "table-of-contents"))]
+    (remove-nbsp elem)))
 
 
 ;;; MAIN
