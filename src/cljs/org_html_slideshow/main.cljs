@@ -266,9 +266,12 @@
                       @slides)))
 
 (defn current-slide []
-  (let [fragment-id (location-fragment)]
-    (or (slide-from-id fragment-id)
-        (and (seq fragment-id) (find-slide-after fragment-id))
+  (let [fragment-id (location-fragment)
+        target-id (if (string/startsWith fragment-id "outline-container-")
+                    fragment-id
+                    (str "outline-container-" fragment-id))]
+    (or (slide-from-id target-id)
+        (and (seq fragment-id) (find-slide-after target-id))
         (first @slides))))
 
 (defn next-slide []
