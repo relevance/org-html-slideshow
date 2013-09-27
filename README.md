@@ -1,5 +1,4 @@
-Org-HTML-Slideshow
-========================================
+# Org-HTML-Slideshow
 
 You have an outline written in Emacs Org-Mode.  Export it to HTML. Add
 Org-HTML-Slideshow, and you have an interactive slide presentation
@@ -9,24 +8,24 @@ Supports anything Org-Mode can export: bulleted lists, code blocks,
 images, etc.
 
 Should work in most modern web browsers; tested only in Google Chrome
-18.0.1025.11 beta.
+29.0.1547.76.
 
 Org-HTML-Slideshow is written in
 [ClojureScript](https://github.com/clojure/clojurescript).
 
 
-Recommended Emacs Platform
-========================================
 
-* [GNU Emacs](http://www.gnu.org/software/emacs/) version 23+
+## Recommended Emacs Platform
+
+* [GNU Emacs](http://www.gnu.org/software/emacs/) version 24+
   * Check version with `M-x emacs-version`
-* [Org-Mode](http://orgmode.org/) version 7+
+* [Org-Mode](http://orgmode.org/) version 8+
   * Check version by opening an .org file and `M-x org-version`
 * [Htmlize](http://www.emacswiki.org/emacs/Htmlize) version 1.37+
 
 
-Using in Your Org-mode Files
-========================================
+
+## Using in Your Org-mode Files
 
 **Step 1.** Copy the following files from the `production` directory
 to the directory containing your .org file:
@@ -41,26 +40,25 @@ to the directory containing your .org file:
 
     #+TAGS: slide(s)
 
-    #+STYLE: <link rel="stylesheet" type="text/css" href="common.css" />
-    #+STYLE: <link rel="stylesheet" type="text/css" href="screen.css" media="screen" />
-    #+STYLE: <link rel="stylesheet" type="text/css" href="projection.css" media="projection" />
-    #+STYLE: <link rel="stylesheet" type="text/css" href="presenter.css" media="presenter" />
+    #+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="common.css" />
+    #+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="screen.css" media="screen" />
+    #+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="projection.css" media="projection" />
+    #+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="presenter.css" media="presenter" />
 
     #+BEGIN_HTML
     <script type="text/javascript" src="org-html-slideshow.js"></script>
     #+END_HTML
 
     # Local Variables:
-    # org-export-html-style-include-default: nil
-    # org-export-html-style-include-scripts: nil
+    # org-html-head-include-default-style: nil
+    # org-html-head-include-scripts: nil
     # End:
 
 **Step 3.** Close and re-open your .org file. Type `y` to accept the
 buffer-local variables.
 
 
-Adding Tags to Your Org-Mode File
----------------------------------
+### Adding Tags to Your Org-Mode File
 
 For each org-mode headline that you want to make into a slide, add the
 `:slide:` tag by typing `C-c C-c s RET` with the cursor on the
@@ -75,8 +73,7 @@ See the files `example.org` and `example.html` for more examples of
 things you can do with Org-Mode.
 
 
-Exporting to HTML
------------------
+### Exporting to HTML
 
 Type `C-c C-e h` in your .org file to export as HTML. Repeat whenever
 you modify the .org file.
@@ -85,8 +82,7 @@ Read more about [HTML export](http://orgmode.org/manual/HTML-export.html)
 in the Org-Mode manual.
 
 
-Playing the Slide Show
-----------------------
+### Playing the Slide Show
 
 Open the generated HTML file in your browser and type `t` to begin the
 slide show.
@@ -101,8 +97,7 @@ Move the mouse to the lower right-hand corner of the screen to show a
 control panel with links to navigate the slide show by mouse.
 
 
-Presenter Preview
---------------------
+### Presenter Preview
 
 While playing the slide show, click on the control panel's "Open
 presenter preview" link. This will open a new window showing the
@@ -110,16 +105,14 @@ currently visible slide, upcoming slide, wall clock time, and elapsed
 time since the presentation began.
 
 
-Presenter Notes
---------------------
+### Presenter Notes
 
 Add a sub-heading with the tag `:notes:` beneath a `:slide:`
 heading. The content under the notes heading will be displayed in the
 Presenter Preview window with the slide.
 
 
-Changing Styles
---------------------
+### Changing Styles
 
 You can modify the appearance of your slides by editing the stylesheets:
 
@@ -129,14 +122,14 @@ You can modify the appearance of your slides by editing the stylesheets:
 * `presenter.css` affects only the presenter preview
 
 
-Development
-========================================
+
+## Development
 
 To develop and build org-html-slides, you will need the following
 programs already installed:
 
 * [Git][git]
-* [Leiningen][lein] 1.6.2 or later
+* [Leiningen][lein] 2.0.0 or later
 * [Java Development Kit][jdk] (JDK) 1.6 or later
 
 [git]: http://git-scm.com/
@@ -151,63 +144,53 @@ to download additional dependencies:
     lein deps
 
 
-Rebuilding Development Examples
--------------------------------
+### Rebuilding Development Examples
 
-Launch a Clojure REPL with:
+Build the development version (one file, unoptimized, readable
+JavaScript source) with:
 
-    lein repl
+    lein cljsbuild once development
 
-Then run the build with:
+The JavaScript file will be written to `out/development/org-html-slideshow.js`.
 
-    (use 'build)
-    (build :development)
-
-You will need [Emacs](http://www.gnu.org/software/emacs/) (version 23+ recommended) and
-[org-mode](http://orgmode.org/) (version 7+ recommended) to generate the HTML.
+You will need [Emacs](http://www.gnu.org/software/emacs/) (version 24+ recommended) and
+[org-mode](http://orgmode.org/) (version 8+ recommended) to generate the HTML.
 
 Open `example.org` in Emacs and type `C-c C-e b`.  Emacs will generate
 an HTML file and open it in your default browser. Type `t` to begin
 the slide show.
 
 
-Rebuilding Production Files
----------------------------
+### Rebuilding Production Files
 
-Launch a Clojure REPL with:
+Build the production version (one file, optimized, not human-readable)
+with:
 
-    lein repl
+    lein cljsbuild once production
 
-Then run the build with:
-
-    (use 'build)
-    (build :production)
+The JavaScript file will be written to `production/org-html-slideshow.js`.
 
 
+## Change Log
 
-TODO
-========================================
+### 27-Sept-2013: Switch to Emacs 24 and Org-mode 8
 
-* Better stylesheets
-* ? key to display on-screen help
-* click mouse to advance slides
-* "Slide X of N" display
-* Jump to slide from a list
-* Link visible in original document to begin slide show?
-* Slide transitions?
-* Animation?
+Org-mode 8 introduced breaking changes in the way it exports HTML,
+necessitating breaking changes in org-html-slideshow.
+
+For Emacs 23 and Org-mode 7, use a version of org-html-slideshow at or
+before Git commit 2851247f5c6c1a858580721bdb9ba9171db817fe.
 
 
 
-Copyright & Contributions
-========================================
+## Copyright & Contributions
 
-There is no copyright. I dedicate this work to the public domain. If
-you want me to use your fixes/improvements, you must do the same.
+There is no copyright. I dedicate this work to the public domain. 
+
+I am not actively developing new features for this project.
 
 
-Contributors
---------------------
+### Contributors
 
 * Stuart Sierra (primary author)
 * Craig Andera
