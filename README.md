@@ -139,11 +139,10 @@ programs already installed:
 [jdk]: http://www.oracle.com/technetwork/java/javase/downloads/index.html
 
 
-In the top-level directory of this project, run the following commands
+In the top-level directory of this project, run the following command
 to download additional dependencies:
 
     git submodule update
-    lein deps
 
 
 ### Rebuilding Development Examples
