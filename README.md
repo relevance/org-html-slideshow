@@ -38,6 +38,8 @@ to the directory containing your .org file:
 
 **Step 2.** Add the following lines to the **bottom** of your .org file:
 
+    #+OPTIONS: num:nil tags:t
+
     #+TAGS: slide(s)
 
     #+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="common.css" />
