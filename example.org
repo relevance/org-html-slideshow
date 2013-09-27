@@ -136,19 +136,21 @@ See [[http://orgmode.org/manual/Comment-lines.html][Comment lines]] and [[http:/
 
 Sometimes it's safest to add an "empty" heading at the end of your document to make sure the stylesheets and JavaScript are included.
 
+#+OPTIONS: num:nil toc:nil tags:t
+
 #+TAGS: slide(s)
 
-#+STYLE: <link rel="stylesheet" type="text/css" href="src/css/common.css" />
-#+STYLE: <link rel="stylesheet" type="text/css" href="src/css/screen.css" media="screen" />
-#+STYLE: <link rel="stylesheet" type="text/css" href="src/css/projection.css" media="projection" />
-#+STYLE: <link rel="stylesheet" type="text/css" href="src/css/presenter.css" media="presenter" />
+#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="src/css/common.css" />
+#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="src/css/screen.css" media="screen" />
+#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="src/css/projection.css" media="projection" />
+#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="src/css/presenter.css" media="presenter" />
 
 #+BEGIN_HTML
 <script type="text/javascript" src="production/org-html-slideshow.js"></script>
 #+END_HTML
 
 # Local Variables:
-# org-export-html-style-include-default: nil
-# org-export-html-style-include-scripts: nil
+# org-html-head-include-default-style: nil
+# org-html-head-include-scripts: nil
 # buffer-file-coding-system: utf-8-unix
 # End:

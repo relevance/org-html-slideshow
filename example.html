@@ -1,246 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Example Presentation</title>
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-<meta name="title" content="Example Presentation"/>
-<meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-03-12 19:11:09 EDT"/>
-<meta name="author" content="Stuart Sierra"/>
-<meta name="description" content=""/>
-<meta name="keywords" content=""/>
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
 
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
 <link rel="stylesheet" type="text/css" href="src/css/common.css" />
 <link rel="stylesheet" type="text/css" href="src/css/screen.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="src/css/projection.css" media="projection" />
 <link rel="stylesheet" type="text/css" href="src/css/presenter.css" media="presenter" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012  Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
 
 
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
 </head>
 <body>
-
-<div id="preamble">
-
-</div>
-
 <div id="content">
 <h1 class="title">Example Presentation</h1>
-
-
 <p>Type <strong>T</strong> to begin the slide show.</p>
 
-
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#sec-1">1 Org-HTML-Slideshow</a>
-<ul>
-<li><a href="#sec-1-1">1.1 Making Slides</a></li>
-<li><a href="#sec-1-2">1.2 Headlines Don't Have to be Slides</a></li>
-<li><a href="#sec-1-3">1.3 Use Lists For Bullets</a></li>
-<li><a href="#sec-1-4">1.4 Or Low-Level Headings</a></li>
-<li><a href="#sec-1-5">1.5 Slides Can Be Nested</a>
-<ul>
-<li><a href="#sec-1-5-1">1.5.1 Slide Headings Can Be Nested</a></li>
-</ul></li>
-</ul>
-</li>
-<li><a href="#sec-2">2 Presenter Notes</a>
-<ul>
-<li><a href="#sec-2-1">2.1 A Slide with Notes</a>
-<ul>
-<li><a href="#sec-2-1-1">2.1.1 Notes</a></li>
-</ul></li>
-</ul>
-</li>
-<li><a href="#sec-3">3 Source Code</a>
-<ul>
-<li><a href="#sec-3-1">3.1 Syntax Highlighting</a></li>
-<li><a href="#sec-3-2">3.2 Syntax Highlighting with CSS Classes</a></li>
-</ul>
-</li>
-<li><a href="#sec-4">4 Images</a>
-<ul>
-<li><a href="#sec-4-1">4.1 Slide with Image</a></li>
-</ul>
-</li>
-<li><a href="#sec-5">5 Styling</a>
-<ul>
-<li><a href="#sec-5-1">5.1 Org-Mode Tag as CSS Class</a></li>
-</ul>
-</li>
-<li><a href="#sec-6">6 Placing Stylesheets/JavaScript</a>
-<ul>
-<li><a href="#sec-6-1">6.1 Warning About Hidden Headlines</a></li>
-<li><a href="#sec-6-2">6.2 The End</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Org-HTML-Slideshow &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Org-HTML-Slideshow&#xa0;&#xa0;&#xa0;<span class="tag"><span class="slide">slide</span></span></h2>
 <div class="outline-text-2" id="text-1">
-
-
 <p>
 Make slides from Emacs Org-Mode!
 </p>
-
 </div>
 
-<div id="outline-container-1-1" class="outline-3">
-<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Making Slides &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">Making Slides&#xa0;&#xa0;&#xa0;<span class="tag"><span class="slide">slide</span></span></h3>
 <div class="outline-text-3" id="text-1-1">
-
-
 <p>
 Org-Mode headlines with the <code>:slide:</code> tag will become slides.
 </p>
 </div>
-
 </div>
-
-<div id="outline-container-1-2" class="outline-3">
-<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Headlines Don't Have to be Slides</h3>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">Headlines Don't Have to be Slides</h3>
 <div class="outline-text-3" id="text-1-2">
-
-
 <p>
 This section doesn't have a <code>:slide:</code> tag, so it will <b>not</b> become a slide, although it is still part of the exported HTML document.
 </p>
 </div>
-
 </div>
-
-<div id="outline-container-1-3" class="outline-3">
-<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Use Lists For Bullets &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3">Use Lists For Bullets&#xa0;&#xa0;&#xa0;<span class="tag"><span class="slide">slide</span></span></h3>
 <div class="outline-text-3" id="text-1-3">
-
-
-<ul>
+<ul class="org-ul">
 <li>Use Org-Mode lists for bullet points
 </li>
 <li>You can make nested bullet lists
-<ul>
+<ul class="org-ul">
 <li>With sub-lists
 </li>
 <li>Like this
 </li>
 </ul>
-
 </li>
 </ul>
-
-
 </div>
-
 </div>
-
-<div id="outline-container-1-4" class="outline-3">
-<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Or Low-Level Headings &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4">Or Low-Level Headings&#xa0;&#xa0;&#xa0;<span class="tag"><span class="slide">slide</span></span></h3>
 <div class="outline-text-3" id="text-1-4">
+</div><ul class="org-ul"><li>By default<br  /><ul class="org-ul"><li>Org-Mode headings below level 3<br  /><ul class="org-ul"><li>Become bullets<br  /></li>
+<li>Meaning they <b>cannot</b> be slides<br  /></li></ul>
+</li></ul>
+</li>
 
-
-<ul>
-<li id="sec-1-4-1">By default<br/>
-<ul>
-<li id="sec-1-4-1-1">Org-Mode headings below level 3<br/>
-<ul>
-<li id="sec-1-4-1-1-1">Become bullets<br/>
-</li>
-</ul>
-<ul>
-<li id="sec-1-4-1-1-2">Meaning they <b>cannot</b> be slides<br/>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li id="sec-1-4-2">This is configurable<br/>
-<ul>
-<li id="sec-1-4-2-1">See <a href="http://orgmode.org/manual/Export-options.html">Export Options in the Org-Mode manual</a><br/>
-
-</li>
-</ul>
-</li>
-</ul>
+<li>This is configurable<br  /><ul class="org-ul"><li>See <a href="http://orgmode.org/manual/Export-options.html">Export Options in the Org-Mode manual</a><br  /></li></ul>
+</li></ul>
 </div>
-
-</div>
-
-<div id="outline-container-1-5" class="outline-3">
-<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Slides Can Be Nested &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5">Slides Can Be Nested&#xa0;&#xa0;&#xa0;<span class="tag"><span class="slide">slide</span></span></h3>
 <div class="outline-text-3" id="text-1-5">
-
-
 <p>
 You can use the structure of the Org-Mode document to group your slides.
 </p>
+
 <p>
 For example, this slide is a <b>level-2</b> Org-Mode heading.
 </p>
-
 </div>
 
-<div id="outline-container-1-5-1" class="outline-4">
-<h4 id="sec-1-5-1"><span class="section-number-4">1.5.1</span> Slide Headings Can Be Nested &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h4>
+<div id="outline-container-sec-1-5-1" class="outline-4">
+<h4 id="sec-1-5-1">Slide Headings Can Be Nested&#xa0;&#xa0;&#xa0;<span class="tag"><span class="slide">slide</span></span></h4>
 <div class="outline-text-4" id="text-1-5-1">
-
-
 <p>
 This slide is a <b>level-3</b> Org-Mode heading, inside the previous one.
 </p>
 </div>
 </div>
 </div>
-
 </div>
-
-<div id="outline-container-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Presenter Notes &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Presenter Notes&#xa0;&#xa0;&#xa0;<span class="tag"><span class="slide">slide</span></span></h2>
 <div class="outline-text-2" id="text-2">
-
-
-<ul>
+<ul class="org-ul">
 <li>Slides can have presenter notes
 </li>
 <li>Add a sub-heading with the <code>:notes:</code> tag
 </li>
 </ul>
-
-
-
 </div>
 
-<div id="outline-container-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> A Slide with Notes &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1">A Slide with Notes&#xa0;&#xa0;&#xa0;<span class="tag"><span class="slide">slide</span></span></h3>
 <div class="outline-text-3" id="text-2-1">
-
-
-<ul>
+<ul class="org-ul">
 <li>This slide has notes
 </li>
 <li>Notes are only visible to presenter
 </li>
 </ul>
-
-
-
 </div>
 
-<div id="outline-container-2-1-1" class="outline-4">
-<h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> Notes &nbsp;&nbsp;&nbsp;<span class="tag"><span class="notes">notes</span></span></h4>
+<div id="outline-container-sec-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1">Notes&#xa0;&#xa0;&#xa0;<span class="tag"><span class="notes">notes</span></span></h4>
 <div class="outline-text-4" id="text-2-1-1">
-
-
-<ul>
+<ul class="org-ul">
 <li>Presenter notes for this slide
 </li>
 <li>Not displayed as part of the slide
@@ -250,63 +250,46 @@ This slide is a <b>level-3</b> Org-Mode heading, inside the previous one.
 <li>Only one <code>:notes:</code> section per slide allowed
 </li>
 </ul>
-
-
 </div>
 </div>
 </div>
-
 </div>
-
-<div id="outline-container-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Source Code &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Source Code&#xa0;&#xa0;&#xa0;<span class="tag"><span class="slide">slide</span></span></h2>
 <div class="outline-text-2" id="text-3">
-
-
 <p>
 Use <code>begin_src/end_src</code> blocks to include source code.
 </p>
 
+<div class="org-src-container">
 
-
-<pre class="src src-clojure">(<span style="color: #CDA869;">defn</span> <span style="color: #9B703F;">example</span> []
-  (<span style="color: #7587A6;">println</span> <span style="color: #8F9D6A;">"This is sample source code."</span>))
+<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">example</span> []
+  (<span class="org-builtin">println</span> <span class="org-string">"This is sample source code."</span>))
 </pre>
-
-
-
+</div>
 </div>
 
-<div id="outline-container-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Syntax Highlighting &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1">Syntax Highlighting&#xa0;&#xa0;&#xa0;<span class="tag"><span class="slide">slide</span></span></h3>
 <div class="outline-text-3" id="text-3-1">
-
-
-<ul>
+<ul class="org-ul">
 <li>Org-Mode HTML export uses <a href="http://www.emacswiki.org/emacs/Htmlize">htmlize.el</a>
 </li>
 <li>Code in exported HTML will match your current Emacs theme
-<ul>
+<ul class="org-ul">
 <li>Choose a theme that looks good on a projector!
 </li>
 </ul>
-
 </li>
 </ul>
-
-
 </div>
-
 </div>
-
-<div id="outline-container-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Syntax Highlighting with CSS Classes &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2">Syntax Highlighting with CSS Classes&#xa0;&#xa0;&#xa0;<span class="tag"><span class="slide">slide</span></span></h3>
 <div class="outline-text-3" id="text-3-2">
-
-
-<ul>
+<ul class="org-ul">
 <li>Set the Emacs variable 
-<ul>
+<ul class="org-ul">
 <li><code>org-export-htmlize-output-type</code> 
 </li>
 <li>to the symbol <code>css</code>
@@ -314,148 +297,117 @@ Use <code>begin_src/end_src</code> blocks to include source code.
 <li>(Does not work as a buffer-local variable)
 </li>
 </ul>
-
 </li>
 <li>Htmlize.el will add SPAN tags with CSS classes
-<ul>
+<ul class="org-ul">
 <li>Named for each font face, e.g. <code>org-comment</code>
 </li>
 </ul>
-
 </li>
 <li>Examine HTML output to see class names
 </li>
 <li>Add CSS styles to set colors
 </li>
 </ul>
-
-
 </div>
 </div>
-
 </div>
-
-<div id="outline-container-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Images &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Images&#xa0;&#xa0;&#xa0;<span class="tag"><span class="slide">slide</span></span></h2>
 <div class="outline-text-2" id="text-4">
-
-
-<ul>
+<ul class="org-ul">
 <li>Slides can contain images
-<ul>
+<ul class="org-ul">
 <li>Any file type a browser can display
 </li>
 </ul>
-
 </li>
 <li>See also these Emacs variables:
-<ul>
+<ul class="org-ul">
 <li><code>org-export-html-inline-images</code>
 </li>
 <li><code>org-export-html-inline-image-extensions</code>
-<ul>
+<ul class="org-ul">
 <li>Controls which file types get exported
 </li>
 </ul>
-
 </li>
 </ul>
-
 </li>
 <li>See <a href="http://orgmode.org/manual/Images-in-HTML-export.html">Images in HTML Export in the Org-Mode manual</a>.
 </li>
 </ul>
-
-
-
 </div>
 
-<div id="outline-container-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Slide with Image &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1">Slide with Image&#xa0;&#xa0;&#xa0;<span class="tag"><span class="slide">slide</span></span></h3>
 <div class="outline-text-3" id="text-4-1">
-
-
 <p>
 Make a <code>file:</code> link with the path to the image and no link text.
 </p>
-<p>
-<img src="example-image.svg"  alt="example-image.svg" />
-</p>
+
+
+<div class="figure">
+<p><img  src="example-image.svg" alt="example-image.svg" /></p>
+</div>
+
 <p>
 This example image is public-domain <a href="http://openclipart.org/detail/165554/geodesic_dome-by-yoderj">clip art by Josiah / yoderj</a>.
 </p>
 </div>
 </div>
-
 </div>
-
-<div id="outline-container-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> Styling &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">Styling&#xa0;&#xa0;&#xa0;<span class="tag"><span class="slide">slide</span></span></h2>
 <div class="outline-text-2" id="text-5">
-
-
-<ul>
+<ul class="org-ul">
 <li>Use CSS styles to control appearance of slides
 </li>
 <li>Extra tags on a slide become extra CSS classes on its HTML
 </li>
 </ul>
-
-
-
 </div>
 
-<div id="outline-container-5-1" class="outline-3">
-<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Org-Mode Tag as CSS Class &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span>&nbsp;<span class="blue_background">blue_background</span></span></h3>
+<div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1">Org-Mode Tag as CSS Class&#xa0;&#xa0;&#xa0;<span class="tag"><span class="slide">slide</span>&#xa0;<span class="blue_background">blue_background</span></span></h3>
 <div class="outline-text-3" id="text-5-1">
-
-
-<ul>
+<ul class="org-ul">
 <li>This slide has the <code>:blue_background:</code> tag
-<ul>
+<ul class="org-ul">
 <li>Which is a class defined in <code>projection.css</code>
 </li>
 </ul>
-
 </li>
 <li>Make up your own tags
-<ul>
+<ul class="org-ul">
 <li>Add them to the CSS file
 </li>
 </ul>
-
 </li>
 </ul>
-
-
 </div>
 </div>
-
 </div>
-
-<div id="outline-container-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> Placing Stylesheets/JavaScript &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6">Placing Stylesheets/JavaScript&#xa0;&#xa0;&#xa0;<span class="tag"><span class="slide">slide</span></span></h2>
 <div class="outline-text-2" id="text-6">
-
-
 <p>
 Include the stylesheets and JavaScript at the <b>bottom</b> of your Org-Mode file.
 </p>
+
 <p>
 They must go at the bottom because the Google Closure Library does not support an on-DOM-ready event. See the <a href="http://groups.google.com/group/closure-library-discuss/browse_thread/thread/1beecbb5d6afcb41/075c536259653946">Closure mailing list discussion</a> for an explanation.
 </p>
-
 </div>
 
-<div id="outline-container-6-1" class="outline-3">
-<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Warning About Hidden Headlines &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1">Warning About Hidden Headlines&#xa0;&#xa0;&#xa0;<span class="tag"><span class="slide">slide</span></span></h3>
 <div class="outline-text-3" id="text-6-1">
-
-
 <p>
 Stylesheets and JavaScript will <b>not</b> be loaded if the <b>last</b> headline in your Org-Mode file is hidden by any of:
 </p>
-<ul>
+
+<ul class="org-ul">
 <li><code>COMMENT</code> at the start of the heading
 </li>
 <li><code>#+COMMENT</code> at the start of the line
@@ -464,39 +416,27 @@ Stylesheets and JavaScript will <b>not</b> be loaded if the <b>last</b> headline
 </li>
 </ul>
 
-
 <p>
 See <a href="http://orgmode.org/manual/Comment-lines.html">Comment lines</a> and <a href="http://orgmode.org/manual/Selective-export.html">Selective export</a> in the Org-Mode manual for details.
 </p>
 </div>
-
 </div>
-
-<div id="outline-container-6-2" class="outline-3">
-<h3 id="sec-6-2"><span class="section-number-3">6.2</span> The End &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div id="outline-container-sec-6-2" class="outline-3">
+<h3 id="sec-6-2">The End&#xa0;&#xa0;&#xa0;<span class="tag"><span class="slide">slide</span></span></h3>
 <div class="outline-text-3" id="text-6-2">
-
-
 <p>
 Sometimes it's safest to add an "empty" heading at the end of your document to make sure the stylesheets and JavaScript are included.
 </p>
 
-
-
-
 <script type="text/javascript" src="production/org-html-slideshow.js"></script>
-
 </div>
 </div>
 </div>
 </div>
-
-<div id="postamble">
-<p class="date">Date: 2012-03-12 19:11:09 EDT</p>
+<div id="postamble" class="status">
 <p class="author">Author: Stuart Sierra</p>
-<p class="creator">Org version 7.8.02 with Emacs version 23</p>
-<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
-
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode N/A)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
