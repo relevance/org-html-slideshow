@@ -77,7 +77,7 @@ things you can do with Org-Mode.
 
 ### Exporting to HTML
 
-Type `C-c C-e h` in your .org file to export as HTML. Repeat whenever
+Type `C-c C-e h h` in your .org file to export as HTML. Repeat whenever
 you modify the .org file.
 
 Read more about [HTML export](http://orgmode.org/manual/HTML-export.html)
