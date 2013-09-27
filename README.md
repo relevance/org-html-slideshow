@@ -174,14 +174,15 @@ The JavaScript file will be written to `production/org-html-slideshow.js`.
 
 ## Change Log
 
-### 27-Sept-2013: Switch to Emacs 24 and Org-mode 8
+* 27-Sept-2013: Switch to Emacs 24 and Org-mode 8
 
-Org-mode 8 introduced breaking changes in the way it exports HTML,
-necessitating breaking changes in org-html-slideshow.
+  Org-mode 8 introduced breaking changes in the way it exports HTML,
+  necessitating breaking changes in org-html-slideshow.
 
-For Emacs 23 and Org-mode 7, use a version of org-html-slideshow on
-the Git branch [emacs23-org7](https://github.com/relevance/org-html-slideshow/tree/emacs23-org7)
+  For Emacs 23 and Org-mode 7, use a version of org-html-slideshow on
+  the Git branch [emacs23-org7](https://github.com/relevance/org-html-slideshow/tree/emacs23-org7)
 
+### 11-Dec-2011: Initial release
 
 
 ## Copyright & Contributions
