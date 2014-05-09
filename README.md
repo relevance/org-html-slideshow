@@ -23,6 +23,8 @@ Org-HTML-Slideshow is written in
   * Check version by opening an .org file and `M-x org-version`
 * [Htmlize](http://www.emacswiki.org/emacs/Htmlize) version 1.37+
 
+For Emacs 23 and Org-mode 7, use the older version of
+org-html-slideshow on the Git branch [emacs23-org7](https://github.com/relevance/org-html-slideshow/tree/emacs23-org7)
 
 
 ## Using in Your Org-mode Files
@@ -127,7 +129,7 @@ You can modify the appearance of your slides by editing the stylesheets:
 
 ## Development
 
-To develop and build org-html-slides, you will need the following
+To develop and build org-html-slideshow, you will need the following
 programs already installed:
 
 * [Git][git]
@@ -155,10 +157,10 @@ JavaScript source) with:
 
 The JavaScript file will be written to `out/development/org-html-slideshow.js`.
 
-You will need [Emacs](http://www.gnu.org/software/emacs/) (version 24+ recommended) and
-[org-mode](http://orgmode.org/) (version 8+ recommended) to generate the HTML.
+You will need [Emacs](http://www.gnu.org/software/emacs/) (version 24+) and
+[org-mode](http://orgmode.org/) (version 8+) to generate the HTML.
 
-Open `example.org` in Emacs and type `C-c C-e b`.  Emacs will generate
+Open `example.org` in Emacs and type `C-e h o`.  Emacs will generate
 an HTML file and open it in your default browser. Type `t` to begin
 the slide show.
 
@@ -180,8 +182,8 @@ The JavaScript file will be written to `production/org-html-slideshow.js`.
   Org-mode 8 introduced breaking changes in the way it exports HTML,
   necessitating breaking changes in org-html-slideshow.
 
-  For Emacs 23 and Org-mode 7, use a version of org-html-slideshow on
-  the Git branch [emacs23-org7](https://github.com/relevance/org-html-slideshow/tree/emacs23-org7)
+  For Emacs 23 and Org-mode 7, use the older version of
+  org-html-slideshow on the Git branch [emacs23-org7](https://github.com/relevance/org-html-slideshow/tree/emacs23-org7)
 
 * **11-Dec-2011:** Initial release
 
